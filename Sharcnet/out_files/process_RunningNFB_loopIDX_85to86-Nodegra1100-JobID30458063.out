@@ -1,0 +1,175 @@
+Opening log file:  /tmp/java.log.27561
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2018 The MathWorks, Inc.
+                   R2018b (9.5.0.944444) 64-bit (glnxa64)
+                              August 28, 2018
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function iscolumn has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function ismatrix has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function isrow has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function isequaln has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function isstring has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function isstring has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 43)
+  In run (line 91)] 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 44)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_85to86 (line 44)
+  In run (line 91)] 
+
+ ***************************** Processing Subject P1148 Session Pre Run task ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (676101) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.32332
+Error using iclabel (line 44)
+You must have an ICA decomposition to use ICLabel
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 182)
+
+
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tp9383a9e2_049d_4bfb_bbab_a91c9a83d02a.mat: Signal 127
+Elapsed time is 23.490934 seconds.
+
+ ***************************** Finished Subject P1148 Session Pre Run task ***************************** 
+
+ ***************************** Processing Subject P1148 Session Pre Run rest ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (153600) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.32410
+Error using iclabel (line 44)
+You must have an ICA decomposition to use ICLabel
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 182)
+
+
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tp8906a6f9_829e_45f5_a350_1a8c4310cbd8.mat: Signal 127
+Elapsed time is 13.328870 seconds.
+
+ ***************************** Finished Subject P1148 Session Pre Run rest ***************************** 
+
+ ***************************** Processing Subject P1150 Session Pre Run task ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (428338) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.32483
+Error using iclabel (line 44)
+You must have an ICA decomposition to use ICLabel
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 182)
+
+
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tpe78279c2_b460_4a13_8375_87bf046d1b5e.mat: Signal 127
+Elapsed time is 18.678127 seconds.
+
+ ***************************** Finished Subject P1150 Session Pre Run task ***************************** 
+
+ ***************************** Processing Subject P1150 Session Pre Run rest ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (153600) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.360
+Error using iclabel (line 44)
+You must have an ICA decomposition to use ICLabel
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 182)
+
+
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tpaf7a65a9_0a8b_4e8d_a985_e875ce6edc3e.mat: Signal 127
+Elapsed time is 12.790838 seconds.
+
+ ***************************** Finished Subject P1150 Session Pre Run rest ***************************** 

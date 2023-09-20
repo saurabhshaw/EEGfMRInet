@@ -1,0 +1,2938 @@
+Opening log file:  /tmp/java.log.30070
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2018 The MathWorks, Inc.
+                   R2018b (9.5.0.944444) 64-bit (glnxa64)
+                              August 28, 2018
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function iscolumn has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function ismatrix has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function isrow has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function isequaln has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function isstring has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function isstring has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 43)
+  In run (line 91)] 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 44)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_201to202 (line 44)
+  In run (line 91)] 
+
+ ***************************** Processing Subject P1220 Session Post Run task ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (392475) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.34815
+pop_eegfiltnew() - performing 16897 point bandpass filtering.
+pop_eegfiltnew() - transition band width: 0.1 Hz
+pop_eegfiltnew() - passband edge(s): [0.1 50] Hz
+pop_eegfiltnew() - cutoff frequency(ies) (-6 dB): [0.05 50.05] Hz
+pop_eegfiltnew() - filtering the data (zero-phase, non-causal)
+firfilt(): |                    |   0%=                   /   5%, ETE 01:14=                  -  10%, ETE 00:51=                 \  15%, ETE 00:42=                |  20%, ETE 00:37=               /  25%, ETE 00:33=              -  30%, ETE 00:30=             \  35%, ETE 00:27=            |  40%, ETE 00:25=           /  45%, ETE 00:22=          -  50%, ETE 00:20=         \  55%, ETE 00:18=        |  60%, ETE 00:16=       /  65%, ETE 00:14=      -  70%, ETE 00:12=     \  75%, ETE 00:10=    |  80%, ETE 00:08=   /  85%, ETE 00:06=  -  90%, ETE 00:04= \  95%, ETE 00:02=| 100%, ETE 00:00
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Scanning for bad channels...
+clean_channel:   1/153 blocks, 0.3 minutes remaining.
+clean_channel:   2/153 blocks, 0.3 minutes remaining.
+clean_channel:   3/153 blocks, 0.3 minutes remaining.
+clean_channel:   4/153 blocks, 0.3 minutes remaining.
+clean_channel:   5/153 blocks, 0.3 minutes remaining.
+clean_channel:   6/153 blocks, 0.3 minutes remaining.
+clean_channel:   7/153 blocks, 0.3 minutes remaining.
+clean_channel:   8/153 blocks, 0.3 minutes remaining.
+clean_channel:   9/153 blocks, 0.3 minutes remaining.
+clean_channel:  10/153 blocks, 0.3 minutes remaining.
+clean_channel:  11/153 blocks, 0.3 minutes remaining.
+clean_channel:  12/153 blocks, 0.3 minutes remaining.
+clean_channel:  13/153 blocks, 0.3 minutes remaining.
+clean_channel:  14/153 blocks, 0.3 minutes remaining.
+clean_channel:  15/153 blocks, 0.3 minutes remaining.
+clean_channel:  16/153 blocks, 0.3 minutes remaining.
+clean_channel:  17/153 blocks, 0.3 minutes remaining.
+clean_channel:  18/153 blocks, 0.3 minutes remaining.
+clean_channel:  19/153 blocks, 0.3 minutes remaining.
+clean_channel:  20/153 blocks, 0.3 minutes remaining.
+clean_channel:  21/153 blocks, 0.3 minutes remaining.
+clean_channel:  22/153 blocks, 0.3 minutes remaining.
+clean_channel:  23/153 blocks, 0.3 minutes remaining.
+clean_channel:  24/153 blocks, 0.2 minutes remaining.
+clean_channel:  25/153 blocks, 0.2 minutes remaining.
+clean_channel:  26/153 blocks, 0.2 minutes remaining.
+clean_channel:  27/153 blocks, 0.2 minutes remaining.
+clean_channel:  28/153 blocks, 0.2 minutes remaining.
+clean_channel:  29/153 blocks, 0.2 minutes remaining.
+clean_channel:  30/153 blocks, 0.2 minutes remaining.
+clean_channel:  31/153 blocks, 0.2 minutes remaining.
+clean_channel:  32/153 blocks, 0.2 minutes remaining.
+clean_channel:  33/153 blocks, 0.2 minutes remaining.
+clean_channel:  34/153 blocks, 0.2 minutes remaining.
+clean_channel:  35/153 blocks, 0.2 minutes remaining.
+clean_channel:  36/153 blocks, 0.2 minutes remaining.
+clean_channel:  37/153 blocks, 0.2 minutes remaining.
+clean_channel:  38/153 blocks, 0.2 minutes remaining.
+clean_channel:  39/153 blocks, 0.2 minutes remaining.
+clean_channel:  40/153 blocks, 0.2 minutes remaining.
+clean_channel:  41/153 blocks, 0.2 minutes remaining.
+clean_channel:  42/153 blocks, 0.2 minutes remaining.
+clean_channel:  43/153 blocks, 0.2 minutes remaining.
+clean_channel:  44/153 blocks, 0.2 minutes remaining.
+clean_channel:  45/153 blocks, 0.2 minutes remaining.
+clean_channel:  46/153 blocks, 0.2 minutes remaining.
+clean_channel:  47/153 blocks, 0.2 minutes remaining.
+clean_channel:  48/153 blocks, 0.2 minutes remaining.
+clean_channel:  49/153 blocks, 0.2 minutes remaining.
+clean_channel:  50/153 blocks, 0.2 minutes remaining.
+clean_channel:  51/153 blocks, 0.2 minutes remaining.
+clean_channel:  52/153 blocks, 0.2 minutes remaining.
+clean_channel:  53/153 blocks, 0.2 minutes remaining.
+clean_channel:  54/153 blocks, 0.2 minutes remaining.
+clean_channel:  55/153 blocks, 0.2 minutes remaining.
+clean_channel:  56/153 blocks, 0.2 minutes remaining.
+clean_channel:  57/153 blocks, 0.2 minutes remaining.
+clean_channel:  58/153 blocks, 0.2 minutes remaining.
+clean_channel:  59/153 blocks, 0.2 minutes remaining.
+clean_channel:  60/153 blocks, 0.2 minutes remaining.
+clean_channel:  61/153 blocks, 0.2 minutes remaining.
+clean_channel:  62/153 blocks, 0.2 minutes remaining.
+clean_channel:  63/153 blocks, 0.2 minutes remaining.
+clean_channel:  64/153 blocks, 0.1 minutes remaining.
+clean_channel:  65/153 blocks, 0.1 minutes remaining.
+clean_channel:  66/153 blocks, 0.1 minutes remaining.
+clean_channel:  67/153 blocks, 0.1 minutes remaining.
+clean_channel:  68/153 blocks, 0.1 minutes remaining.
+clean_channel:  69/153 blocks, 0.1 minutes remaining.
+clean_channel:  70/153 blocks, 0.1 minutes remaining.
+clean_channel:  71/153 blocks, 0.1 minutes remaining.
+clean_channel:  72/153 blocks, 0.1 minutes remaining.
+clean_channel:  73/153 blocks, 0.1 minutes remaining.
+clean_channel:  74/153 blocks, 0.1 minutes remaining.
+clean_channel:  75/153 blocks, 0.1 minutes remaining.
+clean_channel:  76/153 blocks, 0.1 minutes remaining.
+clean_channel:  77/153 blocks, 0.1 minutes remaining.
+clean_channel:  78/153 blocks, 0.1 minutes remaining.
+clean_channel:  79/153 blocks, 0.1 minutes remaining.
+clean_channel:  80/153 blocks, 0.1 minutes remaining.
+clean_channel:  81/153 blocks, 0.1 minutes remaining.
+clean_channel:  82/153 blocks, 0.1 minutes remaining.
+clean_channel:  83/153 blocks, 0.1 minutes remaining.
+clean_channel:  84/153 blocks, 0.1 minutes remaining.
+clean_channel:  85/153 blocks, 0.1 minutes remaining.
+clean_channel:  86/153 blocks, 0.1 minutes remaining.
+clean_channel:  87/153 blocks, 0.1 minutes remaining.
+clean_channel:  88/153 blocks, 0.1 minutes remaining.
+clean_channel:  89/153 blocks, 0.1 minutes remaining.
+clean_channel:  90/153 blocks, 0.1 minutes remaining.
+clean_channel:  91/153 blocks, 0.1 minutes remaining.
+clean_channel:  92/153 blocks, 0.1 minutes remaining.
+clean_channel:  93/153 blocks, 0.1 minutes remaining.
+clean_channel:  94/153 blocks, 0.1 minutes remaining.
+clean_channel:  95/153 blocks, 0.1 minutes remaining.
+clean_channel:  96/153 blocks, 0.1 minutes remaining.
+clean_channel:  97/153 blocks, 0.1 minutes remaining.
+clean_channel:  98/153 blocks, 0.1 minutes remaining.
+clean_channel:  99/153 blocks, 0.1 minutes remaining.
+clean_channel: 100/153 blocks, 0.1 minutes remaining.
+clean_channel: 101/153 blocks, 0.1 minutes remaining.
+clean_channel: 102/153 blocks, 0.1 minutes remaining.
+clean_channel: 103/153 blocks, 0.1 minutes remaining.
+clean_channel: 104/153 blocks, 0.1 minutes remaining.
+clean_channel: 105/153 blocks, 0.1 minutes remaining.
+clean_channel: 106/153 blocks, 0.1 minutes remaining.
+clean_channel: 107/153 blocks, 0.1 minutes remaining.
+clean_channel: 108/153 blocks, 0.1 minutes remaining.
+clean_channel: 109/153 blocks, 0.1 minutes remaining.
+clean_channel: 110/153 blocks, 0.1 minutes remaining.
+clean_channel: 111/153 blocks, 0.1 minutes remaining.
+clean_channel: 112/153 blocks, 0.1 minutes remaining.
+clean_channel: 113/153 blocks, 0.1 minutes remaining.
+clean_channel: 114/153 blocks, 0.1 minutes remaining.
+clean_channel: 115/153 blocks, 0.1 minutes remaining.
+clean_channel: 116/153 blocks, 0.1 minutes remaining.
+clean_channel: 117/153 blocks, 0.1 minutes remaining.
+clean_channel: 118/153 blocks, 0.1 minutes remaining.
+clean_channel: 119/153 blocks, 0.1 minutes remaining.
+clean_channel: 120/153 blocks, 0.1 minutes remaining.
+clean_channel: 121/153 blocks, 0.1 minutes remaining.
+clean_channel: 122/153 blocks, 0.1 minutes remaining.
+clean_channel: 123/153 blocks, 0.1 minutes remaining.
+clean_channel: 124/153 blocks, 0.0 minutes remaining.
+clean_channel: 125/153 blocks, 0.0 minutes remaining.
+clean_channel: 126/153 blocks, 0.0 minutes remaining.
+clean_channel: 127/153 blocks, 0.0 minutes remaining.
+clean_channel: 128/153 blocks, 0.0 minutes remaining.
+clean_channel: 129/153 blocks, 0.0 minutes remaining.
+clean_channel: 130/153 blocks, 0.0 minutes remaining.
+clean_channel: 131/153 blocks, 0.0 minutes remaining.
+clean_channel: 132/153 blocks, 0.0 minutes remaining.
+clean_channel: 133/153 blocks, 0.0 minutes remaining.
+clean_channel: 134/153 blocks, 0.0 minutes remaining.
+clean_channel: 135/153 blocks, 0.0 minutes remaining.
+clean_channel: 136/153 blocks, 0.0 minutes remaining.
+clean_channel: 137/153 blocks, 0.0 minutes remaining.
+clean_channel: 138/153 blocks, 0.0 minutes remaining.
+clean_channel: 139/153 blocks, 0.0 minutes remaining.
+clean_channel: 140/153 blocks, 0.0 minutes remaining.
+clean_channel: 141/153 blocks, 0.0 minutes remaining.
+clean_channel: 142/153 blocks, 0.0 minutes remaining.
+clean_channel: 143/153 blocks, 0.0 minutes remaining.
+clean_channel: 144/153 blocks, 0.0 minutes remaining.
+clean_channel: 145/153 blocks, 0.0 minutes remaining.
+clean_channel: 146/153 blocks, 0.0 minutes remaining.
+clean_channel: 147/153 blocks, 0.0 minutes remaining.
+clean_channel: 148/153 blocks, 0.0 minutes remaining.
+clean_channel: 149/153 blocks, 0.0 minutes remaining.
+clean_channel: 150/153 blocks, 0.0 minutes remaining.
+clean_channel: 151/153 blocks, 0.0 minutes remaining.
+clean_channel: 152/153 blocks, 0.0 minutes remaining.
+clean_channel: 153/153 blocks, 0.0 minutes remaining.
+Removing 3 channel(s)...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Use vis_artifacts to compare the cleaned data to the original.
+Computing spectrum for channels...
+Removing spectrum data below -20dB (most likelly filtered out)
+Selecting minimum and maximum normalized power over the frequency range
+4 electrodes labeled for rejection
+#	Elec.	[min]	[max]
+1	A-1	0.92	2.38
+2	A-2	0.24	1.93
+3	A-3	0.87	1.78
+4	A-4	0.09	1.54
+5	A-5	0.47	0.81
+6	A-6	-0.23	1.44
+7	A-7	0.61	1.61
+8	A-8	0.43	1.34
+9	A-9	0.33	1.39
+10	A-10	0.46	0.82
+11	A-11	-0.21	1.14
+12	A-12	0.42	1.20
+13	A-13	0.13	1.53
+14	A-14	0.06	1.54
+15	A-15	0.13	0.69
+16	A-16	-0.48	0.98
+17	A-17	0.29	1.48
+18	A-18	0.08	1.54
+19	A-19	-0.44	1.39
+20	A-20	-0.27	0.97
+21	A-21	-0.44	0.48
+22	A-22	0.13	1.52
+23	A-23	-0.55	1.40
+24	A-24	-0.85	1.06
+25	A-25	-0.66	0.27
+26	A-26	-0.76	0.33
+27	A-27	-0.25	1.58
+28	A-28	-1.20	0.46
+29	A-29	-1.25	0.40
+30	A-30	-0.87	-0.11
+31	A-31	-1.16	0.33
+32	A-32	-1.40	0.57
+33	B-1	-1.27	-0.63
+34	B-2	-1.25	-0.24
+35	B-3	-0.46	0.27
+36	B-4	-0.91	0.09
+37	B-5	-1.73	0.21
+38	B-6	-1.53	-0.63
+39	B-7	-1.73	-0.94
+40	B-8	-1.39	0.11
+41	B-9	-1.83	-0.64
+42	B-10	-2.04	-0.94
+43	B-11	-2.69	-1.46
+44	B-12	-2.13	-1.17
+45	B-13	-0.73	0.12
+46	B-14	-1.48	-0.63
+47	B-15	-2.48	-1.43
+48	B-16	-3.85	-2.08	*Bad*
+49	B-18	-1.92	-1.29
+50	B-19	-0.98	-0.26
+51	B-20	-3.58	-2.18	*Bad*
+52	B-21	-3.67	-2.04	*Bad*
+53	B-22	-1.76	-0.93
+54	B-24	-2.13	-1.42
+55	B-25	-0.51	0.07
+56	B-26	-0.92	-0.03
+57	B-27	-1.63	-0.77
+58	B-28	-3.11	-1.62	*Bad*
+59	B-29	-0.48	0.37
+60	B-30	-0.77	-0.04
+61	B-31	-1.20	-0.49
+62	B-32	-0.39	0.35
+63	C-1	0.23	2.34
+64	C-2	0.86	2.55
+65	C-3	0.24	2.03
+66	C-4	-0.24	1.77
+67	C-5	-0.06	1.72
+68	C-6	0.99	2.48
+69	C-7	-0.27	1.42
+70	C-8	0.69	1.45
+71	C-9	-0.42	1.24
+72	C-10	-0.27	1.10
+73	C-11	0.45	1.04
+74	C-12	0.81	1.68
+75	C-13	0.76	1.52
+76	C-14	0.76	1.52
+77	C-15	-0.45	0.90
+78	C-16	0.17	0.78
+79	C-17	0.74	1.51
+80	C-18	0.70	1.59
+81	C-19	0.70	1.34
+82	C-20	-0.64	0.69
+83	C-21	-0.36	0.64
+84	C-22	0.41	0.94
+85	C-23	0.36	1.41
+86	C-24	0.55	1.66
+87	C-25	0.52	1.20
+88	C-26	-0.67	0.55
+89	C-27	0.03	0.54
+90	C-28	0.31	1.54
+91	C-29	0.26	1.35
+92	C-30	0.38	1.79
+93	C-31	-0.98	0.40
+94	C-32	-0.68	0.43
+95	D-1	-0.05	0.78
+96	D-2	0.05	0.87
+97	D-3	0.15	1.28
+98	D-4	-1.02	0.37
+99	D-5	-0.38	0.65
+100	D-6	-0.19	0.86
+101	D-7	-0.05	0.77
+102	D-8	-0.94	0.32
+103	D-9	-0.51	0.69
+104	D-10	-0.29	0.73
+105	D-11	-0.14	0.67
+106	D-12	-0.21	0.66
+107	D-13	-1.43	-0.22
+108	D-14	-0.91	0.28
+109	D-15	-0.65	0.58
+110	D-16	-0.49	0.58
+111	D-17	-1.45	-0.53
+112	D-18	-1.04	0.21
+113	D-19	-0.83	0.53
+114	D-20	-0.65	0.62
+115	D-21	-0.40	0.59
+116	D-22	-1.60	-0.36
+117	D-23	-1.11	0.50
+118	D-24	-0.63	0.78
+119	D-25	-1.34	0.38
+120	D-26	-0.79	0.87
+121	D-27	-0.37	0.81
+122	D-28	-1.39	-0.82
+123	D-29	-0.90	0.12
+124	D-31	-0.70	0.44
+125	D-32	-0.38	0.94
+Removing 4 channel(s)...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+
+Attempting to convert data matrix to double precision for more accurate ICA results.
+
+Input data size [121,392475] = 121 channels, 392475 frames/nFinding 121 ICA components using extended ICA.
+Kurtosis will be calculated initially every 1 blocks using 6000 data points.
+Decomposing 26 frames per ICA weight ((14641)^2 = 392475 weights, Initial learning rate will be 0.001, block size 65.
+Learning rate will be multiplied by 0.98 whenever angledelta >= 60 deg.
+More than 32 channels: default stopping weight change 1E-7
+Training will end when wchange < 1e-07 or after 512 steps.
+Online bias adjustment will be used.
+Removing mean of each channel ...
+Final training data range: -395.095 to 723.291
+Computing the sphering matrix...
+Starting weights are the identity matrix ...
+Sphering the data ...
+Beginning ICA training ... first training step may be slow ...
+Lowering learning rate to 0.0009 and starting again.
+Lowering learning rate to 0.00081 and starting again.
+Lowering learning rate to 0.000729 and starting again.
+Lowering learning rate to 0.0006561 and starting again.
+Lowering learning rate to 0.00059049 and starting again.
+step 1 - lrate 0.000590, wchange 99.95416204, angledelta  0.0 deg
+Lowering learning rate to 0.000531441 and starting again.
+step 1 - lrate 0.000531, wchange 92.05813630, angledelta  0.0 deg
+step 2 - lrate 0.000531, wchange 13.48582675, angledelta  0.0 deg
+Lowering learning rate to 0.000478297 and starting again.
+step 1 - lrate 0.000478, wchange 91.65906074, angledelta  0.0 deg
+step 2 - lrate 0.000478, wchange 8.85842717, angledelta  0.0 deg
+step 3 - lrate 0.000478, wchange 8.20073170, angledelta 88.1 deg
+step 4 - lrate 0.000469, wchange 9.32033565, angledelta 110.4 deg
+Lowering learning rate to 0.000413421 and starting again.
+step 1 - lrate 0.000413, wchange 83.90890414, angledelta  0.0 deg
+step 2 - lrate 0.000413, wchange 7.94097703, angledelta  0.0 deg
+step 3 - lrate 0.000413, wchange 6.05908201, angledelta 87.9 deg
+step 4 - lrate 0.000405, wchange 4.33047464, angledelta 100.7 deg
+step 5 - lrate 0.000397, wchange 5.00419473, angledelta 116.1 deg
+step 6 - lrate 0.000389, wchange 5.56215294, angledelta 121.7 deg
+step 7 - lrate 0.000381, wchange 3.97332271, angledelta 119.8 deg
+step 8 - lrate 0.000374, wchange 3.93365433, angledelta 111.1 deg
+step 9 - lrate 0.000366, wchange 4.28803422, angledelta 119.0 deg
+step 10 - lrate 0.000359, wchange 4.27525361, angledelta 121.4 deg
+step 11 - lrate 0.000352, wchange 4.08084882, angledelta 116.2 deg
+step 12 - lrate 0.000345, wchange 3.37871454, angledelta 119.6 deg
+step 13 - lrate 0.000338, wchange 3.27263505, angledelta 105.2 deg
+step 14 - lrate 0.000331, wchange 2.91371411, angledelta 118.6 deg
+step 15 - lrate 0.000324, wchange 2.45069020, angledelta 99.2 deg
+step 16 - lrate 0.000318, wchange 1.38035109, angledelta 115.4 deg
+step 17 - lrate 0.000312, wchange 2.60484583, angledelta 105.6 deg
+step 18 - lrate 0.000305, wchange 4.30074821, angledelta 133.7 deg
+step 19 - lrate 0.000299, wchange 1.24844880, angledelta 107.0 deg
+step 20 - lrate 0.000293, wchange 2.23855940, angledelta 108.4 deg
+step 21 - lrate 0.000287, wchange 2.00872086, angledelta 106.6 deg
+step 22 - lrate 0.000282, wchange 1.69647553, angledelta 99.5 deg
+step 23 - lrate 0.000276, wchange 1.80867393, angledelta 119.4 deg
+step 24 - lrate 0.000270, wchange 1.88597030, angledelta 129.5 deg
+step 25 - lrate 0.000265, wchange 2.21962182, angledelta 127.2 deg
+step 26 - lrate 0.000260, wchange 1.90096290, angledelta 129.5 deg
+step 27 - lrate 0.000255, wchange 1.08117653, angledelta 120.1 deg
+step 28 - lrate 0.000249, wchange 1.54474427, angledelta 119.4 deg
+step 29 - lrate 0.000244, wchange 1.39539215, angledelta 104.2 deg
+step 30 - lrate 0.000240, wchange 0.93069856, angledelta 106.3 deg
+step 31 - lrate 0.000235, wchange 2.11604078, angledelta 118.0 deg
+step 32 - lrate 0.000230, wchange 1.65616149, angledelta 134.7 deg
+step 33 - lrate 0.000226, wchange 1.90623950, angledelta 106.7 deg
+step 34 - lrate 0.000221, wchange 1.70231044, angledelta 134.8 deg
+step 35 - lrate 0.000217, wchange 1.15116899, angledelta 109.0 deg
+step 36 - lrate 0.000212, wchange 1.32152152, angledelta 103.1 deg
+step 37 - lrate 0.000208, wchange 0.67949816, angledelta 109.7 deg
+step 38 - lrate 0.000204, wchange 0.76726289, angledelta 116.5 deg
+step 39 - lrate 0.000200, wchange 0.77648318, angledelta 124.3 deg
+step 40 - lrate 0.000196, wchange 0.61621839, angledelta 116.8 deg
+step 41 - lrate 0.000192, wchange 0.61394479, angledelta 119.1 deg
+step 42 - lrate 0.000188, wchange 0.65502545, angledelta 118.9 deg
+step 43 - lrate 0.000184, wchange 0.62400624, angledelta 122.4 deg
+step 44 - lrate 0.000181, wchange 0.57530494, angledelta 119.9 deg
+step 45 - lrate 0.000177, wchange 0.55581889, angledelta 114.6 deg
+step 46 - lrate 0.000173, wchange 0.58968558, angledelta 122.5 deg
+step 47 - lrate 0.000170, wchange 0.48227782, angledelta 115.7 deg
+step 48 - lrate 0.000167, wchange 0.52350824, angledelta 121.3 deg
+step 49 - lrate 0.000163, wchange 0.48065646, angledelta 115.2 deg
+step 50 - lrate 0.000160, wchange 0.48431263, angledelta 118.7 deg
+step 51 - lrate 0.000157, wchange 0.53175393, angledelta 116.6 deg
+step 52 - lrate 0.000154, wchange 0.48406035, angledelta 121.0 deg
+step 53 - lrate 0.000151, wchange 0.48793407, angledelta 119.8 deg
+step 54 - lrate 0.000148, wchange 0.46524407, angledelta 122.8 deg
+step 55 - lrate 0.000145, wchange 0.48714145, angledelta 117.9 deg
+step 56 - lrate 0.000142, wchange 0.42285525, angledelta 119.5 deg
+step 57 - lrate 0.000139, wchange 0.38636161, angledelta 113.3 deg
+step 58 - lrate 0.000136, wchange 0.42335079, angledelta 118.2 deg
+step 59 - lrate 0.000133, wchange 0.41806695, angledelta 118.9 deg
+step 60 - lrate 0.000131, wchange 0.37997889, angledelta 119.9 deg
+step 61 - lrate 0.000128, wchange 0.36572693, angledelta 119.4 deg
+step 62 - lrate 0.000126, wchange 0.36076619, angledelta 119.5 deg
+step 63 - lrate 0.000123, wchange 0.35487512, angledelta 117.9 deg
+step 64 - lrate 0.000121, wchange 0.35160453, angledelta 118.7 deg
+step 65 - lrate 0.000118, wchange 0.35839166, angledelta 121.4 deg
+step 66 - lrate 0.000116, wchange 0.34459405, angledelta 123.3 deg
+step 67 - lrate 0.000113, wchange 0.33733886, angledelta 120.0 deg
+step 68 - lrate 0.000111, wchange 0.33402665, angledelta 122.9 deg
+step 69 - lrate 0.000109, wchange 0.28976037, angledelta 120.3 deg
+step 70 - lrate 0.000107, wchange 0.32231013, angledelta 115.1 deg
+step 71 - lrate 0.000105, wchange 0.36736363, angledelta 125.9 deg
+step 72 - lrate 0.000103, wchange 0.33343359, angledelta 125.5 deg
+step 73 - lrate 0.000101, wchange 0.31698044, angledelta 126.4 deg
+step 74 - lrate 0.000099, wchange 0.26535359, angledelta 111.7 deg
+step 75 - lrate 0.000097, wchange 0.25490063, angledelta 118.2 deg
+step 76 - lrate 0.000095, wchange 0.26076273, angledelta 116.6 deg
+step 77 - lrate 0.000093, wchange 0.25143024, angledelta 118.6 deg
+step 78 - lrate 0.000091, wchange 0.24030960, angledelta 119.9 deg
+step 79 - lrate 0.000089, wchange 0.28093428, angledelta 120.5 deg
+step 80 - lrate 0.000087, wchange 0.21941346, angledelta 116.1 deg
+step 81 - lrate 0.000086, wchange 0.24209610, angledelta 119.0 deg
+step 82 - lrate 0.000084, wchange 0.25255358, angledelta 118.9 deg
+step 83 - lrate 0.000082, wchange 0.23334705, angledelta 119.9 deg
+step 84 - lrate 0.000080, wchange 0.23171110, angledelta 120.3 deg
+step 85 - lrate 0.000079, wchange 0.21833824, angledelta 119.7 deg
+step 86 - lrate 0.000077, wchange 0.19126052, angledelta 120.3 deg
+step 87 - lrate 0.000076, wchange 0.21069571, angledelta 114.8 deg
+step 88 - lrate 0.000074, wchange 0.21098928, angledelta 123.8 deg
+step 89 - lrate 0.000073, wchange 0.18848957, angledelta 114.8 deg
+step 90 - lrate 0.000071, wchange 0.16744524, angledelta 117.4 deg
+step 91 - lrate 0.000070, wchange 0.19616287, angledelta 118.3 deg
+step 92 - lrate 0.000068, wchange 0.17902106, angledelta 120.3 deg
+step 93 - lrate 0.000067, wchange 0.18054096, angledelta 119.7 deg
+step 94 - lrate 0.000066, wchange 0.16068234, angledelta 116.5 deg
+step 95 - lrate 0.000064, wchange 0.16823696, angledelta 119.3 deg
+step 96 - lrate 0.000063, wchange 0.16249084, angledelta 122.2 deg
+step 97 - lrate 0.000062, wchange 0.13674033, angledelta 117.2 deg
+step 98 - lrate 0.000061, wchange 0.14716995, angledelta 115.9 deg
+step 99 - lrate 0.000059, wchange 0.15869744, angledelta 117.9 deg
+step 100 - lrate 0.000058, wchange 0.15093908, angledelta 121.5 deg
+step 101 - lrate 0.000057, wchange 0.13451660, angledelta 115.6 deg
+step 102 - lrate 0.000056, wchange 0.13285071, angledelta 116.0 deg
+step 103 - lrate 0.000055, wchange 0.14141731, angledelta 116.9 deg
+step 104 - lrate 0.000054, wchange 0.13470970, angledelta 124.1 deg
+step 105 - lrate 0.000053, wchange 0.12884625, angledelta 119.7 deg
+step 106 - lrate 0.000052, wchange 0.12481355, angledelta 120.8 deg
+step 107 - lrate 0.000051, wchange 0.12201538, angledelta 117.2 deg
+step 108 - lrate 0.000050, wchange 0.11967740, angledelta 118.1 deg
+step 109 - lrate 0.000049, wchange 0.11646513, angledelta 120.2 deg
+step 110 - lrate 0.000048, wchange 0.11606161, angledelta 119.9 deg
+step 111 - lrate 0.000047, wchange 0.10444896, angledelta 115.7 deg
+step 112 - lrate 0.000046, wchange 0.10641290, angledelta 119.6 deg
+step 113 - lrate 0.000045, wchange 0.09877695, angledelta 121.3 deg
+step 114 - lrate 0.000044, wchange 0.09897223, angledelta 115.2 deg
+step 115 - lrate 0.000043, wchange 0.10702022, angledelta 120.8 deg
+step 116 - lrate 0.000042, wchange 0.09894533, angledelta 122.1 deg
+step 117 - lrate 0.000041, wchange 0.09337191, angledelta 114.6 deg
+step 118 - lrate 0.000040, wchange 0.09552566, angledelta 117.7 deg
+step 119 - lrate 0.000040, wchange 0.09949684, angledelta 120.0 deg
+step 120 - lrate 0.000039, wchange 0.09848502, angledelta 124.4 deg
+step 121 - lrate 0.000038, wchange 0.08205095, angledelta 119.8 deg
+step 122 - lrate 0.000037, wchange 0.08124231, angledelta 116.7 deg
+step 123 - lrate 0.000037, wchange 0.07836555, angledelta 118.0 deg
+step 124 - lrate 0.000036, wchange 0.08080759, angledelta 122.3 deg
+step 125 - lrate 0.000035, wchange 0.08764853, angledelta 118.5 deg
+step 126 - lrate 0.000034, wchange 0.08085421, angledelta 121.2 deg
+step 127 - lrate 0.000034, wchange 0.08110358, angledelta 117.0 deg
+step 128 - lrate 0.000033, wchange 0.07232260, angledelta 119.7 deg
+step 129 - lrate 0.000032, wchange 0.08708211, angledelta 119.8 deg
+step 130 - lrate 0.000032, wchange 0.07844099, angledelta 123.8 deg
+step 131 - lrate 0.000031, wchange 0.06750585, angledelta 120.7 deg
+step 132 - lrate 0.000031, wchange 0.06524125, angledelta 123.1 deg
+step 133 - lrate 0.000030, wchange 0.06445716, angledelta 120.0 deg
+step 134 - lrate 0.000029, wchange 0.07485025, angledelta 122.8 deg
+step 135 - lrate 0.000029, wchange 0.06962567, angledelta 120.3 deg
+step 136 - lrate 0.000028, wchange 0.06437273, angledelta 122.4 deg
+step 137 - lrate 0.000028, wchange 0.06191509, angledelta 120.7 deg
+step 138 - lrate 0.000027, wchange 0.05778396, angledelta 116.9 deg
+step 139 - lrate 0.000026, wchange 0.06043421, angledelta 120.8 deg
+step 140 - lrate 0.000026, wchange 0.05596159, angledelta 119.0 deg
+step 141 - lrate 0.000025, wchange 0.05718310, angledelta 120.5 deg
+step 142 - lrate 0.000025, wchange 0.05765867, angledelta 120.5 deg
+step 143 - lrate 0.000024, wchange 0.05268794, angledelta 123.3 deg
+step 144 - lrate 0.000024, wchange 0.04971566, angledelta 119.1 deg
+step 145 - lrate 0.000023, wchange 0.05088611, angledelta 117.6 deg
+step 146 - lrate 0.000023, wchange 0.05416050, angledelta 118.7 deg
+step 147 - lrate 0.000023, wchange 0.05108833, angledelta 124.4 deg
+step 148 - lrate 0.000022, wchange 0.04922121, angledelta 122.0 deg
+step 149 - lrate 0.000022, wchange 0.05342723, angledelta 122.5 deg
+step 150 - lrate 0.000021, wchange 0.04742295, angledelta 122.1 deg
+step 151 - lrate 0.000021, wchange 0.03887710, angledelta 119.4 deg
+step 152 - lrate 0.000020, wchange 0.03884857, angledelta 117.5 deg
+step 153 - lrate 0.000020, wchange 0.04110955, angledelta 120.5 deg
+step 154 - lrate 0.000020, wchange 0.04268566, angledelta 122.5 deg
+step 155 - lrate 0.000019, wchange 0.03633943, angledelta 116.6 deg
+step 156 - lrate 0.000019, wchange 0.03790081, angledelta 119.9 deg
+step 157 - lrate 0.000018, wchange 0.03523181, angledelta 116.3 deg
+step 158 - lrate 0.000018, wchange 0.03519792, angledelta 114.6 deg
+step 159 - lrate 0.000018, wchange 0.03822409, angledelta 118.2 deg
+step 160 - lrate 0.000017, wchange 0.03419250, angledelta 118.5 deg
+step 161 - lrate 0.000017, wchange 0.13085793, angledelta 102.6 deg
+step 162 - lrate 0.000017, wchange 0.03526371, angledelta 104.0 deg
+step 163 - lrate 0.000016, wchange 0.11876782, angledelta 103.3 deg
+step 164 - lrate 0.000016, wchange 0.03245168, angledelta 99.5 deg
+step 165 - lrate 0.000016, wchange 0.02938887, angledelta 116.6 deg
+step 166 - lrate 0.000015, wchange 0.03181346, angledelta 120.1 deg
+step 167 - lrate 0.000015, wchange 0.02881792, angledelta 117.1 deg
+step 168 - lrate 0.000015, wchange 0.02792927, angledelta 120.2 deg
+step 169 - lrate 0.000014, wchange 0.02945376, angledelta 119.9 deg
+step 170 - lrate 0.000014, wchange 0.02610911, angledelta 120.8 deg
+step 171 - lrate 0.000014, wchange 0.02934487, angledelta 115.6 deg
+step 172 - lrate 0.000014, wchange 0.02984164, angledelta 125.1 deg
+step 173 - lrate 0.000013, wchange 0.03004875, angledelta 120.8 deg
+step 174 - lrate 0.000013, wchange 0.02576896, angledelta 119.5 deg
+step 175 - lrate 0.000013, wchange 0.02570176, angledelta 122.2 deg
+step 176 - lrate 0.000013, wchange 0.02347383, angledelta 118.1 deg
+step 177 - lrate 0.000012, wchange 0.02522282, angledelta 120.5 deg
+step 178 - lrate 0.000012, wchange 0.02530797, angledelta 117.1 deg
+step 179 - lrate 0.000012, wchange 0.02230015, angledelta 120.8 deg
+step 180 - lrate 0.000012, wchange 0.01997936, angledelta 119.2 deg
+step 181 - lrate 0.000011, wchange 0.02471336, angledelta 115.2 deg
+step 182 - lrate 0.000011, wchange 0.02267788, angledelta 126.5 deg
+step 183 - lrate 0.000011, wchange 0.01836412, angledelta 117.4 deg
+step 184 - lrate 0.000011, wchange 0.01962791, angledelta 119.9 deg
+step 185 - lrate 0.000010, wchange 0.01759876, angledelta 122.2 deg
+step 186 - lrate 0.000010, wchange 0.01911585, angledelta 120.3 deg
+step 187 - lrate 0.000010, wchange 0.01727801, angledelta 121.9 deg
+step 188 - lrate 0.000010, wchange 0.01654481, angledelta 119.0 deg
+step 189 - lrate 0.000010, wchange 0.01551890, angledelta 117.1 deg
+step 190 - lrate 0.000009, wchange 0.01514304, angledelta 119.4 deg
+step 191 - lrate 0.000009, wchange 0.01586396, angledelta 115.8 deg
+step 192 - lrate 0.000009, wchange 0.01556102, angledelta 121.1 deg
+step 193 - lrate 0.000009, wchange 0.01656300, angledelta 117.1 deg
+step 194 - lrate 0.000009, wchange 0.01513050, angledelta 119.9 deg
+step 195 - lrate 0.000009, wchange 0.01341448, angledelta 113.9 deg
+step 196 - lrate 0.000008, wchange 0.01321796, angledelta 120.5 deg
+step 197 - lrate 0.000008, wchange 0.01250111, angledelta 119.0 deg
+step 198 - lrate 0.000008, wchange 0.01326507, angledelta 120.2 deg
+step 199 - lrate 0.000008, wchange 0.01355257, angledelta 115.3 deg
+step 200 - lrate 0.000008, wchange 0.01385139, angledelta 121.6 deg
+step 201 - lrate 0.000008, wchange 0.01237155, angledelta 119.5 deg
+step 202 - lrate 0.000007, wchange 0.01239358, angledelta 121.3 deg
+step 203 - lrate 0.000007, wchange 0.01232649, angledelta 122.0 deg
+step 204 - lrate 0.000007, wchange 0.01076665, angledelta 120.6 deg
+step 205 - lrate 0.000007, wchange 0.01114160, angledelta 115.2 deg
+step 206 - lrate 0.000007, wchange 0.01178596, angledelta 124.0 deg
+step 207 - lrate 0.000007, wchange 0.01090140, angledelta 120.4 deg
+step 208 - lrate 0.000007, wchange 0.00941057, angledelta 120.6 deg
+step 209 - lrate 0.000006, wchange 0.01058596, angledelta 120.5 deg
+step 210 - lrate 0.000006, wchange 0.00940179, angledelta 122.4 deg
+step 211 - lrate 0.000006, wchange 0.00914875, angledelta 118.4 deg
+step 212 - lrate 0.000006, wchange 0.00886601, angledelta 116.1 deg
+step 213 - lrate 0.000006, wchange 0.00856955, angledelta 120.4 deg
+step 214 - lrate 0.000006, wchange 0.00871388, angledelta 118.3 deg
+step 215 - lrate 0.000006, wchange 0.00778462, angledelta 119.1 deg
+step 216 - lrate 0.000006, wchange 0.00786650, angledelta 119.3 deg
+step 217 - lrate 0.000005, wchange 0.00808566, angledelta 121.8 deg
+step 218 - lrate 0.000005, wchange 0.00711670, angledelta 120.1 deg
+step 219 - lrate 0.000005, wchange 0.00749425, angledelta 118.5 deg
+step 220 - lrate 0.000005, wchange 0.00709572, angledelta 123.0 deg
+step 221 - lrate 0.000005, wchange 0.00639099, angledelta 121.3 deg
+step 222 - lrate 0.000005, wchange 0.00644361, angledelta 119.0 deg
+step 223 - lrate 0.000005, wchange 0.00635055, angledelta 124.2 deg
+step 224 - lrate 0.000005, wchange 0.00561040, angledelta 117.5 deg
+step 225 - lrate 0.000005, wchange 0.00651938, angledelta 120.1 deg
+step 226 - lrate 0.000005, wchange 0.00551453, angledelta 121.7 deg
+step 227 - lrate 0.000004, wchange 0.00477060, angledelta 115.8 deg
+step 228 - lrate 0.000004, wchange 0.00476801, angledelta 119.5 deg
+step 229 - lrate 0.000004, wchange 0.00503836, angledelta 117.8 deg
+step 230 - lrate 0.000004, wchange 0.00502847, angledelta 120.5 deg
+step 231 - lrate 0.000004, wchange 0.00456943, angledelta 121.0 deg
+step 232 - lrate 0.000004, wchange 0.00385984, angledelta 122.3 deg
+step 233 - lrate 0.000004, wchange 0.00402168, angledelta 112.6 deg
+step 234 - lrate 0.000004, wchange 0.00387339, angledelta 120.4 deg
+step 235 - lrate 0.000004, wchange 0.00371663, angledelta 119.6 deg
+step 236 - lrate 0.000004, wchange 0.00349668, angledelta 115.6 deg
+step 237 - lrate 0.000004, wchange 0.00396512, angledelta 116.0 deg
+step 238 - lrate 0.000004, wchange 0.00312283, angledelta 120.3 deg
+step 239 - lrate 0.000004, wchange 0.00312981, angledelta 116.7 deg
+step 240 - lrate 0.000003, wchange 0.00280692, angledelta 117.5 deg
+step 241 - lrate 0.000003, wchange 0.00283526, angledelta 117.9 deg
+step 242 - lrate 0.000003, wchange 0.00259494, angledelta 121.9 deg
+step 243 - lrate 0.000003, wchange 0.00242686, angledelta 115.5 deg
+step 244 - lrate 0.000003, wchange 0.00231050, angledelta 115.6 deg
+step 245 - lrate 0.000003, wchange 0.00225050, angledelta 116.9 deg
+step 246 - lrate 0.000003, wchange 0.00238086, angledelta 116.4 deg
+step 247 - lrate 0.000003, wchange 0.00255506, angledelta 122.7 deg
+step 248 - lrate 0.000003, wchange 0.00204072, angledelta 119.9 deg
+step 249 - lrate 0.000003, wchange 0.00197232, angledelta 114.3 deg
+step 250 - lrate 0.000003, wchange 0.00212915, angledelta 117.8 deg
+step 251 - lrate 0.000003, wchange 0.00180174, angledelta 120.2 deg
+step 252 - lrate 0.000003, wchange 0.00176560, angledelta 117.8 deg
+step 253 - lrate 0.000003, wchange 0.00143960, angledelta 119.1 deg
+step 254 - lrate 0.000003, wchange 0.00152847, angledelta 113.3 deg
+step 255 - lrate 0.000003, wchange 0.00133124, angledelta 116.3 deg
+step 256 - lrate 0.000002, wchange 0.00130064, angledelta 114.9 deg
+step 257 - lrate 0.000002, wchange 0.00131445, angledelta 115.9 deg
+step 258 - lrate 0.000002, wchange 0.00124900, angledelta 119.3 deg
+step 259 - lrate 0.000002, wchange 0.00116164, angledelta 113.6 deg
+step 260 - lrate 0.000002, wchange 0.00111107, angledelta 114.8 deg
+step 261 - lrate 0.000002, wchange 0.00101078, angledelta 119.6 deg
+step 262 - lrate 0.000002, wchange 0.00089340, angledelta 114.8 deg
+step 263 - lrate 0.000002, wchange 0.00087878, angledelta 115.9 deg
+step 264 - lrate 0.000002, wchange 0.00081172, angledelta 117.1 deg
+step 265 - lrate 0.000002, wchange 0.00081381, angledelta 113.0 deg
+step 266 - lrate 0.000002, wchange 0.00115028, angledelta 111.6 deg
+step 267 - lrate 0.000002, wchange 0.04577630, angledelta 57.3 deg
+step 268 - lrate 0.000002, wchange 0.00544020, angledelta 58.7 deg
+step 269 - lrate 0.000002, wchange 0.00076357, angledelta 80.6 deg
+step 270 - lrate 0.000002, wchange 0.00070426, angledelta 108.1 deg
+step 271 - lrate 0.000002, wchange 0.00063479, angledelta 117.6 deg
+step 272 - lrate 0.000002, wchange 0.00059400, angledelta 111.2 deg
+step 273 - lrate 0.000002, wchange 0.00057914, angledelta 116.0 deg
+step 274 - lrate 0.000002, wchange 0.00055436, angledelta 115.9 deg
+step 275 - lrate 0.000002, wchange 0.00049677, angledelta 110.5 deg
+step 276 - lrate 0.000002, wchange 0.00047297, angledelta 112.7 deg
+step 277 - lrate 0.000002, wchange 0.00043677, angledelta 113.8 deg
+step 278 - lrate 0.000002, wchange 0.00047083, angledelta 107.8 deg
+step 279 - lrate 0.000002, wchange 0.00041052, angledelta 109.4 deg
+step 280 - lrate 0.000002, wchange 0.00035547, angledelta 112.5 deg
+step 281 - lrate 0.000002, wchange 0.00034609, angledelta 108.3 deg
+step 282 - lrate 0.000002, wchange 0.00036124, angledelta 114.9 deg
+step 283 - lrate 0.000002, wchange 0.05503624, angledelta 91.7 deg
+step 284 - lrate 0.000001, wchange 0.00327667, angledelta 17.9 deg
+step 285 - lrate 0.000001, wchange 0.00056425, angledelta 49.7 deg
+step 286 - lrate 0.000001, wchange 0.00030867, angledelta 73.0 deg
+step 287 - lrate 0.000001, wchange 0.00028466, angledelta 103.9 deg
+step 288 - lrate 0.000001, wchange 0.00025389, angledelta 102.8 deg
+step 289 - lrate 0.000001, wchange 0.00021001, angledelta 108.3 deg
+step 290 - lrate 0.000001, wchange 0.00018758, angledelta 109.6 deg
+step 291 - lrate 0.000001, wchange 0.00018485, angledelta 110.7 deg
+step 292 - lrate 0.000001, wchange 0.00019461, angledelta 111.3 deg
+step 293 - lrate 0.000001, wchange 0.00016841, angledelta 110.2 deg
+step 294 - lrate 0.000001, wchange 0.00015779, angledelta 111.6 deg
+step 295 - lrate 0.000001, wchange 0.00015693, angledelta 103.4 deg
+step 296 - lrate 0.000001, wchange 0.00015342, angledelta 114.6 deg
+step 297 - lrate 0.000001, wchange 0.00013829, angledelta 109.5 deg
+step 298 - lrate 0.000001, wchange 0.00012884, angledelta 111.6 deg
+step 299 - lrate 0.000001, wchange 0.00549744, angledelta 91.8 deg
+step 300 - lrate 0.000001, wchange 0.01526977, angledelta 11.2 deg
+step 301 - lrate 0.000001, wchange 0.00525706, angledelta 12.5 deg
+step 302 - lrate 0.000001, wchange 0.00097085, angledelta 22.3 deg
+step 303 - lrate 0.000001, wchange 0.00022987, angledelta 46.1 deg
+step 304 - lrate 0.000001, wchange 0.00183236, angledelta 163.6 deg
+step 305 - lrate 0.000001, wchange 0.03512772, angledelta 15.5 deg
+step 306 - lrate 0.000001, wchange 0.00234487, angledelta 18.9 deg
+step 307 - lrate 0.000001, wchange 0.00042779, angledelta 33.3 deg
+step 308 - lrate 0.000001, wchange 0.00015638, angledelta 54.2 deg
+step 309 - lrate 0.000001, wchange 0.00010154, angledelta 71.8 deg
+step 310 - lrate 0.000001, wchange 0.00009497, angledelta 100.3 deg
+step 311 - lrate 0.000001, wchange 0.00007793, angledelta 105.4 deg
+step 312 - lrate 0.000001, wchange 0.00008566, angledelta 108.5 deg
+step 313 - lrate 0.000001, wchange 0.00007977, angledelta 104.5 deg
+step 314 - lrate 0.000001, wchange 0.00006653, angledelta 107.8 deg
+step 315 - lrate 0.000001, wchange 0.00006025, angledelta 104.1 deg
+step 316 - lrate 0.000001, wchange 0.00006521, angledelta 104.7 deg
+step 317 - lrate 0.000001, wchange 0.00005573, angledelta 109.6 deg
+step 318 - lrate 0.000001, wchange 0.00005138, angledelta 107.0 deg
+step 319 - lrate 0.000001, wchange 0.00004753, angledelta 105.1 deg
+step 320 - lrate 0.000001, wchange 0.00004817, angledelta 107.4 deg
+step 321 - lrate 0.000001, wchange 0.00004423, angledelta 103.2 deg
+step 322 - lrate 0.000001, wchange 0.00004465, angledelta 108.0 deg
+step 323 - lrate 0.000001, wchange 0.00004105, angledelta 105.8 deg
+step 324 - lrate 0.000001, wchange 0.00003623, angledelta 102.2 deg
+step 325 - lrate 0.000001, wchange 0.00002944, angledelta 103.6 deg
+step 326 - lrate 0.000001, wchange 0.00003073, angledelta 103.2 deg
+step 327 - lrate 0.000001, wchange 0.00002871, angledelta 106.6 deg
+step 328 - lrate 0.000001, wchange 0.00002396, angledelta 100.9 deg
+step 329 - lrate 0.000001, wchange 0.00002491, angledelta 100.4 deg
+step 330 - lrate 0.000001, wchange 0.00002089, angledelta 105.7 deg
+step 331 - lrate 0.000001, wchange 0.00002215, angledelta 99.9 deg
+step 332 - lrate 0.000001, wchange 0.00001951, angledelta 102.8 deg
+step 333 - lrate 0.000001, wchange 0.00001952, angledelta 103.4 deg
+step 334 - lrate 0.000001, wchange 0.00001676, angledelta 103.2 deg
+step 335 - lrate 0.000001, wchange 0.00001451, angledelta 101.3 deg
+step 336 - lrate 0.000001, wchange 0.00001332, angledelta 103.9 deg
+step 337 - lrate 0.000001, wchange 0.00001287, angledelta 101.1 deg
+step 338 - lrate 0.000001, wchange 0.00001303, angledelta 96.3 deg
+step 339 - lrate 0.000001, wchange 0.00001098, angledelta 105.5 deg
+step 340 - lrate 0.000001, wchange 0.00001017, angledelta 102.1 deg
+step 341 - lrate 0.000001, wchange 0.00001119, angledelta 99.4 deg
+step 342 - lrate 0.000001, wchange 0.00000913, angledelta 95.4 deg
+step 343 - lrate 0.000001, wchange 0.00000790, angledelta 103.7 deg
+step 344 - lrate 0.000001, wchange 0.00000822, angledelta 99.0 deg
+step 345 - lrate 0.000001, wchange 0.00000705, angledelta 97.5 deg
+step 346 - lrate 0.000001, wchange 0.00000660, angledelta 100.4 deg
+step 347 - lrate 0.000001, wchange 0.00000665, angledelta 97.0 deg
+step 348 - lrate 0.000000, wchange 0.00000593, angledelta 101.3 deg
+step 349 - lrate 0.000000, wchange 0.00000572, angledelta 98.3 deg
+step 350 - lrate 0.000000, wchange 0.00000579, angledelta 102.4 deg
+step 351 - lrate 0.000000, wchange 0.00000435, angledelta 95.5 deg
+step 352 - lrate 0.000000, wchange 0.00000406, angledelta 98.9 deg
+step 353 - lrate 0.000000, wchange 0.00000372, angledelta 99.8 deg
+step 354 - lrate 0.000000, wchange 0.00000367, angledelta 102.2 deg
+step 355 - lrate 0.000000, wchange 0.00000342, angledelta 97.0 deg
+step 356 - lrate 0.000000, wchange 0.00000311, angledelta 101.3 deg
+step 357 - lrate 0.000000, wchange 0.00000295, angledelta 91.7 deg
+step 358 - lrate 0.000000, wchange 0.00000271, angledelta 95.9 deg
+step 359 - lrate 0.000000, wchange 0.00000244, angledelta 97.3 deg
+step 360 - lrate 0.000000, wchange 0.00000270, angledelta 95.1 deg
+step 361 - lrate 0.000000, wchange 0.00000231, angledelta 98.1 deg
+step 362 - lrate 0.000000, wchange 0.00000192, angledelta 100.3 deg
+step 363 - lrate 0.000000, wchange 0.00000174, angledelta 92.8 deg
+step 364 - lrate 0.000000, wchange 0.00000164, angledelta 96.0 deg
+step 365 - lrate 0.000000, wchange 0.00000162, angledelta 93.0 deg
+step 366 - lrate 0.000000, wchange 0.00000158, angledelta 96.6 deg
+step 367 - lrate 0.000000, wchange 0.00000134, angledelta 90.3 deg
+step 368 - lrate 0.000000, wchange 0.00000121, angledelta 95.4 deg
+step 369 - lrate 0.000000, wchange 0.00000119, angledelta 92.9 deg
+step 370 - lrate 0.000000, wchange 0.00000104, angledelta 97.2 deg
+step 371 - lrate 0.000000, wchange 0.00000107, angledelta 97.7 deg
+step 372 - lrate 0.000000, wchange 0.00000094, angledelta 98.3 deg
+step 373 - lrate 0.000000, wchange 0.00000086, angledelta 97.7 deg
+step 374 - lrate 0.000000, wchange 0.00000071, angledelta 97.5 deg
+step 375 - lrate 0.000000, wchange 0.00000076, angledelta 98.2 deg
+step 376 - lrate 0.000000, wchange 0.00000067, angledelta 91.9 deg
+step 377 - lrate 0.000000, wchange 0.00000057, angledelta 94.5 deg
+step 378 - lrate 0.000000, wchange 0.00000052, angledelta 96.2 deg
+step 379 - lrate 0.000000, wchange 0.00000055, angledelta 92.4 deg
+step 380 - lrate 0.000000, wchange 0.00000050, angledelta 97.0 deg
+step 381 - lrate 0.000000, wchange 0.00000048, angledelta 91.2 deg
+step 382 - lrate 0.000000, wchange 0.00000044, angledelta 101.9 deg
+step 383 - lrate 0.000000, wchange 0.00000039, angledelta 95.3 deg
+step 384 - lrate 0.000000, wchange 0.00000032, angledelta 96.6 deg
+step 385 - lrate 0.000000, wchange 0.00000033, angledelta 92.3 deg
+step 386 - lrate 0.000000, wchange 0.00000028, angledelta 96.6 deg
+step 387 - lrate 0.000000, wchange 0.00000025, angledelta 89.4 deg
+step 388 - lrate 0.000000, wchange 0.00000027, angledelta 95.6 deg
+step 389 - lrate 0.000000, wchange 0.00000029, angledelta 95.9 deg
+step 390 - lrate 0.000000, wchange 0.00000023, angledelta 89.4 deg
+step 391 - lrate 0.000000, wchange 0.00000022, angledelta 90.3 deg
+step 392 - lrate 0.000000, wchange 0.00000021, angledelta 97.0 deg
+step 393 - lrate 0.000000, wchange 0.00000018, angledelta 97.6 deg
+step 394 - lrate 0.000000, wchange 0.00000016, angledelta 93.2 deg
+step 395 - lrate 0.000000, wchange 0.00000013, angledelta 94.0 deg
+step 396 - lrate 0.000000, wchange 0.00000015, angledelta 91.9 deg
+step 397 - lrate 0.000000, wchange 0.00036502, angledelta 90.0 deg
+step 398 - lrate 0.000000, wchange 0.00051463, angledelta  1.5 deg
+step 399 - lrate 0.000000, wchange 0.00051525, angledelta  1.5 deg
+step 400 - lrate 0.000000, wchange 0.00050458, angledelta  1.5 deg
+step 401 - lrate 0.000000, wchange 0.00048269, angledelta  1.5 deg
+step 402 - lrate 0.000000, wchange 0.00045032, angledelta  1.6 deg
+step 403 - lrate 0.000000, wchange 0.00040969, angledelta  1.6 deg
+step 404 - lrate 0.000000, wchange 0.00036310, angledelta  1.7 deg
+step 405 - lrate 0.000000, wchange 0.00031354, angledelta  1.8 deg
+step 406 - lrate 0.000000, wchange 0.00026425, angledelta  1.8 deg
+step 407 - lrate 0.000000, wchange 0.00021757, angledelta  1.9 deg
+step 408 - lrate 0.000000, wchange 0.00185863, angledelta 178.8 deg
+step 409 - lrate 0.000000, wchange 0.00102476, angledelta  0.8 deg
+step 410 - lrate 0.000000, wchange 0.00059760, angledelta  1.0 deg
+step 411 - lrate 0.000000, wchange 0.00036775, angledelta  1.1 deg
+step 412 - lrate 0.000000, wchange 0.00023562, angledelta  1.3 deg
+step 413 - lrate 0.000000, wchange 0.00015631, angledelta  1.7 deg
+step 414 - lrate 0.000000, wchange 0.00010623, angledelta  1.8 deg
+step 415 - lrate 0.000000, wchange 0.00007371, angledelta  2.2 deg
+step 416 - lrate 0.000000, wchange 0.00005211, angledelta  2.8 deg
+step 417 - lrate 0.000000, wchange 0.00003731, angledelta  3.2 deg
+step 418 - lrate 0.000000, wchange 0.00002706, angledelta  3.4 deg
+step 419 - lrate 0.000000, wchange 0.00001979, angledelta  4.3 deg
+step 420 - lrate 0.000000, wchange 0.00001468, angledelta  5.0 deg
+step 421 - lrate 0.000000, wchange 0.00001091, angledelta  5.9 deg
+step 422 - lrate 0.000000, wchange 0.00000820, angledelta  6.7 deg
+step 423 - lrate 0.000000, wchange 0.00000616, angledelta  7.4 deg
+step 424 - lrate 0.000000, wchange 0.00000470, angledelta  9.1 deg
+step 425 - lrate 0.000000, wchange 0.00000358, angledelta  9.9 deg
+step 426 - lrate 0.000000, wchange 0.00000276, angledelta 11.6 deg
+step 427 - lrate 0.000000, wchange 0.00000214, angledelta 12.8 deg
+step 428 - lrate 0.000000, wchange 0.00000165, angledelta 15.2 deg
+step 429 - lrate 0.000000, wchange 0.00000129, angledelta 16.8 deg
+step 430 - lrate 0.000000, wchange 0.00000101, angledelta 18.7 deg
+step 431 - lrate 0.000000, wchange 0.00000081, angledelta 22.2 deg
+step 432 - lrate 0.000000, wchange 0.00000064, angledelta 23.8 deg
+step 433 - lrate 0.000000, wchange 0.00000052, angledelta 26.8 deg
+step 434 - lrate 0.000000, wchange 0.00000043, angledelta 30.6 deg
+step 435 - lrate 0.000000, wchange 0.00034179, angledelta 178.8 deg
+step 436 - lrate 0.000000, wchange 0.00047526, angledelta  1.5 deg
+step 437 - lrate 0.000000, wchange 0.00047473, angledelta  1.4 deg
+step 438 - lrate 0.000000, wchange 0.00046451, angledelta  1.5 deg
+step 439 - lrate 0.000000, wchange 0.00044478, angledelta  1.5 deg
+step 440 - lrate 0.000000, wchange 0.00001197, angledelta  7.0 deg
+step 441 - lrate 0.000000, wchange 0.00030927, angledelta 178.5 deg
+step 442 - lrate 0.000000, wchange 0.00019483, angledelta  1.7 deg
+step 443 - lrate 0.000000, wchange 0.00013202, angledelta  1.8 deg
+step 444 - lrate 0.000000, wchange 0.00009157, angledelta  2.2 deg
+step 445 - lrate 0.000000, wchange 0.00006469, angledelta  2.4 deg
+step 446 - lrate 0.000000, wchange 0.00004645, angledelta  2.8 deg
+step 447 - lrate 0.000000, wchange 0.00003370, angledelta  3.2 deg
+step 448 - lrate 0.000000, wchange 0.00002480, angledelta  3.6 deg
+step 449 - lrate 0.000000, wchange 0.00001838, angledelta  4.3 deg
+step 450 - lrate 0.000000, wchange 0.00001373, angledelta  4.7 deg
+step 451 - lrate 0.000000, wchange 0.00001034, angledelta  5.7 deg
+step 452 - lrate 0.000000, wchange 0.00000784, angledelta  6.3 deg
+step 453 - lrate 0.000000, wchange 0.00000598, angledelta  7.4 deg
+step 454 - lrate 0.000000, wchange 0.00000458, angledelta  8.1 deg
+step 455 - lrate 0.000000, wchange 0.00000351, angledelta  9.5 deg
+step 456 - lrate 0.000000, wchange 0.00000272, angledelta 10.2 deg
+step 457 - lrate 0.000000, wchange 0.00000212, angledelta 12.0 deg
+step 458 - lrate 0.000000, wchange 0.00000167, angledelta 13.6 deg
+step 459 - lrate 0.000000, wchange 0.00000130, angledelta 15.2 deg
+step 460 - lrate 0.000000, wchange 0.00000103, angledelta 17.0 deg
+step 461 - lrate 0.000000, wchange 0.00000083, angledelta 19.8 deg
+step 462 - lrate 0.000000, wchange 0.00000066, angledelta 21.5 deg
+step 463 - lrate 0.000000, wchange 0.00000054, angledelta 24.3 deg
+step 464 - lrate 0.000000, wchange 0.00000043, angledelta 26.0 deg
+step 465 - lrate 0.000000, wchange 0.00000036, angledelta 30.2 deg
+step 466 - lrate 0.000000, wchange 0.00000030, angledelta 32.6 deg
+step 467 - lrate 0.000000, wchange 0.00000026, angledelta 36.8 deg
+step 468 - lrate 0.000000, wchange 0.00000022, angledelta 39.4 deg
+step 469 - lrate 0.000000, wchange 0.00000019, angledelta 43.6 deg
+step 470 - lrate 0.000000, wchange 0.00000018, angledelta 48.8 deg
+step 471 - lrate 0.000000, wchange 0.00000016, angledelta 50.4 deg
+step 472 - lrate 0.000000, wchange 0.00000014, angledelta 54.6 deg
+step 473 - lrate 0.000000, wchange 0.00000012, angledelta 56.1 deg
+step 474 - lrate 0.000000, wchange 0.00000013, angledelta 61.3 deg
+step 475 - lrate 0.000000, wchange 0.00000011, angledelta 83.6 deg
+step 476 - lrate 0.000000, wchange 0.00000010, angledelta 83.0 deg
+Sorting components in descending order of mean projected variance ...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Scaling components to RMS microvolt
+eeg_checkset: recomputing the ICA activation matrix ...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+ICLabel: extracting features...
+ICLabel: calculating labels...
+Error using load
+Unable to read file '/home/shaws5/.mcrCache9.5/offlin1/project/6006749/shaws5/Research_code/EEGnet/Toolboxes/EEGLAB/plugins/ICLabel1.1/netICL'. No such file or directory.
+
+Error in run_ICL (line 26)
+
+Error in iclabel (line 53)
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 118)
+
+MATLAB:load:couldNotReadFile
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tpe0f8d87e_f173_4a37_b836_dee2af4a9c64.mat: Signal 127
+Elapsed time is 2954.050130 seconds.
+
+ ***************************** Finished Subject P1220 Session Post Run task ***************************** 
+
+ ***************************** Processing Subject P1220 Session Post Run rest ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (153600) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.309
+pop_eegfiltnew() - performing 16897 point bandpass filtering.
+pop_eegfiltnew() - transition band width: 0.1 Hz
+pop_eegfiltnew() - passband edge(s): [0.1 50] Hz
+pop_eegfiltnew() - cutoff frequency(ies) (-6 dB): [0.05 50.05] Hz
+pop_eegfiltnew() - filtering the data (zero-phase, non-causal)
+firfilt(): |                    |   0%=                   /   5%, ETE 00:49=                  -  10%, ETE 00:30=                 \  15%, ETE 00:23=                |  20%, ETE 00:19=               /  25%, ETE 00:16=              -  30%, ETE 00:15=             \  35%, ETE 00:13=            |  40%, ETE 00:12=           /  45%, ETE 00:11=          -  50%, ETE 00:09=         \  55%, ETE 00:08=        |  60%, ETE 00:07=       /  65%, ETE 00:06=      -  70%, ETE 00:05=     \  75%, ETE 00:05=    |  80%, ETE 00:04=   /  85%, ETE 00:03=  -  90%, ETE 00:02==| 100%, ETE 00:00
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Scanning for bad channels...
+clean_channel:   1/59 blocks, 0.1 minutes remaining.
+clean_channel:   2/59 blocks, 0.1 minutes remaining.
+clean_channel:   3/59 blocks, 0.1 minutes remaining.
+clean_channel:   4/59 blocks, 0.1 minutes remaining.
+clean_channel:   5/59 blocks, 0.1 minutes remaining.
+clean_channel:   6/59 blocks, 0.1 minutes remaining.
+clean_channel:   7/59 blocks, 0.1 minutes remaining.
+clean_channel:   8/59 blocks, 0.1 minutes remaining.
+clean_channel:   9/59 blocks, 0.1 minutes remaining.
+clean_channel:  10/59 blocks, 0.1 minutes remaining.
+clean_channel:  11/59 blocks, 0.1 minutes remaining.
+clean_channel:  12/59 blocks, 0.1 minutes remaining.
+clean_channel:  13/59 blocks, 0.1 minutes remaining.
+clean_channel:  14/59 blocks, 0.1 minutes remaining.
+clean_channel:  15/59 blocks, 0.1 minutes remaining.
+clean_channel:  16/59 blocks, 0.1 minutes remaining.
+clean_channel:  17/59 blocks, 0.1 minutes remaining.
+clean_channel:  18/59 blocks, 0.1 minutes remaining.
+clean_channel:  19/59 blocks, 0.1 minutes remaining.
+clean_channel:  20/59 blocks, 0.1 minutes remaining.
+clean_channel:  21/59 blocks, 0.1 minutes remaining.
+clean_channel:  22/59 blocks, 0.1 minutes remaining.
+clean_channel:  23/59 blocks, 0.1 minutes remaining.
+clean_channel:  24/59 blocks, 0.1 minutes remaining.
+clean_channel:  25/59 blocks, 0.1 minutes remaining.
+clean_channel:  26/59 blocks, 0.1 minutes remaining.
+clean_channel:  27/59 blocks, 0.1 minutes remaining.
+clean_channel:  28/59 blocks, 0.1 minutes remaining.
+clean_channel:  29/59 blocks, 0.0 minutes remaining.
+clean_channel:  30/59 blocks, 0.0 minutes remaining.
+clean_channel:  31/59 blocks, 0.0 minutes remaining.
+clean_channel:  32/59 blocks, 0.0 minutes remaining.
+clean_channel:  33/59 blocks, 0.0 minutes remaining.
+clean_channel:  34/59 blocks, 0.0 minutes remaining.
+clean_channel:  35/59 blocks, 0.0 minutes remaining.
+clean_channel:  36/59 blocks, 0.0 minutes remaining.
+clean_channel:  37/59 blocks, 0.0 minutes remaining.
+clean_channel:  38/59 blocks, 0.0 minutes remaining.
+clean_channel:  39/59 blocks, 0.0 minutes remaining.
+clean_channel:  40/59 blocks, 0.0 minutes remaining.
+clean_channel:  41/59 blocks, 0.0 minutes remaining.
+clean_channel:  42/59 blocks, 0.0 minutes remaining.
+clean_channel:  43/59 blocks, 0.0 minutes remaining.
+clean_channel:  44/59 blocks, 0.0 minutes remaining.
+clean_channel:  45/59 blocks, 0.0 minutes remaining.
+clean_channel:  46/59 blocks, 0.0 minutes remaining.
+clean_channel:  47/59 blocks, 0.0 minutes remaining.
+clean_channel:  48/59 blocks, 0.0 minutes remaining.
+clean_channel:  49/59 blocks, 0.0 minutes remaining.
+clean_channel:  50/59 blocks, 0.0 minutes remaining.
+clean_channel:  51/59 blocks, 0.0 minutes remaining.
+clean_channel:  52/59 blocks, 0.0 minutes remaining.
+clean_channel:  53/59 blocks, 0.0 minutes remaining.
+clean_channel:  54/59 blocks, 0.0 minutes remaining.
+clean_channel:  55/59 blocks, 0.0 minutes remaining.
+clean_channel:  56/59 blocks, 0.0 minutes remaining.
+clean_channel:  57/59 blocks, 0.0 minutes remaining.
+clean_channel:  58/59 blocks, 0.0 minutes remaining.
+clean_channel:  59/59 blocks, 0.0 minutes remaining.
+Removing 3 channel(s)...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Use vis_artifacts to compare the cleaned data to the original.
+Computing spectrum for channels...
+Removing spectrum data below -20dB (most likelly filtered out)
+Selecting minimum and maximum normalized power over the frequency range
+4 electrodes labeled for rejection
+#	Elec.	[min]	[max]
+1	A-1	0.39	1.90
+2	A-2	0.08	1.44
+3	A-3	0.64	2.10
+4	A-4	-0.00	1.12
+5	A-5	0.20	0.99
+6	A-6	-0.22	0.99
+7	A-7	0.48	1.62
+8	A-8	0.54	1.66
+9	A-9	0.41	1.27
+10	A-10	0.19	0.99
+11	A-11	-0.23	0.96
+12	A-12	0.44	1.58
+13	A-13	0.27	1.72
+14	A-14	0.10	1.72
+15	A-15	0.06	0.95
+16	A-16	-0.35	0.94
+17	A-17	0.14	1.31
+18	A-18	0.19	1.75
+19	A-19	-0.37	1.36
+20	A-20	-0.28	1.21
+21	A-21	-0.35	0.79
+22	A-22	0.21	1.87
+23	A-23	-0.46	1.72
+24	A-24	-0.78	1.15
+25	A-25	-0.68	0.47
+26	A-26	-0.64	0.65
+27	A-27	-0.14	1.65
+28	A-28	-1.16	0.79
+29	A-29	-0.97	0.57
+30	A-30	-0.87	0.27
+31	A-31	-1.10	0.91
+32	A-32	-1.28	0.73
+33	B-1	-1.16	-0.27
+34	B-2	-1.23	0.06
+35	B-3	-0.60	0.42
+36	B-4	-0.76	0.52
+37	B-5	-1.76	0.84
+38	B-6	-1.54	-0.54
+39	B-7	-1.67	-0.71
+40	B-8	-1.29	-0.08
+41	B-9	-1.81	0.40
+42	B-10	-2.25	-0.48
+43	B-11	-2.55	-1.66
+44	B-12	-2.01	-1.09
+45	B-13	-0.88	0.33
+46	B-14	-1.47	-0.85
+47	B-15	-2.50	-0.91
+48	B-16	-3.89	-2.02	*Bad*
+49	B-18	-1.93	-1.11
+50	B-19	-1.14	-0.39
+51	B-20	-3.30	-2.10	*Bad*
+52	B-21	-4.03	-2.31	*Bad*
+53	B-22	-1.47	-0.72
+54	B-24	-2.15	-1.67
+55	B-25	-0.83	0.41
+56	B-26	-1.48	-0.23
+57	B-27	-2.25	-0.90
+58	B-28	-3.27	-1.64	*Bad*
+59	B-29	-0.79	0.49
+60	B-30	-1.16	0.09
+61	B-31	-1.68	-0.39
+62	B-32	-0.71	0.71
+63	C-1	0.22	1.69
+64	C-2	0.30	1.89
+65	C-3	0.12	1.43
+66	C-4	-0.15	1.17
+67	C-5	0.02	1.19
+68	C-6	0.61	2.09
+69	C-7	-0.13	0.99
+70	C-8	0.34	1.08
+71	C-9	-0.31	0.98
+72	C-10	-0.13	0.97
+73	C-11	0.24	1.05
+74	C-12	0.82	1.85
+75	C-13	0.64	1.65
+76	C-14	0.65	1.65
+77	C-15	-0.23	0.94
+78	C-16	0.17	1.00
+79	C-17	0.71	2.03
+80	C-18	0.64	1.91
+81	C-19	0.63	1.61
+82	C-20	-0.38	0.86
+83	C-21	-0.21	0.80
+84	C-22	0.43	1.45
+85	C-23	0.62	1.70
+86	C-24	0.60	2.07
+87	C-25	0.59	1.64
+88	C-26	-0.49	0.69
+89	C-27	0.00	0.93
+90	C-28	0.51	2.36
+91	C-29	0.58	1.80
+92	C-31	-0.80	0.52
+93	C-32	-0.59	0.41
+94	D-1	-0.00	1.07
+95	D-2	0.38	1.31
+96	D-3	0.50	1.73
+97	D-4	-0.87	0.22
+98	D-5	-0.39	0.57
+99	D-6	-0.02	1.13
+100	D-7	0.25	1.20
+101	D-8	-0.84	-0.01
+102	D-9	-0.47	0.57
+103	D-10	-0.07	1.03
+104	D-11	0.02	1.04
+105	D-12	-0.09	0.90
+106	D-13	-1.34	-0.58
+107	D-14	-0.81	0.01
+108	D-15	-0.46	0.45
+109	D-16	-0.35	0.66
+110	D-17	-1.40	-0.80
+111	D-18	-0.88	-0.01
+112	D-19	-0.58	0.53
+113	D-20	-0.46	0.75
+114	D-21	-0.27	0.80
+115	D-22	-1.46	-0.84
+116	D-23	-0.76	0.54
+117	D-24	-0.34	0.88
+118	D-25	-1.08	0.25
+119	D-26	-0.42	1.05
+120	D-27	-0.18	0.70
+121	D-28	-1.51	-0.68
+122	D-29	-0.91	0.02
+123	D-30	-0.72	0.32
+124	D-31	-0.91	0.24
+125	D-32	-0.44	0.69
+Removing 4 channel(s)...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+
+Attempting to convert data matrix to double precision for more accurate ICA results.
+
+Input data size [121,153600] = 121 channels, 153600 frames/nFinding 121 ICA components using extended ICA.
+Kurtosis will be calculated initially every 1 blocks using 6000 data points.
+Decomposing 10 frames per ICA weight ((14641)^2 = 153600 weights, Initial learning rate will be 0.001, block size 60.
+Learning rate will be multiplied by 0.98 whenever angledelta >= 60 deg.
+More than 32 channels: default stopping weight change 1E-7
+Training will end when wchange < 1e-07 or after 512 steps.
+Online bias adjustment will be used.
+Removing mean of each channel ...
+Final training data range: -352.901 to 382.118
+Computing the sphering matrix...
+Starting weights are the identity matrix ...
+Sphering the data ...
+Beginning ICA training ... first training step may be slow ...
+Lowering learning rate to 0.0009 and starting again.
+Lowering learning rate to 0.00081 and starting again.
+Lowering learning rate to 0.000729 and starting again.
+Lowering learning rate to 0.0006561 and starting again.
+Lowering learning rate to 0.00059049 and starting again.
+step 1 - lrate 0.000590, wchange 97.08033057, angledelta  0.0 deg
+Lowering learning rate to 0.000531441 and starting again.
+Lowering learning rate to 0.000478297 and starting again.
+Lowering learning rate to 0.000430467 and starting again.
+step 1 - lrate 0.000430, wchange 78.81104352, angledelta  0.0 deg
+step 2 - lrate 0.000430, wchange 10.09152682, angledelta  0.0 deg
+step 3 - lrate 0.000430, wchange 10.66582316, angledelta 87.0 deg
+step 4 - lrate 0.000422, wchange 10.31512123, angledelta 114.1 deg
+step 5 - lrate 0.000413, wchange 10.24283692, angledelta 114.8 deg
+step 6 - lrate 0.000405, wchange 9.52686176, angledelta 117.4 deg
+step 7 - lrate 0.000397, wchange 8.44161878, angledelta 114.7 deg
+step 8 - lrate 0.000389, wchange 9.29264153, angledelta 112.6 deg
+step 9 - lrate 0.000381, wchange 9.55470240, angledelta 120.8 deg
+step 10 - lrate 0.000374, wchange 9.49246260, angledelta 113.3 deg
+step 11 - lrate 0.000366, wchange 9.87467867, angledelta 118.9 deg
+step 12 - lrate 0.000359, wchange 6.88731610, angledelta 114.9 deg
+step 13 - lrate 0.000352, wchange 6.25148377, angledelta 111.2 deg
+step 14 - lrate 0.000345, wchange 6.82733747, angledelta 111.7 deg
+step 15 - lrate 0.000338, wchange 6.93216157, angledelta 118.8 deg
+step 16 - lrate 0.000331, wchange 6.61149118, angledelta 111.8 deg
+step 17 - lrate 0.000324, wchange 6.64914794, angledelta 115.2 deg
+step 18 - lrate 0.000318, wchange 6.42739188, angledelta 114.2 deg
+step 19 - lrate 0.000312, wchange 6.20037837, angledelta 112.0 deg
+step 20 - lrate 0.000305, wchange 5.47166751, angledelta 113.9 deg
+step 21 - lrate 0.000299, wchange 5.27353565, angledelta 109.6 deg
+step 22 - lrate 0.000293, wchange 5.06456825, angledelta 112.2 deg
+step 23 - lrate 0.000287, wchange 5.13560567, angledelta 115.6 deg
+step 24 - lrate 0.000282, wchange 4.75353756, angledelta 111.3 deg
+step 25 - lrate 0.000276, wchange 5.18886167, angledelta 109.9 deg
+step 26 - lrate 0.000270, wchange 4.22888321, angledelta 118.8 deg
+step 27 - lrate 0.000265, wchange 3.70688128, angledelta 104.7 deg
+step 28 - lrate 0.000260, wchange 4.25885367, angledelta 112.7 deg
+step 29 - lrate 0.000255, wchange 4.73226497, angledelta 111.9 deg
+step 30 - lrate 0.000249, wchange 5.16178045, angledelta 121.9 deg
+step 31 - lrate 0.000244, wchange 3.64591526, angledelta 119.1 deg
+step 32 - lrate 0.000240, wchange 2.30099476, angledelta 112.1 deg
+step 33 - lrate 0.000235, wchange 2.34181479, angledelta 105.4 deg
+step 34 - lrate 0.000230, wchange 3.71205561, angledelta 120.0 deg
+step 35 - lrate 0.000226, wchange 3.82287744, angledelta 110.3 deg
+step 36 - lrate 0.000221, wchange 1.94719313, angledelta 106.0 deg
+step 37 - lrate 0.000217, wchange 2.40455266, angledelta 104.3 deg
+step 38 - lrate 0.000212, wchange 2.26284628, angledelta 117.4 deg
+step 39 - lrate 0.000208, wchange 1.90249096, angledelta 126.9 deg
+step 40 - lrate 0.000204, wchange 1.81444774, angledelta 108.3 deg
+step 41 - lrate 0.000200, wchange 1.36651424, angledelta 114.1 deg
+step 42 - lrate 0.000196, wchange 1.71987375, angledelta 112.3 deg
+step 43 - lrate 0.000192, wchange 0.99003890, angledelta 111.9 deg
+step 44 - lrate 0.000188, wchange 1.10619578, angledelta 108.9 deg
+step 45 - lrate 0.000184, wchange 1.12378641, angledelta 106.7 deg
+step 46 - lrate 0.000181, wchange 1.79362480, angledelta 112.5 deg
+step 47 - lrate 0.000177, wchange 1.69294315, angledelta 99.9 deg
+step 48 - lrate 0.000173, wchange 0.92472346, angledelta 100.2 deg
+step 49 - lrate 0.000170, wchange 0.93107492, angledelta 114.7 deg
+step 50 - lrate 0.000167, wchange 1.01324862, angledelta 124.9 deg
+step 51 - lrate 0.000163, wchange 0.82020051, angledelta 118.1 deg
+step 52 - lrate 0.000160, wchange 0.85762989, angledelta 114.8 deg
+step 53 - lrate 0.000157, wchange 0.75847587, angledelta 120.7 deg
+step 54 - lrate 0.000154, wchange 0.62877738, angledelta 111.7 deg
+step 55 - lrate 0.000151, wchange 0.70302980, angledelta 111.4 deg
+step 56 - lrate 0.000148, wchange 0.74171919, angledelta 124.1 deg
+step 57 - lrate 0.000145, wchange 0.61830232, angledelta 115.8 deg
+step 58 - lrate 0.000142, wchange 0.68926713, angledelta 116.8 deg
+step 59 - lrate 0.000139, wchange 0.59678857, angledelta 119.1 deg
+step 60 - lrate 0.000136, wchange 0.50051382, angledelta 114.6 deg
+step 61 - lrate 0.000133, wchange 0.53156102, angledelta 116.7 deg
+step 62 - lrate 0.000131, wchange 0.45445328, angledelta 114.7 deg
+step 63 - lrate 0.000128, wchange 0.55807966, angledelta 115.2 deg
+step 64 - lrate 0.000126, wchange 0.47308362, angledelta 116.1 deg
+step 65 - lrate 0.000123, wchange 0.49282717, angledelta 118.6 deg
+step 66 - lrate 0.000121, wchange 0.42179890, angledelta 120.2 deg
+step 67 - lrate 0.000118, wchange 0.38081771, angledelta 117.6 deg
+step 68 - lrate 0.000116, wchange 0.46659527, angledelta 115.2 deg
+step 69 - lrate 0.000113, wchange 0.45737209, angledelta 121.8 deg
+step 70 - lrate 0.000111, wchange 1.34013442, angledelta 107.8 deg
+step 71 - lrate 0.000109, wchange 0.50067370, angledelta 106.3 deg
+step 72 - lrate 0.000107, wchange 0.43523020, angledelta 110.3 deg
+step 73 - lrate 0.000105, wchange 0.40159749, angledelta 110.9 deg
+step 74 - lrate 0.000103, wchange 0.34917430, angledelta 115.7 deg
+step 75 - lrate 0.000101, wchange 0.33581422, angledelta 114.6 deg
+step 76 - lrate 0.000099, wchange 0.33334300, angledelta 119.8 deg
+step 77 - lrate 0.000097, wchange 0.33280777, angledelta 115.4 deg
+step 78 - lrate 0.000095, wchange 0.28685938, angledelta 119.3 deg
+step 79 - lrate 0.000093, wchange 0.28651112, angledelta 117.4 deg
+step 80 - lrate 0.000091, wchange 0.28123192, angledelta 109.6 deg
+step 81 - lrate 0.000089, wchange 0.31755250, angledelta 114.8 deg
+step 82 - lrate 0.000087, wchange 0.28527470, angledelta 113.1 deg
+step 83 - lrate 0.000086, wchange 0.24782632, angledelta 112.8 deg
+step 84 - lrate 0.000084, wchange 0.26302690, angledelta 112.1 deg
+step 85 - lrate 0.000082, wchange 0.30047294, angledelta 115.4 deg
+step 86 - lrate 0.000080, wchange 0.29418476, angledelta 127.7 deg
+step 87 - lrate 0.000079, wchange 0.26635295, angledelta 120.2 deg
+step 88 - lrate 0.000077, wchange 0.23200535, angledelta 119.2 deg
+step 89 - lrate 0.000076, wchange 0.25278168, angledelta 114.9 deg
+step 90 - lrate 0.000074, wchange 0.24249826, angledelta 120.2 deg
+step 91 - lrate 0.000073, wchange 0.22480701, angledelta 118.4 deg
+step 92 - lrate 0.000071, wchange 0.27169026, angledelta 120.3 deg
+step 93 - lrate 0.000070, wchange 0.26450631, angledelta 124.4 deg
+step 94 - lrate 0.000068, wchange 0.19597462, angledelta 112.6 deg
+step 95 - lrate 0.000067, wchange 0.29433921, angledelta 118.9 deg
+step 96 - lrate 0.000066, wchange 0.23015609, angledelta 124.1 deg
+step 97 - lrate 0.000064, wchange 0.17710777, angledelta 112.4 deg
+step 98 - lrate 0.000063, wchange 0.18185834, angledelta 117.8 deg
+step 99 - lrate 0.000062, wchange 0.20658212, angledelta 112.8 deg
+step 100 - lrate 0.000061, wchange 0.17782455, angledelta 119.8 deg
+step 101 - lrate 0.000059, wchange 0.20486713, angledelta 120.2 deg
+step 102 - lrate 0.000058, wchange 0.19864248, angledelta 119.1 deg
+step 103 - lrate 0.000057, wchange 0.17405724, angledelta 117.5 deg
+step 104 - lrate 0.000056, wchange 0.18748754, angledelta 117.2 deg
+step 105 - lrate 0.000055, wchange 0.19933980, angledelta 121.4 deg
+step 106 - lrate 0.000054, wchange 0.16608781, angledelta 115.6 deg
+step 107 - lrate 0.000053, wchange 0.14763036, angledelta 120.1 deg
+step 108 - lrate 0.000052, wchange 0.14726494, angledelta 109.8 deg
+step 109 - lrate 0.000051, wchange 0.14485977, angledelta 120.9 deg
+step 110 - lrate 0.000050, wchange 0.12699927, angledelta 120.5 deg
+step 111 - lrate 0.000049, wchange 0.13034724, angledelta 118.2 deg
+step 112 - lrate 0.000048, wchange 0.11420260, angledelta 119.5 deg
+step 113 - lrate 0.000047, wchange 0.12303442, angledelta 119.8 deg
+step 114 - lrate 0.000046, wchange 0.11598363, angledelta 119.4 deg
+step 115 - lrate 0.000045, wchange 0.11519783, angledelta 121.6 deg
+step 116 - lrate 0.000044, wchange 0.12545225, angledelta 122.1 deg
+step 117 - lrate 0.000043, wchange 0.11734985, angledelta 125.9 deg
+step 118 - lrate 0.000042, wchange 0.11255608, angledelta 118.1 deg
+step 119 - lrate 0.000041, wchange 0.09579913, angledelta 117.6 deg
+step 120 - lrate 0.000040, wchange 0.09952017, angledelta 114.4 deg
+step 121 - lrate 0.000040, wchange 0.09968253, angledelta 119.1 deg
+step 122 - lrate 0.000039, wchange 0.09234138, angledelta 113.7 deg
+step 123 - lrate 0.000038, wchange 0.10375473, angledelta 117.8 deg
+step 124 - lrate 0.000037, wchange 0.11234532, angledelta 120.6 deg
+step 125 - lrate 0.000037, wchange 0.08145559, angledelta 120.1 deg
+step 126 - lrate 0.000036, wchange 0.08486714, angledelta 115.4 deg
+step 127 - lrate 0.000035, wchange 0.09942342, angledelta 117.8 deg
+step 128 - lrate 0.000034, wchange 0.08415659, angledelta 123.2 deg
+step 129 - lrate 0.000034, wchange 0.08693648, angledelta 119.1 deg
+step 130 - lrate 0.000033, wchange 0.08842082, angledelta 121.7 deg
+step 131 - lrate 0.000032, wchange 0.08619313, angledelta 117.4 deg
+step 132 - lrate 0.000032, wchange 0.07920823, angledelta 117.9 deg
+step 133 - lrate 0.000031, wchange 0.07486441, angledelta 119.1 deg
+step 134 - lrate 0.000031, wchange 0.08730010, angledelta 119.1 deg
+step 135 - lrate 0.000030, wchange 0.06964785, angledelta 123.2 deg
+step 136 - lrate 0.000029, wchange 0.06754394, angledelta 124.0 deg
+step 137 - lrate 0.000029, wchange 0.06001858, angledelta 118.7 deg
+step 138 - lrate 0.000028, wchange 0.06854366, angledelta 118.6 deg
+step 139 - lrate 0.000028, wchange 0.06734607, angledelta 123.1 deg
+step 140 - lrate 0.000027, wchange 0.06326088, angledelta 123.6 deg
+step 141 - lrate 0.000026, wchange 0.06855301, angledelta 119.1 deg
+step 142 - lrate 0.000026, wchange 0.06450068, angledelta 126.3 deg
+step 143 - lrate 0.000025, wchange 0.05450783, angledelta 115.2 deg
+step 144 - lrate 0.000025, wchange 0.06706108, angledelta 120.6 deg
+step 145 - lrate 0.000024, wchange 0.05733070, angledelta 121.7 deg
+step 146 - lrate 0.000024, wchange 0.06686813, angledelta 121.0 deg
+step 147 - lrate 0.000023, wchange 0.05748567, angledelta 122.6 deg
+step 148 - lrate 0.000023, wchange 0.05883941, angledelta 122.2 deg
+step 149 - lrate 0.000023, wchange 0.04869032, angledelta 123.3 deg
+step 150 - lrate 0.000022, wchange 0.04886437, angledelta 113.4 deg
+step 151 - lrate 0.000022, wchange 0.04885386, angledelta 117.4 deg
+step 152 - lrate 0.000021, wchange 0.04966599, angledelta 123.3 deg
+step 153 - lrate 0.000021, wchange 0.04187763, angledelta 114.8 deg
+step 154 - lrate 0.000020, wchange 0.04761533, angledelta 122.3 deg
+step 155 - lrate 0.000020, wchange 0.03961921, angledelta 121.3 deg
+step 156 - lrate 0.000020, wchange 0.03704373, angledelta 120.4 deg
+step 157 - lrate 0.000019, wchange 0.03679669, angledelta 121.4 deg
+step 158 - lrate 0.000019, wchange 0.03503525, angledelta 120.0 deg
+step 159 - lrate 0.000018, wchange 0.03702628, angledelta 121.1 deg
+step 160 - lrate 0.000018, wchange 0.03440774, angledelta 120.1 deg
+step 161 - lrate 0.000018, wchange 0.03507984, angledelta 119.3 deg
+step 162 - lrate 0.000017, wchange 0.04251395, angledelta 123.0 deg
+step 163 - lrate 0.000017, wchange 0.03380856, angledelta 119.5 deg
+step 164 - lrate 0.000017, wchange 0.03138271, angledelta 120.6 deg
+step 165 - lrate 0.000016, wchange 0.03268630, angledelta 117.8 deg
+step 166 - lrate 0.000016, wchange 0.03353564, angledelta 126.3 deg
+step 167 - lrate 0.000016, wchange 0.02313715, angledelta 121.0 deg
+step 168 - lrate 0.000015, wchange 0.02505281, angledelta 114.9 deg
+step 169 - lrate 0.000015, wchange 0.02374823, angledelta 117.9 deg
+step 170 - lrate 0.000015, wchange 0.02819441, angledelta 116.6 deg
+step 171 - lrate 0.000014, wchange 0.02852022, angledelta 127.3 deg
+step 172 - lrate 0.000014, wchange 0.02168848, angledelta 115.1 deg
+step 173 - lrate 0.000014, wchange 0.02540395, angledelta 121.9 deg
+step 174 - lrate 0.000014, wchange 0.02090165, angledelta 116.7 deg
+step 175 - lrate 0.000013, wchange 0.01872448, angledelta 118.2 deg
+step 176 - lrate 0.000013, wchange 0.01995467, angledelta 114.6 deg
+step 177 - lrate 0.000013, wchange 0.02040239, angledelta 118.8 deg
+step 178 - lrate 0.000013, wchange 0.02104344, angledelta 118.6 deg
+step 179 - lrate 0.000012, wchange 0.02083792, angledelta 122.8 deg
+step 180 - lrate 0.000012, wchange 0.01704917, angledelta 122.0 deg
+step 181 - lrate 0.000012, wchange 0.01694077, angledelta 115.1 deg
+step 182 - lrate 0.000012, wchange 0.01920974, angledelta 122.4 deg
+step 183 - lrate 0.000011, wchange 0.01698159, angledelta 118.3 deg
+step 184 - lrate 0.000011, wchange 0.01804452, angledelta 121.1 deg
+step 185 - lrate 0.000011, wchange 0.01413237, angledelta 120.2 deg
+step 186 - lrate 0.000011, wchange 0.01350607, angledelta 114.8 deg
+step 187 - lrate 0.000010, wchange 0.01508235, angledelta 119.4 deg
+step 188 - lrate 0.000010, wchange 0.01543648, angledelta 118.7 deg
+step 189 - lrate 0.000010, wchange 0.01419660, angledelta 118.4 deg
+step 190 - lrate 0.000010, wchange 0.01361223, angledelta 120.0 deg
+step 191 - lrate 0.000010, wchange 0.01137626, angledelta 121.7 deg
+step 192 - lrate 0.000009, wchange 0.01051073, angledelta 123.0 deg
+step 193 - lrate 0.000009, wchange 0.00962098, angledelta 121.1 deg
+step 194 - lrate 0.000009, wchange 0.01021141, angledelta 118.0 deg
+step 195 - lrate 0.000009, wchange 0.00945769, angledelta 119.5 deg
+step 196 - lrate 0.000009, wchange 0.00804471, angledelta 116.5 deg
+step 197 - lrate 0.000009, wchange 0.00847893, angledelta 117.9 deg
+step 198 - lrate 0.000008, wchange 0.00713725, angledelta 116.5 deg
+step 199 - lrate 0.000008, wchange 0.00777865, angledelta 116.3 deg
+step 200 - lrate 0.000008, wchange 0.00828370, angledelta 122.2 deg
+step 201 - lrate 0.000008, wchange 0.00649569, angledelta 118.7 deg
+step 202 - lrate 0.000008, wchange 0.00622518, angledelta 109.3 deg
+step 203 - lrate 0.000008, wchange 0.00573439, angledelta 118.6 deg
+step 204 - lrate 0.000007, wchange 0.00723499, angledelta 118.0 deg
+step 205 - lrate 0.000007, wchange 0.00683041, angledelta 128.0 deg
+step 206 - lrate 0.000007, wchange 0.00518469, angledelta 108.3 deg
+step 207 - lrate 0.000007, wchange 0.00510268, angledelta 117.3 deg
+step 208 - lrate 0.000007, wchange 0.00475989, angledelta 110.1 deg
+step 209 - lrate 0.000007, wchange 0.00436664, angledelta 118.3 deg
+step 210 - lrate 0.000007, wchange 0.00476753, angledelta 115.2 deg
+step 211 - lrate 0.000006, wchange 0.00428004, angledelta 114.7 deg
+step 212 - lrate 0.000006, wchange 0.00428366, angledelta 116.3 deg
+step 213 - lrate 0.000006, wchange 0.00414954, angledelta 114.1 deg
+step 214 - lrate 0.000006, wchange 0.00360330, angledelta 119.6 deg
+step 215 - lrate 0.000006, wchange 0.00377160, angledelta 114.0 deg
+step 216 - lrate 0.000006, wchange 0.00433241, angledelta 124.4 deg
+step 217 - lrate 0.000006, wchange 0.00293070, angledelta 116.0 deg
+step 218 - lrate 0.000006, wchange 0.00242645, angledelta 113.5 deg
+step 219 - lrate 0.000005, wchange 0.00258584, angledelta 112.9 deg
+step 220 - lrate 0.000005, wchange 0.00244660, angledelta 120.9 deg
+step 221 - lrate 0.000005, wchange 0.00258173, angledelta 104.2 deg
+step 222 - lrate 0.000005, wchange 0.00224807, angledelta 116.5 deg
+step 223 - lrate 0.000005, wchange 0.00212628, angledelta 113.1 deg
+step 224 - lrate 0.000005, wchange 0.00188320, angledelta 111.6 deg
+step 225 - lrate 0.000005, wchange 0.00191385, angledelta 113.2 deg
+step 226 - lrate 0.000005, wchange 0.00177341, angledelta 103.3 deg
+step 227 - lrate 0.000005, wchange 0.00175660, angledelta 110.5 deg
+step 228 - lrate 0.000005, wchange 0.00166394, angledelta 106.3 deg
+step 229 - lrate 0.000004, wchange 0.00157398, angledelta 116.3 deg
+step 230 - lrate 0.000004, wchange 0.00149088, angledelta 111.1 deg
+step 231 - lrate 0.000004, wchange 0.00114318, angledelta 105.3 deg
+step 232 - lrate 0.000004, wchange 0.00135521, angledelta 115.2 deg
+step 233 - lrate 0.000004, wchange 0.00123637, angledelta 109.3 deg
+step 234 - lrate 0.000004, wchange 0.00110736, angledelta 114.4 deg
+step 235 - lrate 0.000004, wchange 0.00102854, angledelta 116.6 deg
+step 236 - lrate 0.000004, wchange 0.00082500, angledelta 108.7 deg
+step 237 - lrate 0.000004, wchange 0.00096505, angledelta 108.7 deg
+step 238 - lrate 0.000004, wchange 0.00076823, angledelta 106.7 deg
+step 239 - lrate 0.000004, wchange 0.00078325, angledelta 108.8 deg
+step 240 - lrate 0.000004, wchange 0.00077684, angledelta 106.6 deg
+step 241 - lrate 0.000004, wchange 0.00077809, angledelta 114.4 deg
+step 242 - lrate 0.000003, wchange 0.00062091, angledelta 112.1 deg
+step 243 - lrate 0.000003, wchange 0.00055567, angledelta 109.2 deg
+step 244 - lrate 0.000003, wchange 0.00050909, angledelta 108.7 deg
+step 245 - lrate 0.000003, wchange 0.00046070, angledelta 111.1 deg
+step 246 - lrate 0.000003, wchange 0.00047329, angledelta 105.3 deg
+step 247 - lrate 0.000003, wchange 0.00047516, angledelta 109.3 deg
+step 248 - lrate 0.000003, wchange 0.00045113, angledelta 108.1 deg
+step 249 - lrate 0.000003, wchange 0.00042629, angledelta 110.1 deg
+step 250 - lrate 0.000003, wchange 0.00034213, angledelta 108.4 deg
+step 251 - lrate 0.000003, wchange 0.00032428, angledelta 107.5 deg
+step 252 - lrate 0.000003, wchange 0.00034270, angledelta 104.5 deg
+step 253 - lrate 0.000003, wchange 0.00027049, angledelta 106.4 deg
+step 254 - lrate 0.000003, wchange 0.00022827, angledelta 109.9 deg
+step 255 - lrate 0.000003, wchange 0.00025675, angledelta 103.4 deg
+step 256 - lrate 0.000003, wchange 0.00024541, angledelta 109.4 deg
+step 257 - lrate 0.000003, wchange 0.00023295, angledelta 101.3 deg
+step 258 - lrate 0.000002, wchange 0.00023520, angledelta 102.6 deg
+step 259 - lrate 0.000002, wchange 0.00019681, angledelta 109.0 deg
+step 260 - lrate 0.000002, wchange 0.00017798, angledelta 101.8 deg
+step 261 - lrate 0.000002, wchange 0.00017501, angledelta 103.0 deg
+step 262 - lrate 0.000002, wchange 0.00014835, angledelta 102.7 deg
+step 263 - lrate 0.000002, wchange 0.00015700, angledelta 104.7 deg
+step 264 - lrate 0.000002, wchange 0.00013656, angledelta 110.1 deg
+step 265 - lrate 0.000002, wchange 0.00010657, angledelta 103.1 deg
+step 266 - lrate 0.000002, wchange 0.00010169, angledelta 102.5 deg
+step 267 - lrate 0.000002, wchange 0.00011964, angledelta 105.2 deg
+step 268 - lrate 0.000002, wchange 0.00009411, angledelta 108.1 deg
+step 269 - lrate 0.000002, wchange 0.00008284, angledelta 96.7 deg
+step 270 - lrate 0.000002, wchange 0.00008779, angledelta 102.2 deg
+step 271 - lrate 0.000002, wchange 0.00007599, angledelta 106.6 deg
+step 272 - lrate 0.000002, wchange 0.00007147, angledelta 101.9 deg
+step 273 - lrate 0.000002, wchange 0.00007448, angledelta 105.5 deg
+step 274 - lrate 0.000002, wchange 0.00006316, angledelta 101.3 deg
+step 275 - lrate 0.000002, wchange 0.00005454, angledelta 101.3 deg
+step 276 - lrate 0.000002, wchange 0.00005648, angledelta 100.7 deg
+step 277 - lrate 0.000002, wchange 0.00004968, angledelta 100.6 deg
+step 278 - lrate 0.000002, wchange 0.00004383, angledelta 101.0 deg
+step 279 - lrate 0.000002, wchange 0.00004650, angledelta 102.4 deg
+step 280 - lrate 0.000002, wchange 0.00004203, angledelta 100.0 deg
+step 281 - lrate 0.000002, wchange 0.00004090, angledelta 103.4 deg
+step 282 - lrate 0.000002, wchange 0.00003420, angledelta 96.4 deg
+step 283 - lrate 0.000002, wchange 0.00003589, angledelta 106.1 deg
+step 284 - lrate 0.000001, wchange 0.00003107, angledelta 100.3 deg
+step 285 - lrate 0.000001, wchange 0.00002594, angledelta 108.4 deg
+step 286 - lrate 0.000001, wchange 0.00002366, angledelta 95.4 deg
+step 287 - lrate 0.000001, wchange 0.00002144, angledelta 102.5 deg
+step 288 - lrate 0.000001, wchange 0.00002305, angledelta 100.9 deg
+step 289 - lrate 0.000001, wchange 0.00002062, angledelta 98.2 deg
+step 290 - lrate 0.000001, wchange 0.00001987, angledelta 99.5 deg
+step 291 - lrate 0.000001, wchange 0.00002159, angledelta 106.7 deg
+step 292 - lrate 0.000001, wchange 0.00001711, angledelta 97.6 deg
+step 293 - lrate 0.000001, wchange 0.00001542, angledelta 97.7 deg
+step 294 - lrate 0.000001, wchange 0.00001460, angledelta 93.6 deg
+step 295 - lrate 0.000001, wchange 0.00001227, angledelta 104.1 deg
+step 296 - lrate 0.000001, wchange 0.00001267, angledelta 94.6 deg
+step 297 - lrate 0.000001, wchange 0.00001215, angledelta 99.1 deg
+step 298 - lrate 0.000001, wchange 0.00000940, angledelta 101.5 deg
+step 299 - lrate 0.000001, wchange 0.00000928, angledelta 92.6 deg
+step 300 - lrate 0.000001, wchange 0.00000827, angledelta 91.2 deg
+step 301 - lrate 0.000001, wchange 0.00000822, angledelta 96.6 deg
+step 302 - lrate 0.000001, wchange 0.00000853, angledelta 90.4 deg
+step 303 - lrate 0.000001, wchange 0.00000627, angledelta 98.4 deg
+step 304 - lrate 0.000001, wchange 0.00000667, angledelta 92.1 deg
+step 305 - lrate 0.000001, wchange 0.00000637, angledelta 100.7 deg
+step 306 - lrate 0.000001, wchange 0.00000479, angledelta 97.8 deg
+step 307 - lrate 0.000001, wchange 0.00000582, angledelta 96.3 deg
+step 308 - lrate 0.000001, wchange 0.00000433, angledelta 97.7 deg
+step 309 - lrate 0.000001, wchange 0.00000405, angledelta 94.3 deg
+step 310 - lrate 0.000001, wchange 0.00000384, angledelta 94.8 deg
+step 311 - lrate 0.000001, wchange 0.00000391, angledelta 97.3 deg
+step 312 - lrate 0.000001, wchange 0.00000374, angledelta 94.7 deg
+step 313 - lrate 0.000001, wchange 0.00000278, angledelta 95.0 deg
+step 314 - lrate 0.000001, wchange 0.00000305, angledelta 90.3 deg
+step 315 - lrate 0.000001, wchange 0.00000340, angledelta 98.6 deg
+step 316 - lrate 0.000001, wchange 0.00000318, angledelta 101.4 deg
+step 317 - lrate 0.000001, wchange 0.00000249, angledelta 96.5 deg
+step 318 - lrate 0.000001, wchange 0.00000223, angledelta 99.8 deg
+step 319 - lrate 0.000001, wchange 0.00000231, angledelta 94.2 deg
+step 320 - lrate 0.000001, wchange 0.00000188, angledelta 99.3 deg
+step 321 - lrate 0.000001, wchange 0.00000190, angledelta 93.0 deg
+step 322 - lrate 0.000001, wchange 0.00000143, angledelta 99.4 deg
+step 323 - lrate 0.000001, wchange 0.00000186, angledelta 92.5 deg
+step 324 - lrate 0.000001, wchange 0.00000131, angledelta 97.3 deg
+step 325 - lrate 0.000001, wchange 0.00000126, angledelta 93.2 deg
+step 326 - lrate 0.000001, wchange 0.00000117, angledelta 95.7 deg
+step 327 - lrate 0.000001, wchange 0.00000111, angledelta 93.0 deg
+step 328 - lrate 0.000001, wchange 0.00000089, angledelta 93.7 deg
+step 329 - lrate 0.000001, wchange 0.00000074, angledelta 90.8 deg
+step 330 - lrate 0.000001, wchange 0.00000097, angledelta 94.4 deg
+step 331 - lrate 0.000001, wchange 0.00000084, angledelta 92.5 deg
+step 332 - lrate 0.000001, wchange 0.00000067, angledelta 94.7 deg
+step 333 - lrate 0.000001, wchange 0.00000060, angledelta 93.3 deg
+step 334 - lrate 0.000001, wchange 0.00000065, angledelta 96.5 deg
+step 335 - lrate 0.000001, wchange 0.00000060, angledelta 95.1 deg
+step 336 - lrate 0.000001, wchange 0.00000050, angledelta 97.0 deg
+step 337 - lrate 0.000001, wchange 0.00000056, angledelta 96.4 deg
+step 338 - lrate 0.000000, wchange 0.00000050, angledelta 90.9 deg
+step 339 - lrate 0.000000, wchange 0.00000039, angledelta 96.3 deg
+step 340 - lrate 0.000000, wchange 0.00000042, angledelta 94.2 deg
+step 341 - lrate 0.000000, wchange 0.00000034, angledelta 89.6 deg
+step 342 - lrate 0.000000, wchange 0.00000036, angledelta 94.8 deg
+step 343 - lrate 0.000000, wchange 0.00000032, angledelta 85.8 deg
+step 344 - lrate 0.000000, wchange 0.00000024, angledelta 96.8 deg
+step 345 - lrate 0.000000, wchange 0.00000030, angledelta 97.1 deg
+step 346 - lrate 0.000000, wchange 0.00000024, angledelta 94.7 deg
+step 347 - lrate 0.000000, wchange 0.00000020, angledelta 93.2 deg
+step 348 - lrate 0.000000, wchange 0.00000023, angledelta 93.8 deg
+step 349 - lrate 0.000000, wchange 0.00000016, angledelta 89.9 deg
+step 350 - lrate 0.000000, wchange 0.00000018, angledelta 90.7 deg
+step 351 - lrate 0.000000, wchange 0.00000014, angledelta 89.7 deg
+step 352 - lrate 0.000000, wchange 0.00000015, angledelta 89.0 deg
+step 353 - lrate 0.000000, wchange 0.00000014, angledelta 84.9 deg
+step 354 - lrate 0.000000, wchange 0.00000013, angledelta 95.7 deg
+step 355 - lrate 0.000000, wchange 0.00000013, angledelta 94.8 deg
+step 356 - lrate 0.000000, wchange 0.00000011, angledelta 93.9 deg
+step 357 - lrate 0.000000, wchange 0.00000010, angledelta 95.2 deg
+step 358 - lrate 0.000000, wchange 0.00000008, angledelta 92.1 deg
+Sorting components in descending order of mean projected variance ...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Scaling components to RMS microvolt
+eeg_checkset: recomputing the ICA activation matrix ...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+ICLabel: extracting features...
+ICLabel: calculating labels...
+Error using load
+Unable to read file '/home/shaws5/.mcrCache9.5/offlin1/project/6006749/shaws5/Research_code/EEGnet/Toolboxes/EEGLAB/plugins/ICLabel1.1/netICL'. No such file or directory.
+
+Error in run_ICL (line 26)
+
+Error in iclabel (line 53)
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 118)
+
+MATLAB:load:couldNotReadFile
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tpaa44f3d8_9fab_4eb7_b4c5_6697bc1a2a79.mat: Signal 127
+Elapsed time is 987.252553 seconds.
+
+ ***************************** Finished Subject P1220 Session Post Run rest ***************************** 
+
+ ***************************** Processing Subject P1228 Session Post Run task ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (373454) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.7982
+pop_eegfiltnew() - performing 16897 point bandpass filtering.
+pop_eegfiltnew() - transition band width: 0.1 Hz
+pop_eegfiltnew() - passband edge(s): [0.1 50] Hz
+pop_eegfiltnew() - cutoff frequency(ies) (-6 dB): [0.05 50.05] Hz
+pop_eegfiltnew() - filtering the data (zero-phase, non-causal)
+firfilt(): |                    |   0%=                   /   5%, ETE 01:05=                  -  10%, ETE 00:46=                 \  15%, ETE 00:39=                |  20%, ETE 00:34=               /  25%, ETE 00:31=              -  30%, ETE 00:28=             \  35%, ETE 00:25=            |  40%, ETE 00:23=           /  45%, ETE 00:21=          -  50%, ETE 00:19=         \  55%, ETE 00:17=        |  60%, ETE 00:15=       /  65%, ETE 00:13=      -  70%, ETE 00:11=     \  75%, ETE 00:09=    |  80%, ETE 00:08=   /  85%, ETE 00:06=  -  90%, ETE 00:04= \  95%, ETE 00:02=| 100%, ETE 00:00
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Scanning for bad channels...
+clean_channel:   1/145 blocks, 0.2 minutes remaining.
+clean_channel:   2/145 blocks, 0.3 minutes remaining.
+clean_channel:   3/145 blocks, 0.3 minutes remaining.
+clean_channel:   4/145 blocks, 0.3 minutes remaining.
+clean_channel:   5/145 blocks, 0.3 minutes remaining.
+clean_channel:   6/145 blocks, 0.3 minutes remaining.
+clean_channel:   7/145 blocks, 0.3 minutes remaining.
+clean_channel:   8/145 blocks, 0.2 minutes remaining.
+clean_channel:   9/145 blocks, 0.2 minutes remaining.
+clean_channel:  10/145 blocks, 0.2 minutes remaining.
+clean_channel:  11/145 blocks, 0.2 minutes remaining.
+clean_channel:  12/145 blocks, 0.2 minutes remaining.
+clean_channel:  13/145 blocks, 0.2 minutes remaining.
+clean_channel:  14/145 blocks, 0.2 minutes remaining.
+clean_channel:  15/145 blocks, 0.2 minutes remaining.
+clean_channel:  16/145 blocks, 0.2 minutes remaining.
+clean_channel:  17/145 blocks, 0.2 minutes remaining.
+clean_channel:  18/145 blocks, 0.2 minutes remaining.
+clean_channel:  19/145 blocks, 0.2 minutes remaining.
+clean_channel:  20/145 blocks, 0.2 minutes remaining.
+clean_channel:  21/145 blocks, 0.2 minutes remaining.
+clean_channel:  22/145 blocks, 0.2 minutes remaining.
+clean_channel:  23/145 blocks, 0.2 minutes remaining.
+clean_channel:  24/145 blocks, 0.2 minutes remaining.
+clean_channel:  25/145 blocks, 0.2 minutes remaining.
+clean_channel:  26/145 blocks, 0.2 minutes remaining.
+clean_channel:  27/145 blocks, 0.2 minutes remaining.
+clean_channel:  28/145 blocks, 0.2 minutes remaining.
+clean_channel:  29/145 blocks, 0.2 minutes remaining.
+clean_channel:  30/145 blocks, 0.2 minutes remaining.
+clean_channel:  31/145 blocks, 0.2 minutes remaining.
+clean_channel:  32/145 blocks, 0.2 minutes remaining.
+clean_channel:  33/145 blocks, 0.2 minutes remaining.
+clean_channel:  34/145 blocks, 0.2 minutes remaining.
+clean_channel:  35/145 blocks, 0.2 minutes remaining.
+clean_channel:  36/145 blocks, 0.2 minutes remaining.
+clean_channel:  37/145 blocks, 0.2 minutes remaining.
+clean_channel:  38/145 blocks, 0.2 minutes remaining.
+clean_channel:  39/145 blocks, 0.2 minutes remaining.
+clean_channel:  40/145 blocks, 0.2 minutes remaining.
+clean_channel:  41/145 blocks, 0.2 minutes remaining.
+clean_channel:  42/145 blocks, 0.2 minutes remaining.
+clean_channel:  43/145 blocks, 0.2 minutes remaining.
+clean_channel:  44/145 blocks, 0.2 minutes remaining.
+clean_channel:  45/145 blocks, 0.2 minutes remaining.
+clean_channel:  46/145 blocks, 0.2 minutes remaining.
+clean_channel:  47/145 blocks, 0.2 minutes remaining.
+clean_channel:  48/145 blocks, 0.2 minutes remaining.
+clean_channel:  49/145 blocks, 0.2 minutes remaining.
+clean_channel:  50/145 blocks, 0.2 minutes remaining.
+clean_channel:  51/145 blocks, 0.2 minutes remaining.
+clean_channel:  52/145 blocks, 0.2 minutes remaining.
+clean_channel:  53/145 blocks, 0.2 minutes remaining.
+clean_channel:  54/145 blocks, 0.2 minutes remaining.
+clean_channel:  55/145 blocks, 0.2 minutes remaining.
+clean_channel:  56/145 blocks, 0.1 minutes remaining.
+clean_channel:  57/145 blocks, 0.1 minutes remaining.
+clean_channel:  58/145 blocks, 0.1 minutes remaining.
+clean_channel:  59/145 blocks, 0.1 minutes remaining.
+clean_channel:  60/145 blocks, 0.1 minutes remaining.
+clean_channel:  61/145 blocks, 0.1 minutes remaining.
+clean_channel:  62/145 blocks, 0.1 minutes remaining.
+clean_channel:  63/145 blocks, 0.1 minutes remaining.
+clean_channel:  64/145 blocks, 0.1 minutes remaining.
+clean_channel:  65/145 blocks, 0.1 minutes remaining.
+clean_channel:  66/145 blocks, 0.1 minutes remaining.
+clean_channel:  67/145 blocks, 0.1 minutes remaining.
+clean_channel:  68/145 blocks, 0.1 minutes remaining.
+clean_channel:  69/145 blocks, 0.1 minutes remaining.
+clean_channel:  70/145 blocks, 0.1 minutes remaining.
+clean_channel:  71/145 blocks, 0.1 minutes remaining.
+clean_channel:  72/145 blocks, 0.1 minutes remaining.
+clean_channel:  73/145 blocks, 0.1 minutes remaining.
+clean_channel:  74/145 blocks, 0.1 minutes remaining.
+clean_channel:  75/145 blocks, 0.1 minutes remaining.
+clean_channel:  76/145 blocks, 0.1 minutes remaining.
+clean_channel:  77/145 blocks, 0.1 minutes remaining.
+clean_channel:  78/145 blocks, 0.1 minutes remaining.
+clean_channel:  79/145 blocks, 0.1 minutes remaining.
+clean_channel:  80/145 blocks, 0.1 minutes remaining.
+clean_channel:  81/145 blocks, 0.1 minutes remaining.
+clean_channel:  82/145 blocks, 0.1 minutes remaining.
+clean_channel:  83/145 blocks, 0.1 minutes remaining.
+clean_channel:  84/145 blocks, 0.1 minutes remaining.
+clean_channel:  85/145 blocks, 0.1 minutes remaining.
+clean_channel:  86/145 blocks, 0.1 minutes remaining.
+clean_channel:  87/145 blocks, 0.1 minutes remaining.
+clean_channel:  88/145 blocks, 0.1 minutes remaining.
+clean_channel:  89/145 blocks, 0.1 minutes remaining.
+clean_channel:  90/145 blocks, 0.1 minutes remaining.
+clean_channel:  91/145 blocks, 0.1 minutes remaining.
+clean_channel:  92/145 blocks, 0.1 minutes remaining.
+clean_channel:  93/145 blocks, 0.1 minutes remaining.
+clean_channel:  94/145 blocks, 0.1 minutes remaining.
+clean_channel:  95/145 blocks, 0.1 minutes remaining.
+clean_channel:  96/145 blocks, 0.1 minutes remaining.
+clean_channel:  97/145 blocks, 0.1 minutes remaining.
+clean_channel:  98/145 blocks, 0.1 minutes remaining.
+clean_channel:  99/145 blocks, 0.1 minutes remaining.
+clean_channel: 100/145 blocks, 0.1 minutes remaining.
+clean_channel: 101/145 blocks, 0.1 minutes remaining.
+clean_channel: 102/145 blocks, 0.1 minutes remaining.
+clean_channel: 103/145 blocks, 0.1 minutes remaining.
+clean_channel: 104/145 blocks, 0.1 minutes remaining.
+clean_channel: 105/145 blocks, 0.1 minutes remaining.
+clean_channel: 106/145 blocks, 0.1 minutes remaining.
+clean_channel: 107/145 blocks, 0.1 minutes remaining.
+clean_channel: 108/145 blocks, 0.1 minutes remaining.
+clean_channel: 109/145 blocks, 0.1 minutes remaining.
+clean_channel: 110/145 blocks, 0.1 minutes remaining.
+clean_channel: 111/145 blocks, 0.1 minutes remaining.
+clean_channel: 112/145 blocks, 0.1 minutes remaining.
+clean_channel: 113/145 blocks, 0.1 minutes remaining.
+clean_channel: 114/145 blocks, 0.1 minutes remaining.
+clean_channel: 115/145 blocks, 0.0 minutes remaining.
+clean_channel: 116/145 blocks, 0.0 minutes remaining.
+clean_channel: 117/145 blocks, 0.0 minutes remaining.
+clean_channel: 118/145 blocks, 0.0 minutes remaining.
+clean_channel: 119/145 blocks, 0.0 minutes remaining.
+clean_channel: 120/145 blocks, 0.0 minutes remaining.
+clean_channel: 121/145 blocks, 0.0 minutes remaining.
+clean_channel: 122/145 blocks, 0.0 minutes remaining.
+clean_channel: 123/145 blocks, 0.0 minutes remaining.
+clean_channel: 124/145 blocks, 0.0 minutes remaining.
+clean_channel: 125/145 blocks, 0.0 minutes remaining.
+clean_channel: 126/145 blocks, 0.0 minutes remaining.
+clean_channel: 127/145 blocks, 0.0 minutes remaining.
+clean_channel: 128/145 blocks, 0.0 minutes remaining.
+clean_channel: 129/145 blocks, 0.0 minutes remaining.
+clean_channel: 130/145 blocks, 0.0 minutes remaining.
+clean_channel: 131/145 blocks, 0.0 minutes remaining.
+clean_channel: 132/145 blocks, 0.0 minutes remaining.
+clean_channel: 133/145 blocks, 0.0 minutes remaining.
+clean_channel: 134/145 blocks, 0.0 minutes remaining.
+clean_channel: 135/145 blocks, 0.0 minutes remaining.
+clean_channel: 136/145 blocks, 0.0 minutes remaining.
+clean_channel: 137/145 blocks, 0.0 minutes remaining.
+clean_channel: 138/145 blocks, 0.0 minutes remaining.
+clean_channel: 139/145 blocks, 0.0 minutes remaining.
+clean_channel: 140/145 blocks, 0.0 minutes remaining.
+clean_channel: 141/145 blocks, 0.0 minutes remaining.
+clean_channel: 142/145 blocks, 0.0 minutes remaining.
+clean_channel: 143/145 blocks, 0.0 minutes remaining.
+clean_channel: 144/145 blocks, 0.0 minutes remaining.
+clean_channel: 145/145 blocks, 0.0 minutes remaining.
+Removing 3 channel(s)...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Use vis_artifacts to compare the cleaned data to the original.
+Computing spectrum for channels...
+Removing spectrum data below -20dB (most likelly filtered out)
+Selecting minimum and maximum normalized power over the frequency range
+2 electrodes labeled for rejection
+#	Elec.	[min]	[max]
+1	A-1	0.95	2.54
+2	A-2	0.62	2.09
+3	A-3	0.96	1.77
+4	A-4	0.50	1.61
+5	A-5	0.48	0.98
+6	A-6	-0.04	1.01
+7	A-7	0.70	1.47
+8	A-8	0.68	2.08
+9	A-9	0.57	1.43
+10	A-10	0.46	0.96
+11	A-11	-0.13	0.82
+12	A-12	0.23	1.15
+13	A-13	0.23	1.55
+14	A-14	0.09	0.76
+15	A-15	0.41	0.93
+16	A-16	-0.16	0.80
+17	A-17	0.23	1.15
+18	A-18	0.22	1.18
+19	A-19	-0.05	1.08
+20	A-20	0.09	0.76
+21	A-21	-0.41	0.48
+22	A-22	0.20	1.80
+23	A-24	-0.30	0.78
+24	A-25	-0.26	0.14
+25	A-26	-0.07	0.43
+26	A-27	-0.08	1.43
+27	A-28	-0.60	0.45
+28	A-29	-0.68	-0.32
+29	A-30	-0.86	-0.18
+30	A-31	-0.55	0.22
+31	A-32	-0.74	-0.14
+32	B-1	-1.10	-0.68
+33	B-2	-1.07	-0.47
+34	B-3	0.08	1.01
+35	B-4	-0.32	0.43
+36	B-5	-1.13	-0.61
+37	B-6	-1.75	-1.05
+38	B-7	-1.71	-1.15
+39	B-8	-1.01	-0.36
+40	B-9	-0.99	-0.51
+41	B-10	-2.16	-1.36
+42	B-11	-2.65	-1.71
+43	B-13	-0.22	1.25
+44	B-14	-0.59	0.26
+45	B-15	-1.65	-1.04
+46	B-16	-3.35	-1.62	*Bad*
+47	B-17	-3.54	-2.13	*Bad*
+48	B-18	-1.89	-1.46
+49	B-19	-0.52	0.09
+50	B-20	-2.53	-1.39
+51	B-21	-2.94	-2.00
+52	B-22	-1.18	-0.68
+53	B-23	-2.94	-1.75
+54	B-24	-1.89	-1.20
+55	B-25	-0.30	1.22
+56	B-26	-0.82	-0.28
+57	B-27	-1.57	-0.78
+58	B-28	-1.95	-1.02
+59	B-29	-0.44	0.26
+60	B-30	-0.85	-0.29
+61	B-31	-1.07	-0.60
+62	B-32	-0.38	0.28
+63	C-1	0.75	2.42
+64	C-2	0.96	2.45
+65	C-3	0.49	2.01
+66	C-4	0.24	1.65
+67	C-5	0.41	1.70
+68	C-6	1.04	2.22
+69	C-7	0.09	1.31
+70	C-8	0.54	1.42
+71	C-9	-0.05	0.99
+72	C-10	-0.01	1.02
+73	C-11	0.35	1.00
+74	C-12	0.80	1.29
+75	C-13	0.89	1.49
+76	C-14	0.87	1.49
+77	C-15	-0.18	0.83
+78	C-16	0.08	0.70
+79	C-17	0.63	0.92
+80	C-18	0.71	1.20
+81	C-19	0.74	1.10
+82	C-20	-0.37	0.67
+83	C-21	-0.32	0.58
+84	C-22	-0.07	0.46
+85	C-23	0.46	1.21
+86	C-24	0.53	1.69
+87	C-25	0.55	1.18
+88	C-26	-0.53	0.36
+89	C-27	-0.08	0.46
+90	C-28	0.17	0.55
+91	C-29	0.29	1.24
+92	C-30	0.30	1.40
+93	C-31	-0.56	0.12
+94	C-32	-0.64	0.02
+95	D-1	-0.28	0.49
+96	D-2	0.02	0.81
+97	D-4	-0.67	-0.15
+98	D-5	-0.63	0.11
+99	D-6	-0.26	0.56
+100	D-7	-0.17	0.70
+101	D-8	-0.91	-0.47
+102	D-9	-0.62	0.13
+103	D-10	-0.56	0.41
+104	D-11	-0.34	0.78
+105	D-12	-0.16	1.13
+106	D-13	-1.33	-0.96
+107	D-14	-0.91	-0.48
+108	D-15	-0.77	0.12
+109	D-16	-0.58	0.46
+110	D-17	-1.01	-0.80
+111	D-18	-1.05	-0.31
+112	D-19	-0.95	0.20
+113	D-20	-0.61	0.69
+114	D-21	-0.25	1.15
+115	D-22	-1.55	-1.17
+116	D-23	-1.04	-0.05
+117	D-24	-0.28	1.05
+118	D-25	-1.17	-0.29
+119	D-26	-0.62	0.73
+120	D-27	-0.30	1.17
+121	D-28	-1.10	-0.28
+122	D-29	-0.89	0.21
+123	D-30	-0.56	0.55
+124	D-31	-0.65	0.04
+125	D-32	-0.35	0.94
+Removing 2 channel(s)...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+
+Attempting to convert data matrix to double precision for more accurate ICA results.
+
+Input data size [123,373454] = 123 channels, 373454 frames/nFinding 123 ICA components using extended ICA.
+Kurtosis will be calculated initially every 1 blocks using 6000 data points.
+Decomposing 24 frames per ICA weight ((15129)^2 = 373454 weights, Initial learning rate will be 0.001, block size 65.
+Learning rate will be multiplied by 0.98 whenever angledelta >= 60 deg.
+More than 32 channels: default stopping weight change 1E-7
+Training will end when wchange < 1e-07 or after 512 steps.
+Online bias adjustment will be used.
+Removing mean of each channel ...
+Final training data range: -198.447 to 356.054
+Computing the sphering matrix...
+Starting weights are the identity matrix ...
+Sphering the data ...
+Beginning ICA training ... first training step may be slow ...
+Lowering learning rate to 0.0009 and starting again.
+step 1 - lrate 0.000900, wchange 107.50479236, angledelta  0.0 deg
+step 2 - lrate 0.000900, wchange 10.09074799, angledelta  0.0 deg
+step 3 - lrate 0.000900, wchange 10.13146003, angledelta 93.1 deg
+step 4 - lrate 0.000882, wchange 7.18322257, angledelta 105.2 deg
+step 5 - lrate 0.000864, wchange 7.66124787, angledelta 111.4 deg
+step 6 - lrate 0.000847, wchange 7.33445646, angledelta 108.8 deg
+step 7 - lrate 0.000830, wchange 7.20685565, angledelta 110.7 deg
+step 8 - lrate 0.000814, wchange 7.99821849, angledelta 114.4 deg
+step 9 - lrate 0.000797, wchange 6.72286212, angledelta 114.4 deg
+step 10 - lrate 0.000781, wchange 6.15337378, angledelta 107.4 deg
+step 11 - lrate 0.000766, wchange 5.70676872, angledelta 109.6 deg
+step 12 - lrate 0.000750, wchange 5.65852347, angledelta 117.9 deg
+step 13 - lrate 0.000735, wchange 5.04864469, angledelta 116.7 deg
+step 14 - lrate 0.000721, wchange 4.72320928, angledelta 112.8 deg
+step 15 - lrate 0.000706, wchange 4.68405979, angledelta 120.5 deg
+step 16 - lrate 0.000692, wchange 4.76884308, angledelta 118.5 deg
+step 17 - lrate 0.000678, wchange 4.72411791, angledelta 114.6 deg
+step 18 - lrate 0.000665, wchange 4.15965795, angledelta 117.8 deg
+step 19 - lrate 0.000651, wchange 3.91446242, angledelta 120.4 deg
+step 20 - lrate 0.000638, wchange 4.26878884, angledelta 112.4 deg
+step 21 - lrate 0.000626, wchange 2.45680467, angledelta 112.0 deg
+step 22 - lrate 0.000613, wchange 3.08206731, angledelta 117.8 deg
+step 23 - lrate 0.000601, wchange 2.51951922, angledelta 122.8 deg
+step 24 - lrate 0.000589, wchange 3.10745910, angledelta 107.7 deg
+step 25 - lrate 0.000577, wchange 2.27430368, angledelta 108.8 deg
+step 26 - lrate 0.000566, wchange 2.29024594, angledelta 112.7 deg
+step 27 - lrate 0.000554, wchange 2.41397232, angledelta 105.5 deg
+step 28 - lrate 0.000543, wchange 2.20693976, angledelta 106.4 deg
+step 29 - lrate 0.000532, wchange 2.01785915, angledelta 109.0 deg
+step 30 - lrate 0.000522, wchange 2.12652219, angledelta 122.8 deg
+step 31 - lrate 0.000511, wchange 2.08688401, angledelta 125.1 deg
+step 32 - lrate 0.000501, wchange 1.43830255, angledelta 114.4 deg
+step 33 - lrate 0.000491, wchange 1.94690610, angledelta 111.9 deg
+step 34 - lrate 0.000481, wchange 1.27955710, angledelta 109.2 deg
+step 35 - lrate 0.000471, wchange 1.21888725, angledelta 117.2 deg
+step 36 - lrate 0.000462, wchange 1.77214294, angledelta 112.0 deg
+step 37 - lrate 0.000453, wchange 1.11045933, angledelta 111.9 deg
+step 38 - lrate 0.000444, wchange 1.10027837, angledelta 116.3 deg
+step 39 - lrate 0.000435, wchange 1.09984601, angledelta 117.4 deg
+step 40 - lrate 0.000426, wchange 1.51832601, angledelta 111.9 deg
+step 41 - lrate 0.000418, wchange 1.46417565, angledelta 128.1 deg
+step 42 - lrate 0.000409, wchange 1.56579506, angledelta 128.5 deg
+step 43 - lrate 0.000401, wchange 1.06234944, angledelta 113.0 deg
+step 44 - lrate 0.000393, wchange 1.54864684, angledelta 112.3 deg
+step 45 - lrate 0.000385, wchange 0.92025056, angledelta 112.0 deg
+step 46 - lrate 0.000378, wchange 0.87065179, angledelta 116.0 deg
+step 47 - lrate 0.000370, wchange 0.82960568, angledelta 117.2 deg
+step 48 - lrate 0.000363, wchange 0.83280704, angledelta 117.7 deg
+step 49 - lrate 0.000355, wchange 0.77671690, angledelta 117.5 deg
+step 50 - lrate 0.000348, wchange 0.73464850, angledelta 118.1 deg
+step 51 - lrate 0.000341, wchange 0.71703586, angledelta 115.4 deg
+step 52 - lrate 0.000334, wchange 0.74861191, angledelta 118.7 deg
+step 53 - lrate 0.000328, wchange 0.72481293, angledelta 118.4 deg
+step 54 - lrate 0.000321, wchange 0.67871602, angledelta 117.7 deg
+step 55 - lrate 0.000315, wchange 0.67465841, angledelta 117.9 deg
+step 56 - lrate 0.000308, wchange 0.64707996, angledelta 118.7 deg
+step 57 - lrate 0.000302, wchange 0.60981992, angledelta 118.6 deg
+step 58 - lrate 0.000296, wchange 0.58222079, angledelta 118.9 deg
+step 59 - lrate 0.000290, wchange 0.57556014, angledelta 117.4 deg
+step 60 - lrate 0.000285, wchange 0.59530662, angledelta 119.4 deg
+step 61 - lrate 0.000279, wchange 0.60213302, angledelta 119.1 deg
+step 62 - lrate 0.000273, wchange 0.55330582, angledelta 120.6 deg
+step 63 - lrate 0.000268, wchange 0.52853368, angledelta 118.6 deg
+step 64 - lrate 0.000262, wchange 0.52366335, angledelta 118.5 deg
+step 65 - lrate 0.000257, wchange 0.51421159, angledelta 118.6 deg
+step 66 - lrate 0.000252, wchange 0.48866359, angledelta 118.2 deg
+step 67 - lrate 0.000247, wchange 0.48555528, angledelta 118.8 deg
+step 68 - lrate 0.000242, wchange 0.45087335, angledelta 117.8 deg
+step 69 - lrate 0.000237, wchange 0.47565435, angledelta 117.5 deg
+step 70 - lrate 0.000232, wchange 0.43618707, angledelta 118.7 deg
+step 71 - lrate 0.000228, wchange 0.41174934, angledelta 117.8 deg
+step 72 - lrate 0.000223, wchange 0.40201472, angledelta 118.0 deg
+step 73 - lrate 0.000219, wchange 0.39489275, angledelta 118.2 deg
+step 74 - lrate 0.000214, wchange 0.37886263, angledelta 117.9 deg
+step 75 - lrate 0.000210, wchange 0.35320653, angledelta 117.7 deg
+step 76 - lrate 0.000206, wchange 0.35933156, angledelta 117.1 deg
+step 77 - lrate 0.000202, wchange 0.39000495, angledelta 118.4 deg
+step 78 - lrate 0.000198, wchange 0.36129601, angledelta 118.5 deg
+step 79 - lrate 0.000194, wchange 0.34658195, angledelta 120.3 deg
+step 80 - lrate 0.000190, wchange 0.32021012, angledelta 118.0 deg
+step 81 - lrate 0.000186, wchange 0.31523627, angledelta 118.5 deg
+step 82 - lrate 0.000182, wchange 0.30209940, angledelta 118.1 deg
+step 83 - lrate 0.000179, wchange 0.30430559, angledelta 119.0 deg
+step 84 - lrate 0.000175, wchange 0.29855405, angledelta 117.6 deg
+step 85 - lrate 0.000172, wchange 0.28476951, angledelta 119.2 deg
+step 86 - lrate 0.000168, wchange 0.29018343, angledelta 118.3 deg
+step 87 - lrate 0.000165, wchange 0.28157891, angledelta 119.6 deg
+step 88 - lrate 0.000162, wchange 0.26879274, angledelta 119.0 deg
+step 89 - lrate 0.000158, wchange 0.25295529, angledelta 117.8 deg
+step 90 - lrate 0.000155, wchange 0.25395119, angledelta 116.7 deg
+step 91 - lrate 0.000152, wchange 0.24789025, angledelta 117.6 deg
+step 92 - lrate 0.000149, wchange 0.23445654, angledelta 118.2 deg
+step 93 - lrate 0.000146, wchange 0.22940599, angledelta 118.4 deg
+step 94 - lrate 0.000143, wchange 0.22433423, angledelta 118.9 deg
+step 95 - lrate 0.000140, wchange 0.23819254, angledelta 118.9 deg
+step 96 - lrate 0.000137, wchange 0.22067278, angledelta 120.0 deg
+step 97 - lrate 0.000135, wchange 0.21292373, angledelta 116.5 deg
+step 98 - lrate 0.000132, wchange 0.22458436, angledelta 119.9 deg
+step 99 - lrate 0.000129, wchange 0.20299280, angledelta 121.2 deg
+step 100 - lrate 0.000127, wchange 0.19333270, angledelta 117.5 deg
+step 101 - lrate 0.000124, wchange 0.19281341, angledelta 117.4 deg
+step 102 - lrate 0.000122, wchange 0.19333819, angledelta 119.9 deg
+step 103 - lrate 0.000119, wchange 0.17852445, angledelta 117.7 deg
+step 104 - lrate 0.000117, wchange 0.17744448, angledelta 117.3 deg
+step 105 - lrate 0.000115, wchange 0.17350159, angledelta 119.3 deg
+step 106 - lrate 0.000112, wchange 0.16777849, angledelta 117.0 deg
+step 107 - lrate 0.000110, wchange 0.16822636, angledelta 119.3 deg
+step 108 - lrate 0.000108, wchange 0.16095273, angledelta 118.6 deg
+step 109 - lrate 0.000106, wchange 0.15882127, angledelta 117.4 deg
+step 110 - lrate 0.000104, wchange 0.15668106, angledelta 118.3 deg
+step 111 - lrate 0.000102, wchange 0.15269114, angledelta 118.8 deg
+step 112 - lrate 0.000100, wchange 0.14904343, angledelta 118.1 deg
+step 113 - lrate 0.000098, wchange 0.14028391, angledelta 118.5 deg
+step 114 - lrate 0.000096, wchange 0.13685078, angledelta 118.1 deg
+step 115 - lrate 0.000094, wchange 0.13929597, angledelta 118.9 deg
+step 116 - lrate 0.000092, wchange 0.13265246, angledelta 118.8 deg
+step 117 - lrate 0.000090, wchange 0.12646625, angledelta 118.5 deg
+step 118 - lrate 0.000088, wchange 0.13253348, angledelta 119.8 deg
+step 119 - lrate 0.000086, wchange 0.12942101, angledelta 120.2 deg
+step 120 - lrate 0.000085, wchange 0.12644957, angledelta 119.0 deg
+step 121 - lrate 0.000083, wchange 0.13124470, angledelta 119.9 deg
+step 122 - lrate 0.000081, wchange 0.12198966, angledelta 119.9 deg
+step 123 - lrate 0.000080, wchange 0.11052097, angledelta 118.7 deg
+step 124 - lrate 0.000078, wchange 0.11752523, angledelta 116.6 deg
+step 125 - lrate 0.000077, wchange 0.11164133, angledelta 118.8 deg
+step 126 - lrate 0.000075, wchange 0.10703843, angledelta 117.7 deg
+step 127 - lrate 0.000073, wchange 0.10385308, angledelta 118.5 deg
+step 128 - lrate 0.000072, wchange 0.11538718, angledelta 120.8 deg
+step 129 - lrate 0.000071, wchange 0.09668644, angledelta 120.5 deg
+step 130 - lrate 0.000069, wchange 0.09289628, angledelta 118.9 deg
+step 131 - lrate 0.000068, wchange 0.09155164, angledelta 117.3 deg
+step 132 - lrate 0.000066, wchange 0.08902256, angledelta 119.7 deg
+step 133 - lrate 0.000065, wchange 0.09160742, angledelta 119.9 deg
+step 134 - lrate 0.000064, wchange 0.09128871, angledelta 121.0 deg
+step 135 - lrate 0.000063, wchange 0.08596260, angledelta 120.2 deg
+step 136 - lrate 0.000061, wchange 0.08075510, angledelta 117.8 deg
+step 137 - lrate 0.000060, wchange 0.08272052, angledelta 118.7 deg
+step 138 - lrate 0.000059, wchange 0.08510244, angledelta 119.2 deg
+step 139 - lrate 0.000058, wchange 0.07755581, angledelta 120.9 deg
+step 140 - lrate 0.000057, wchange 0.07835638, angledelta 116.1 deg
+step 141 - lrate 0.000055, wchange 0.07711891, angledelta 121.7 deg
+step 142 - lrate 0.000054, wchange 0.07207726, angledelta 119.3 deg
+step 143 - lrate 0.000053, wchange 0.07155655, angledelta 118.4 deg
+step 144 - lrate 0.000052, wchange 0.06771313, angledelta 119.2 deg
+step 145 - lrate 0.000051, wchange 0.06804013, angledelta 118.6 deg
+step 146 - lrate 0.000050, wchange 0.06690846, angledelta 120.3 deg
+step 147 - lrate 0.000049, wchange 0.06404059, angledelta 118.9 deg
+step 148 - lrate 0.000048, wchange 0.05912726, angledelta 119.1 deg
+step 149 - lrate 0.000047, wchange 0.05796899, angledelta 118.7 deg
+step 150 - lrate 0.000046, wchange 0.05981555, angledelta 118.4 deg
+step 151 - lrate 0.000045, wchange 0.06375826, angledelta 118.2 deg
+step 152 - lrate 0.000044, wchange 0.06034430, angledelta 121.5 deg
+step 153 - lrate 0.000043, wchange 0.05749737, angledelta 118.7 deg
+step 154 - lrate 0.000043, wchange 0.05511489, angledelta 119.7 deg
+step 155 - lrate 0.000042, wchange 0.05377466, angledelta 119.7 deg
+step 156 - lrate 0.000041, wchange 0.05230635, angledelta 119.3 deg
+step 157 - lrate 0.000040, wchange 0.05260246, angledelta 119.8 deg
+step 158 - lrate 0.000039, wchange 0.05094738, angledelta 118.3 deg
+step 159 - lrate 0.000039, wchange 0.05271626, angledelta 117.1 deg
+step 160 - lrate 0.000038, wchange 0.05110889, angledelta 123.1 deg
+step 161 - lrate 0.000037, wchange 0.04602010, angledelta 115.6 deg
+step 162 - lrate 0.000036, wchange 0.04705671, angledelta 119.5 deg
+step 163 - lrate 0.000036, wchange 0.04803259, angledelta 119.9 deg
+step 164 - lrate 0.000035, wchange 0.04969373, angledelta 123.2 deg
+step 165 - lrate 0.000034, wchange 0.04431198, angledelta 119.8 deg
+step 166 - lrate 0.000033, wchange 0.04539895, angledelta 118.2 deg
+step 167 - lrate 0.000033, wchange 0.04395867, angledelta 123.2 deg
+step 168 - lrate 0.000032, wchange 0.04233586, angledelta 119.9 deg
+step 169 - lrate 0.000031, wchange 0.04010312, angledelta 121.5 deg
+step 170 - lrate 0.000031, wchange 0.03712299, angledelta 119.4 deg
+step 171 - lrate 0.000030, wchange 0.03827718, angledelta 119.7 deg
+step 172 - lrate 0.000030, wchange 0.03717372, angledelta 121.9 deg
+step 173 - lrate 0.000029, wchange 0.03487749, angledelta 118.8 deg
+step 174 - lrate 0.000028, wchange 0.03352930, angledelta 118.6 deg
+step 175 - lrate 0.000028, wchange 0.03382158, angledelta 121.0 deg
+step 176 - lrate 0.000027, wchange 0.03296930, angledelta 119.6 deg
+step 177 - lrate 0.000027, wchange 0.03493235, angledelta 121.6 deg
+step 178 - lrate 0.000026, wchange 0.03248614, angledelta 120.9 deg
+step 179 - lrate 0.000026, wchange 0.03199637, angledelta 115.9 deg
+step 180 - lrate 0.000025, wchange 0.03147305, angledelta 121.2 deg
+step 181 - lrate 0.000025, wchange 0.02827054, angledelta 117.9 deg
+step 182 - lrate 0.000024, wchange 0.02826898, angledelta 119.9 deg
+step 183 - lrate 0.000024, wchange 0.02906325, angledelta 119.5 deg
+step 184 - lrate 0.000023, wchange 0.03025028, angledelta 120.9 deg
+step 185 - lrate 0.000023, wchange 0.02841470, angledelta 121.0 deg
+step 186 - lrate 0.000022, wchange 0.02644931, angledelta 121.2 deg
+step 187 - lrate 0.000022, wchange 0.02609606, angledelta 120.0 deg
+step 188 - lrate 0.000021, wchange 0.02434791, angledelta 119.5 deg
+step 189 - lrate 0.000021, wchange 0.02449557, angledelta 119.3 deg
+step 190 - lrate 0.000021, wchange 0.02422713, angledelta 120.6 deg
+step 191 - lrate 0.000020, wchange 0.02279422, angledelta 119.0 deg
+step 192 - lrate 0.000020, wchange 0.02248115, angledelta 120.2 deg
+step 193 - lrate 0.000019, wchange 0.02178000, angledelta 119.6 deg
+step 194 - lrate 0.000019, wchange 0.02176693, angledelta 118.6 deg
+step 195 - lrate 0.000019, wchange 0.02309461, angledelta 119.7 deg
+step 196 - lrate 0.000018, wchange 0.02195599, angledelta 121.6 deg
+step 197 - lrate 0.000018, wchange 0.01986521, angledelta 117.9 deg
+step 198 - lrate 0.000018, wchange 0.01999773, angledelta 119.2 deg
+step 199 - lrate 0.000017, wchange 0.01954505, angledelta 120.3 deg
+step 200 - lrate 0.000017, wchange 0.01850218, angledelta 118.8 deg
+step 201 - lrate 0.000016, wchange 0.01878183, angledelta 118.5 deg
+step 202 - lrate 0.000016, wchange 0.01841314, angledelta 119.9 deg
+step 203 - lrate 0.000016, wchange 0.01719627, angledelta 121.3 deg
+step 204 - lrate 0.000016, wchange 0.01688941, angledelta 120.6 deg
+step 205 - lrate 0.000015, wchange 0.01577008, angledelta 119.3 deg
+step 206 - lrate 0.000015, wchange 0.01687090, angledelta 120.2 deg
+step 207 - lrate 0.000015, wchange 0.01588962, angledelta 121.4 deg
+step 208 - lrate 0.000014, wchange 0.01525555, angledelta 120.0 deg
+step 209 - lrate 0.000014, wchange 0.01560700, angledelta 120.2 deg
+step 210 - lrate 0.000014, wchange 0.01615184, angledelta 121.5 deg
+step 211 - lrate 0.000013, wchange 0.01521814, angledelta 118.6 deg
+step 212 - lrate 0.000013, wchange 0.01418608, angledelta 119.8 deg
+step 213 - lrate 0.000013, wchange 0.01418042, angledelta 120.0 deg
+step 214 - lrate 0.000013, wchange 0.01410664, angledelta 118.7 deg
+step 215 - lrate 0.000012, wchange 0.01376806, angledelta 122.1 deg
+step 216 - lrate 0.000012, wchange 0.01226953, angledelta 119.7 deg
+step 217 - lrate 0.000012, wchange 0.01388254, angledelta 121.0 deg
+step 218 - lrate 0.000012, wchange 0.01298847, angledelta 123.1 deg
+step 219 - lrate 0.000011, wchange 0.01178132, angledelta 120.9 deg
+step 220 - lrate 0.000011, wchange 0.01171473, angledelta 118.5 deg
+step 221 - lrate 0.000011, wchange 0.01192464, angledelta 120.3 deg
+step 222 - lrate 0.000011, wchange 0.01138069, angledelta 120.8 deg
+step 223 - lrate 0.000011, wchange 0.01086520, angledelta 120.2 deg
+step 224 - lrate 0.000010, wchange 0.01058117, angledelta 120.7 deg
+step 225 - lrate 0.000010, wchange 0.00988691, angledelta 119.0 deg
+step 226 - lrate 0.000010, wchange 0.00942936, angledelta 120.4 deg
+step 227 - lrate 0.000010, wchange 0.00923587, angledelta 117.5 deg
+step 228 - lrate 0.000010, wchange 0.00929657, angledelta 121.0 deg
+step 229 - lrate 0.000009, wchange 0.00901356, angledelta 117.5 deg
+step 230 - lrate 0.000009, wchange 0.00911045, angledelta 122.0 deg
+step 231 - lrate 0.000009, wchange 0.00797084, angledelta 119.1 deg
+step 232 - lrate 0.000009, wchange 0.00816564, angledelta 118.0 deg
+step 233 - lrate 0.000009, wchange 0.00834230, angledelta 120.6 deg
+step 234 - lrate 0.000008, wchange 0.00773852, angledelta 121.3 deg
+step 235 - lrate 0.000008, wchange 0.00748720, angledelta 119.7 deg
+step 236 - lrate 0.000008, wchange 0.00758031, angledelta 118.5 deg
+step 237 - lrate 0.000008, wchange 0.00759515, angledelta 120.3 deg
+step 238 - lrate 0.000008, wchange 0.00698797, angledelta 119.6 deg
+step 239 - lrate 0.000008, wchange 0.00681115, angledelta 117.9 deg
+step 240 - lrate 0.000007, wchange 0.00655976, angledelta 120.4 deg
+step 241 - lrate 0.000007, wchange 0.00628030, angledelta 118.4 deg
+step 242 - lrate 0.000007, wchange 0.00653315, angledelta 121.5 deg
+step 243 - lrate 0.000007, wchange 0.00611723, angledelta 120.3 deg
+step 244 - lrate 0.000007, wchange 0.00591894, angledelta 121.5 deg
+step 245 - lrate 0.000007, wchange 0.00556973, angledelta 118.7 deg
+step 246 - lrate 0.000007, wchange 0.00573392, angledelta 119.5 deg
+step 247 - lrate 0.000007, wchange 0.00517915, angledelta 120.4 deg
+step 248 - lrate 0.000006, wchange 0.00480369, angledelta 118.9 deg
+step 249 - lrate 0.000006, wchange 0.00473315, angledelta 117.5 deg
+step 250 - lrate 0.000006, wchange 0.00489917, angledelta 120.5 deg
+step 251 - lrate 0.000006, wchange 0.00457620, angledelta 118.2 deg
+step 252 - lrate 0.000006, wchange 0.00455424, angledelta 118.9 deg
+step 253 - lrate 0.000006, wchange 0.00438223, angledelta 121.0 deg
+step 254 - lrate 0.000006, wchange 0.00403900, angledelta 119.4 deg
+step 255 - lrate 0.000006, wchange 0.00382123, angledelta 117.2 deg
+step 256 - lrate 0.000005, wchange 0.00408819, angledelta 118.9 deg
+step 257 - lrate 0.000005, wchange 0.00376183, angledelta 119.1 deg
+step 258 - lrate 0.000005, wchange 0.00359098, angledelta 118.6 deg
+step 259 - lrate 0.000005, wchange 0.00348420, angledelta 120.0 deg
+step 260 - lrate 0.000005, wchange 0.00329274, angledelta 120.8 deg
+step 261 - lrate 0.000005, wchange 0.00320325, angledelta 117.8 deg
+step 262 - lrate 0.000005, wchange 0.00302256, angledelta 119.5 deg
+step 263 - lrate 0.000005, wchange 0.00290264, angledelta 120.2 deg
+step 264 - lrate 0.000005, wchange 0.00270943, angledelta 117.8 deg
+step 265 - lrate 0.000005, wchange 0.00262014, angledelta 117.8 deg
+step 266 - lrate 0.000004, wchange 0.00262451, angledelta 118.5 deg
+step 267 - lrate 0.000004, wchange 0.00251072, angledelta 116.8 deg
+step 268 - lrate 0.000004, wchange 0.00257980, angledelta 120.8 deg
+step 269 - lrate 0.000004, wchange 0.00221761, angledelta 117.9 deg
+step 270 - lrate 0.000004, wchange 0.00218894, angledelta 118.3 deg
+step 271 - lrate 0.000004, wchange 0.00214679, angledelta 120.5 deg
+step 272 - lrate 0.000004, wchange 0.00200196, angledelta 119.0 deg
+step 273 - lrate 0.000004, wchange 0.00189890, angledelta 117.7 deg
+step 274 - lrate 0.000004, wchange 0.00178799, angledelta 119.0 deg
+step 275 - lrate 0.000004, wchange 0.00172515, angledelta 118.9 deg
+step 276 - lrate 0.000004, wchange 0.00161692, angledelta 118.7 deg
+step 277 - lrate 0.000004, wchange 0.00151346, angledelta 116.4 deg
+step 278 - lrate 0.000003, wchange 0.00149585, angledelta 117.6 deg
+step 279 - lrate 0.000003, wchange 0.00149405, angledelta 119.6 deg
+step 280 - lrate 0.000003, wchange 0.00133349, angledelta 116.9 deg
+step 281 - lrate 0.000003, wchange 0.00126899, angledelta 116.4 deg
+step 282 - lrate 0.000003, wchange 0.00121241, angledelta 117.3 deg
+step 283 - lrate 0.000003, wchange 0.00117352, angledelta 117.2 deg
+step 284 - lrate 0.000003, wchange 0.00110940, angledelta 115.9 deg
+step 285 - lrate 0.000003, wchange 0.00105724, angledelta 118.8 deg
+step 286 - lrate 0.000003, wchange 0.00101746, angledelta 118.7 deg
+step 287 - lrate 0.000003, wchange 0.00090805, angledelta 117.8 deg
+step 288 - lrate 0.000003, wchange 0.00092316, angledelta 116.9 deg
+step 289 - lrate 0.000003, wchange 0.00086417, angledelta 117.4 deg
+step 290 - lrate 0.000003, wchange 0.00082739, angledelta 115.3 deg
+step 291 - lrate 0.000003, wchange 0.00076550, angledelta 115.3 deg
+step 292 - lrate 0.000003, wchange 0.00071124, angledelta 115.4 deg
+step 293 - lrate 0.000003, wchange 0.00069357, angledelta 116.1 deg
+step 294 - lrate 0.000003, wchange 0.00061148, angledelta 113.5 deg
+step 295 - lrate 0.000002, wchange 0.00062099, angledelta 115.5 deg
+step 296 - lrate 0.000002, wchange 0.00056233, angledelta 115.2 deg
+step 297 - lrate 0.000002, wchange 0.00053285, angledelta 114.4 deg
+step 298 - lrate 0.000002, wchange 0.00052915, angledelta 112.3 deg
+step 299 - lrate 0.000002, wchange 0.00049902, angledelta 115.0 deg
+step 300 - lrate 0.000002, wchange 0.00047908, angledelta 113.9 deg
+step 301 - lrate 0.000002, wchange 0.00043464, angledelta 114.8 deg
+step 302 - lrate 0.000002, wchange 0.00038992, angledelta 110.3 deg
+step 303 - lrate 0.000002, wchange 0.00038337, angledelta 111.8 deg
+step 304 - lrate 0.000002, wchange 0.00035547, angledelta 111.7 deg
+step 305 - lrate 0.000002, wchange 0.00034049, angledelta 113.3 deg
+step 306 - lrate 0.000002, wchange 0.00031229, angledelta 112.6 deg
+step 307 - lrate 0.000002, wchange 0.00030210, angledelta 112.9 deg
+step 308 - lrate 0.000002, wchange 0.00026749, angledelta 113.3 deg
+step 309 - lrate 0.000002, wchange 0.00024932, angledelta 111.0 deg
+step 310 - lrate 0.000002, wchange 0.00024678, angledelta 113.1 deg
+step 311 - lrate 0.000002, wchange 0.00023011, angledelta 110.5 deg
+step 312 - lrate 0.000002, wchange 0.00021087, angledelta 112.8 deg
+step 313 - lrate 0.000002, wchange 0.00020392, angledelta 109.4 deg
+step 314 - lrate 0.000002, wchange 0.00019165, angledelta 110.6 deg
+step 315 - lrate 0.000002, wchange 0.00018761, angledelta 111.4 deg
+step 316 - lrate 0.000002, wchange 0.00016534, angledelta 112.3 deg
+step 317 - lrate 0.000002, wchange 0.00016105, angledelta 111.0 deg
+step 318 - lrate 0.000002, wchange 0.00014806, angledelta 108.6 deg
+step 319 - lrate 0.000002, wchange 0.00013731, angledelta 108.5 deg
+step 320 - lrate 0.000001, wchange 0.00012397, angledelta 109.2 deg
+step 321 - lrate 0.000001, wchange 0.00012556, angledelta 109.4 deg
+step 322 - lrate 0.000001, wchange 0.00011462, angledelta 111.7 deg
+step 323 - lrate 0.000001, wchange 0.00010580, angledelta 108.5 deg
+step 324 - lrate 0.000001, wchange 0.00010866, angledelta 111.2 deg
+step 325 - lrate 0.000001, wchange 0.00008896, angledelta 107.0 deg
+step 326 - lrate 0.000001, wchange 0.00008896, angledelta 107.5 deg
+step 327 - lrate 0.000001, wchange 0.00007990, angledelta 105.1 deg
+step 328 - lrate 0.000001, wchange 0.00007847, angledelta 110.0 deg
+step 329 - lrate 0.000001, wchange 0.00006993, angledelta 107.7 deg
+step 330 - lrate 0.000001, wchange 0.00006366, angledelta 105.0 deg
+step 331 - lrate 0.000001, wchange 0.00005996, angledelta 104.7 deg
+step 332 - lrate 0.000001, wchange 0.00005404, angledelta 107.9 deg
+step 333 - lrate 0.000001, wchange 0.00005161, angledelta 106.2 deg
+step 334 - lrate 0.000001, wchange 0.00004716, angledelta 106.3 deg
+step 335 - lrate 0.000001, wchange 0.00004746, angledelta 106.1 deg
+step 336 - lrate 0.000001, wchange 0.00004182, angledelta 106.6 deg
+step 337 - lrate 0.000001, wchange 0.00003843, angledelta 105.7 deg
+step 338 - lrate 0.000001, wchange 0.00003888, angledelta 104.5 deg
+step 339 - lrate 0.000001, wchange 0.00003640, angledelta 104.9 deg
+step 340 - lrate 0.000001, wchange 0.00003211, angledelta 105.5 deg
+step 341 - lrate 0.000001, wchange 0.00003000, angledelta 103.5 deg
+step 342 - lrate 0.000001, wchange 0.00002835, angledelta 106.1 deg
+step 343 - lrate 0.000001, wchange 0.00002591, angledelta 105.9 deg
+step 344 - lrate 0.000001, wchange 0.00002391, angledelta 104.2 deg
+step 345 - lrate 0.000001, wchange 0.00002259, angledelta 104.1 deg
+step 346 - lrate 0.000001, wchange 0.00002311, angledelta 104.6 deg
+step 347 - lrate 0.000001, wchange 0.00001863, angledelta 102.3 deg
+step 348 - lrate 0.000001, wchange 0.00001782, angledelta 103.6 deg
+step 349 - lrate 0.000001, wchange 0.00001720, angledelta 105.4 deg
+step 350 - lrate 0.000001, wchange 0.00001531, angledelta 102.3 deg
+step 351 - lrate 0.000001, wchange 0.00001521, angledelta 103.3 deg
+step 352 - lrate 0.000001, wchange 0.00001353, angledelta 100.9 deg
+step 353 - lrate 0.000001, wchange 0.00001216, angledelta 101.1 deg
+step 354 - lrate 0.000001, wchange 0.00001200, angledelta 103.2 deg
+step 355 - lrate 0.000001, wchange 0.00001115, angledelta 102.1 deg
+step 356 - lrate 0.000001, wchange 0.00000985, angledelta 103.3 deg
+step 357 - lrate 0.000001, wchange 0.00000893, angledelta 101.3 deg
+step 358 - lrate 0.000001, wchange 0.00000853, angledelta 99.5 deg
+step 359 - lrate 0.000001, wchange 0.00000819, angledelta 100.1 deg
+step 360 - lrate 0.000001, wchange 0.00000733, angledelta 102.8 deg
+step 361 - lrate 0.000001, wchange 0.00000687, angledelta 99.7 deg
+step 362 - lrate 0.000001, wchange 0.00000620, angledelta 98.0 deg
+step 363 - lrate 0.000001, wchange 0.00000591, angledelta 100.6 deg
+step 364 - lrate 0.000001, wchange 0.00000539, angledelta 100.1 deg
+step 365 - lrate 0.000001, wchange 0.00000500, angledelta 100.2 deg
+step 366 - lrate 0.000001, wchange 0.00000465, angledelta 97.4 deg
+step 367 - lrate 0.000001, wchange 0.00000454, angledelta 100.9 deg
+step 368 - lrate 0.000001, wchange 0.00000441, angledelta 101.7 deg
+step 369 - lrate 0.000001, wchange 0.00000400, angledelta 98.7 deg
+step 370 - lrate 0.000001, wchange 0.00000368, angledelta 98.2 deg
+step 371 - lrate 0.000001, wchange 0.00000327, angledelta 98.2 deg
+step 372 - lrate 0.000001, wchange 0.00000308, angledelta 98.4 deg
+step 373 - lrate 0.000001, wchange 0.00000275, angledelta 96.6 deg
+step 374 - lrate 0.000001, wchange 0.00000266, angledelta 97.5 deg
+step 375 - lrate 0.000000, wchange 0.00000243, angledelta 97.0 deg
+step 376 - lrate 0.000000, wchange 0.00000223, angledelta 97.8 deg
+step 377 - lrate 0.000000, wchange 0.00000197, angledelta 98.2 deg
+step 378 - lrate 0.000000, wchange 0.00000193, angledelta 99.0 deg
+step 379 - lrate 0.000000, wchange 0.00000172, angledelta 98.6 deg
+step 380 - lrate 0.000000, wchange 0.00000167, angledelta 97.0 deg
+step 381 - lrate 0.000000, wchange 0.00000147, angledelta 96.9 deg
+step 382 - lrate 0.000000, wchange 0.00000134, angledelta 96.5 deg
+step 383 - lrate 0.000000, wchange 0.00000129, angledelta 96.9 deg
+step 384 - lrate 0.000000, wchange 0.00000122, angledelta 97.4 deg
+step 385 - lrate 0.000000, wchange 0.00000109, angledelta 98.0 deg
+step 386 - lrate 0.000000, wchange 0.00000100, angledelta 96.9 deg
+step 387 - lrate 0.000000, wchange 0.00000094, angledelta 94.8 deg
+step 388 - lrate 0.000000, wchange 0.00000086, angledelta 97.4 deg
+step 389 - lrate 0.000000, wchange 0.00000080, angledelta 96.8 deg
+step 390 - lrate 0.000000, wchange 0.00000075, angledelta 95.7 deg
+step 391 - lrate 0.000000, wchange 0.00000069, angledelta 96.6 deg
+step 392 - lrate 0.000000, wchange 0.00000062, angledelta 96.1 deg
+step 393 - lrate 0.000000, wchange 0.00000061, angledelta 95.7 deg
+step 394 - lrate 0.000000, wchange 0.00000055, angledelta 97.5 deg
+step 395 - lrate 0.000000, wchange 0.00000052, angledelta 93.3 deg
+step 396 - lrate 0.000000, wchange 0.00000046, angledelta 95.3 deg
+step 397 - lrate 0.000000, wchange 0.00000048, angledelta 95.3 deg
+step 398 - lrate 0.000000, wchange 0.00000041, angledelta 95.3 deg
+step 399 - lrate 0.000000, wchange 0.00000037, angledelta 96.1 deg
+step 400 - lrate 0.000000, wchange 0.00000035, angledelta 95.2 deg
+step 401 - lrate 0.000000, wchange 0.00000033, angledelta 95.1 deg
+step 402 - lrate 0.000000, wchange 0.00000030, angledelta 93.8 deg
+step 403 - lrate 0.000000, wchange 0.00000027, angledelta 93.4 deg
+step 404 - lrate 0.000000, wchange 0.00000024, angledelta 92.8 deg
+step 405 - lrate 0.000000, wchange 0.00000022, angledelta 94.3 deg
+step 406 - lrate 0.000000, wchange 0.00000022, angledelta 95.4 deg
+step 407 - lrate 0.000000, wchange 0.00000020, angledelta 93.0 deg
+step 408 - lrate 0.000000, wchange 0.00000018, angledelta 93.5 deg
+step 409 - lrate 0.000000, wchange 0.00000018, angledelta 95.3 deg
+step 410 - lrate 0.000000, wchange 0.00000015, angledelta 94.8 deg
+step 411 - lrate 0.000000, wchange 0.00000014, angledelta 93.3 deg
+step 412 - lrate 0.000000, wchange 0.00000014, angledelta 93.5 deg
+step 413 - lrate 0.000000, wchange 0.00000013, angledelta 90.7 deg
+step 414 - lrate 0.000000, wchange 0.00000012, angledelta 94.7 deg
+step 415 - lrate 0.000000, wchange 0.00000011, angledelta 94.1 deg
+step 416 - lrate 0.000000, wchange 0.00000010, angledelta 92.8 deg
+step 417 - lrate 0.000000, wchange 0.00000009, angledelta 93.8 deg
+Sorting components in descending order of mean projected variance ...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Scaling components to RMS microvolt
+eeg_checkset: recomputing the ICA activation matrix ...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+ICLabel: extracting features...
+ICLabel: calculating labels...
+Error using load
+Unable to read file '/home/shaws5/.mcrCache9.5/offlin1/project/6006749/shaws5/Research_code/EEGnet/Toolboxes/EEGLAB/plugins/ICLabel1.1/netICL'. No such file or directory.
+
+Error in run_ICL (line 26)
+
+Error in iclabel (line 53)
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 118)
+
+MATLAB:load:couldNotReadFile
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tp5f08b463_139f_404e_bd35_638d5896ed1b.mat: Signal 127
+Elapsed time is 2545.499263 seconds.
+
+ ***************************** Finished Subject P1228 Session Post Run task ***************************** 
+
+ ***************************** Processing Subject P1228 Session Post Run rest ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (153600) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.33683
+pop_eegfiltnew() - performing 16897 point bandpass filtering.
+pop_eegfiltnew() - transition band width: 0.1 Hz
+pop_eegfiltnew() - passband edge(s): [0.1 50] Hz
+pop_eegfiltnew() - cutoff frequency(ies) (-6 dB): [0.05 50.05] Hz
+pop_eegfiltnew() - filtering the data (zero-phase, non-causal)
+firfilt(): |                    |   0%=                   /   5%, ETE 00:46=                  -  10%, ETE 00:28=                 \  15%, ETE 00:22=                |  20%, ETE 00:18=               /  25%, ETE 00:16=              -  30%, ETE 00:14=             \  35%, ETE 00:12=            |  40%, ETE 00:11=           /  45%, ETE 00:10=          -  50%, ETE 00:09=         \  55%, ETE 00:08=        |  60%, ETE 00:07=       /  65%, ETE 00:06=      -  70%, ETE 00:05=     \  75%, ETE 00:04=    |  80%, ETE 00:04=   /  85%, ETE 00:03=  -  90%, ETE 00:02==| 100%, ETE 00:00
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Scanning for bad channels...
+clean_channel:   1/59 blocks, 0.1 minutes remaining.
+clean_channel:   2/59 blocks, 0.1 minutes remaining.
+clean_channel:   3/59 blocks, 0.1 minutes remaining.
+clean_channel:   4/59 blocks, 0.1 minutes remaining.
+clean_channel:   5/59 blocks, 0.1 minutes remaining.
+clean_channel:   6/59 blocks, 0.1 minutes remaining.
+clean_channel:   7/59 blocks, 0.1 minutes remaining.
+clean_channel:   8/59 blocks, 0.1 minutes remaining.
+clean_channel:   9/59 blocks, 0.1 minutes remaining.
+clean_channel:  10/59 blocks, 0.1 minutes remaining.
+clean_channel:  11/59 blocks, 0.1 minutes remaining.
+clean_channel:  12/59 blocks, 0.1 minutes remaining.
+clean_channel:  13/59 blocks, 0.1 minutes remaining.
+clean_channel:  14/59 blocks, 0.1 minutes remaining.
+clean_channel:  15/59 blocks, 0.1 minutes remaining.
+clean_channel:  16/59 blocks, 0.1 minutes remaining.
+clean_channel:  17/59 blocks, 0.1 minutes remaining.
+clean_channel:  18/59 blocks, 0.1 minutes remaining.
+clean_channel:  19/59 blocks, 0.1 minutes remaining.
+clean_channel:  20/59 blocks, 0.1 minutes remaining.
+clean_channel:  21/59 blocks, 0.1 minutes remaining.
+clean_channel:  22/59 blocks, 0.1 minutes remaining.
+clean_channel:  23/59 blocks, 0.1 minutes remaining.
+clean_channel:  24/59 blocks, 0.1 minutes remaining.
+clean_channel:  25/59 blocks, 0.1 minutes remaining.
+clean_channel:  26/59 blocks, 0.1 minutes remaining.
+clean_channel:  27/59 blocks, 0.1 minutes remaining.
+clean_channel:  28/59 blocks, 0.1 minutes remaining.
+clean_channel:  29/59 blocks, 0.1 minutes remaining.
+clean_channel:  30/59 blocks, 0.1 minutes remaining.
+clean_channel:  31/59 blocks, 0.1 minutes remaining.
+clean_channel:  32/59 blocks, 0.1 minutes remaining.
+clean_channel:  33/59 blocks, 0.1 minutes remaining.
+clean_channel:  34/59 blocks, 0.1 minutes remaining.
+clean_channel:  35/59 blocks, 0.1 minutes remaining.
+clean_channel:  36/59 blocks, 0.1 minutes remaining.
+clean_channel:  37/59 blocks, 0.0 minutes remaining.
+clean_channel:  38/59 blocks, 0.0 minutes remaining.
+clean_channel:  39/59 blocks, 0.0 minutes remaining.
+clean_channel:  40/59 blocks, 0.0 minutes remaining.
+clean_channel:  41/59 blocks, 0.0 minutes remaining.
+clean_channel:  42/59 blocks, 0.0 minutes remaining.
+clean_channel:  43/59 blocks, 0.0 minutes remaining.
+clean_channel:  44/59 blocks, 0.0 minutes remaining.
+clean_channel:  45/59 blocks, 0.0 minutes remaining.
+clean_channel:  46/59 blocks, 0.0 minutes remaining.
+clean_channel:  47/59 blocks, 0.0 minutes remaining.
+clean_channel:  48/59 blocks, 0.0 minutes remaining.
+clean_channel:  49/59 blocks, 0.0 minutes remaining.
+clean_channel:  50/59 blocks, 0.0 minutes remaining.
+clean_channel:  51/59 blocks, 0.0 minutes remaining.
+clean_channel:  52/59 blocks, 0.0 minutes remaining.
+clean_channel:  53/59 blocks, 0.0 minutes remaining.
+clean_channel:  54/59 blocks, 0.0 minutes remaining.
+clean_channel:  55/59 blocks, 0.0 minutes remaining.
+clean_channel:  56/59 blocks, 0.0 minutes remaining.
+clean_channel:  57/59 blocks, 0.0 minutes remaining.
+clean_channel:  58/59 blocks, 0.0 minutes remaining.
+clean_channel:  59/59 blocks, 0.0 minutes remaining.
+Removing 16 channel(s)...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Use vis_artifacts to compare the cleaned data to the original.
+Computing spectrum for channels...
+Removing spectrum data below -20dB (most likelly filtered out)
+Selecting minimum and maximum normalized power over the frequency range
+3 electrodes labeled for rejection
+#	Elec.	[min]	[max]
+1	A-1	0.71	2.16
+2	A-2	0.67	1.67
+3	A-3	0.65	1.76
+4	A-4	0.55	1.31
+5	A-5	0.38	1.05
+6	A-6	0.44	0.89
+7	A-7	0.61	2.17
+8	A-8	0.50	2.00
+9	A-10	0.37	1.03
+10	A-11	0.36	0.83
+11	A-15	0.36	1.02
+12	A-16	0.33	0.81
+13	A-21	-0.01	0.45
+14	A-25	-0.18	0.69
+15	A-26	0.04	0.41
+16	A-30	-0.50	-0.20
+17	A-31	-0.40	0.61
+18	B-1	-1.05	-0.19
+19	B-2	-0.90	-0.43
+20	B-3	0.19	1.12
+21	B-4	-0.15	0.71
+22	B-6	-1.80	-0.56
+23	B-7	-1.48	-1.20
+24	B-8	-1.00	-0.24
+25	B-9	-1.06	0.15
+26	B-10	-2.43	-1.06
+27	B-11	-2.43	-1.90
+28	B-12	-1.99	-0.91
+29	B-13	-0.18	0.83
+30	B-14	-0.77	0.06
+31	B-15	-1.86	-0.80
+32	B-16	-3.74	-2.05	*Bad*
+33	B-17	-3.82	-2.39	*Bad*
+34	B-18	-1.87	-1.41
+35	B-19	-0.65	0.61
+36	B-20	-2.61	-1.59
+37	B-21	-3.03	-2.27	*Bad*
+38	B-22	-1.24	-0.02
+39	B-23	-2.64	-2.00
+40	B-24	-1.68	-0.70
+41	B-25	-0.56	0.65
+42	B-26	-1.06	0.33
+43	B-27	-1.55	-0.51
+44	B-28	-1.78	-0.78
+45	B-29	-0.70	0.46
+46	B-30	-0.97	-0.09
+47	B-31	-1.05	-0.43
+48	B-32	-0.49	0.62
+49	C-1	0.72	1.98
+50	C-2	0.75	1.91
+51	C-3	0.70	1.55
+52	C-4	0.65	1.27
+53	C-5	0.67	1.31
+54	C-6	0.75	1.80
+55	C-7	0.61	1.01
+56	C-8	0.63	1.12
+57	C-9	0.49	0.93
+58	C-10	0.50	0.93
+59	C-11	0.52	1.00
+60	C-12	0.66	1.40
+61	C-13	0.74	1.59
+62	C-14	0.73	1.36
+63	C-15	0.29	0.84
+64	C-16	0.27	0.80
+65	C-17	0.55	1.14
+66	C-18	0.62	1.06
+67	C-19	0.66	1.22
+68	C-20	0.01	0.60
+69	C-21	-0.01	0.54
+70	C-22	-0.02	0.44
+71	C-23	0.46	1.24
+72	C-24	0.53	1.07
+73	C-25	0.69	1.21
+74	C-26	-0.21	0.27
+75	C-27	-0.04	0.45
+76	C-28	0.17	0.53
+77	C-29	0.35	0.79
+78	C-30	0.54	1.07
+79	C-31	-0.30	0.21
+80	C-32	-0.40	-0.01
+81	D-1	-0.26	0.25
+82	D-2	0.08	0.61
+83	D-3	0.37	0.95
+84	D-4	-0.47	-0.03
+85	D-5	-0.44	-0.09
+86	D-6	-0.18	0.41
+87	D-7	0.12	0.75
+88	D-8	-0.74	-0.40
+89	D-9	-0.51	-0.05
+90	D-10	-0.22	0.44
+91	D-11	0.26	0.88
+92	D-12	0.53	1.34
+93	D-13	-1.37	-0.84
+94	D-14	-0.88	-0.46
+95	D-15	-0.48	0.08
+96	D-16	-0.16	0.61
+97	D-17	-1.18	-0.46
+98	D-18	-0.83	-0.23
+99	D-19	-0.39	0.35
+100	D-20	-0.05	0.95
+101	D-21	0.22	1.45
+102	D-22	-1.39	-0.92
+103	D-23	-0.53	0.15
+104	D-24	0.13	1.63
+105	D-25	-0.76	-0.00
+106	D-26	-0.10	1.35
+107	D-27	0.01	1.54
+108	D-28	-0.88	0.00
+109	D-29	-0.47	0.89
+110	D-30	-0.27	1.39
+111	D-31	-0.57	0.76
+112	D-32	-0.20	1.37
+Removing 3 channel(s)...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+
+Attempting to convert data matrix to double precision for more accurate ICA results.
+
+Input data size [109,153600] = 109 channels, 153600 frames/nFinding 109 ICA components using extended ICA.
+Kurtosis will be calculated initially every 1 blocks using 6000 data points.
+Decomposing 12 frames per ICA weight ((11881)^2 = 153600 weights, Initial learning rate will be 0.001, block size 60.
+Learning rate will be multiplied by 0.98 whenever angledelta >= 60 deg.
+More than 32 channels: default stopping weight change 1E-7
+Training will end when wchange < 1e-07 or after 512 steps.
+Online bias adjustment will be used.
+Removing mean of each channel ...
+Final training data range: -140.246 to 188.117
+Computing the sphering matrix...
+Starting weights are the identity matrix ...
+Sphering the data ...
+Beginning ICA training ... first training step may be slow ...
+step 1 - lrate 0.001000, wchange 85.17491867, angledelta  0.0 deg
+Lowering learning rate to 0.0009 and starting again.
+Lowering learning rate to 0.00081 and starting again.
+step 1 - lrate 0.000810, wchange 64.38446857, angledelta  0.0 deg
+step 2 - lrate 0.000810, wchange 4.34703971, angledelta  0.0 deg
+step 3 - lrate 0.000810, wchange 3.26603827, angledelta 84.9 deg
+step 4 - lrate 0.000794, wchange 2.51941356, angledelta 102.3 deg
+step 5 - lrate 0.000778, wchange 2.29036211, angledelta 104.9 deg
+step 6 - lrate 0.000762, wchange 2.70813630, angledelta 107.1 deg
+step 7 - lrate 0.000747, wchange 2.73887581, angledelta 116.7 deg
+step 8 - lrate 0.000732, wchange 2.45005539, angledelta 113.3 deg
+step 9 - lrate 0.000718, wchange 1.99060086, angledelta 110.1 deg
+step 10 - lrate 0.000703, wchange 1.91519857, angledelta 109.5 deg
+step 11 - lrate 0.000689, wchange 2.11722164, angledelta 108.8 deg
+step 12 - lrate 0.000675, wchange 2.12810148, angledelta 118.6 deg
+step 13 - lrate 0.000662, wchange 1.97663152, angledelta 114.9 deg
+step 14 - lrate 0.000649, wchange 1.44241616, angledelta 109.2 deg
+step 15 - lrate 0.000636, wchange 1.86663408, angledelta 111.0 deg
+step 16 - lrate 0.000623, wchange 1.75435207, angledelta 119.5 deg
+step 17 - lrate 0.000610, wchange 2.22435900, angledelta 115.1 deg
+step 18 - lrate 0.000598, wchange 1.69449301, angledelta 125.6 deg
+step 19 - lrate 0.000586, wchange 1.33940185, angledelta 100.9 deg
+step 20 - lrate 0.000575, wchange 1.33968133, angledelta 121.2 deg
+step 21 - lrate 0.000563, wchange 1.58198904, angledelta 113.7 deg
+step 22 - lrate 0.000552, wchange 1.62580947, angledelta 120.2 deg
+step 23 - lrate 0.000541, wchange 1.58456623, angledelta 120.6 deg
+step 24 - lrate 0.000530, wchange 1.20279769, angledelta 111.9 deg
+step 25 - lrate 0.000519, wchange 1.04364760, angledelta 106.4 deg
+step 26 - lrate 0.000509, wchange 0.89400877, angledelta 109.1 deg
+step 27 - lrate 0.000499, wchange 0.83380795, angledelta 113.6 deg
+step 28 - lrate 0.000489, wchange 0.90537959, angledelta 114.4 deg
+step 29 - lrate 0.000479, wchange 0.86729362, angledelta 108.5 deg
+step 30 - lrate 0.000469, wchange 0.96476052, angledelta 107.1 deg
+step 31 - lrate 0.000460, wchange 1.41073461, angledelta 124.2 deg
+step 32 - lrate 0.000451, wchange 0.68761646, angledelta 109.6 deg
+step 33 - lrate 0.000442, wchange 1.00363772, angledelta 109.7 deg
+step 34 - lrate 0.000433, wchange 0.79909814, angledelta 109.0 deg
+step 35 - lrate 0.000424, wchange 1.10727021, angledelta 117.9 deg
+step 36 - lrate 0.000416, wchange 1.19661942, angledelta 130.4 deg
+step 37 - lrate 0.000408, wchange 1.23694235, angledelta 136.7 deg
+step 38 - lrate 0.000399, wchange 1.04136401, angledelta 130.5 deg
+step 39 - lrate 0.000391, wchange 0.86468438, angledelta 128.8 deg
+step 40 - lrate 0.000384, wchange 0.67767885, angledelta 105.5 deg
+step 41 - lrate 0.000376, wchange 1.25032331, angledelta 119.8 deg
+step 42 - lrate 0.000368, wchange 0.56255581, angledelta 108.9 deg
+step 43 - lrate 0.000361, wchange 0.52308291, angledelta 116.6 deg
+step 44 - lrate 0.000354, wchange 0.50273270, angledelta 115.3 deg
+step 45 - lrate 0.000347, wchange 0.49085285, angledelta 117.6 deg
+step 46 - lrate 0.000340, wchange 0.48469472, angledelta 116.7 deg
+step 47 - lrate 0.000333, wchange 0.44404156, angledelta 116.4 deg
+step 48 - lrate 0.000326, wchange 0.43503407, angledelta 116.2 deg
+step 49 - lrate 0.000320, wchange 0.41906799, angledelta 118.1 deg
+step 50 - lrate 0.000313, wchange 0.42231932, angledelta 117.7 deg
+step 51 - lrate 0.000307, wchange 0.40099794, angledelta 115.9 deg
+step 52 - lrate 0.000301, wchange 0.41499627, angledelta 117.9 deg
+step 53 - lrate 0.000295, wchange 0.37926996, angledelta 117.3 deg
+step 54 - lrate 0.000289, wchange 0.36739618, angledelta 115.7 deg
+step 55 - lrate 0.000283, wchange 0.37303329, angledelta 118.1 deg
+step 56 - lrate 0.000278, wchange 0.37079175, angledelta 117.8 deg
+step 57 - lrate 0.000272, wchange 0.34356900, angledelta 118.1 deg
+step 58 - lrate 0.000267, wchange 0.33298186, angledelta 117.8 deg
+step 59 - lrate 0.000261, wchange 0.33930367, angledelta 117.7 deg
+step 60 - lrate 0.000256, wchange 0.31450204, angledelta 118.3 deg
+step 61 - lrate 0.000251, wchange 0.31024776, angledelta 116.4 deg
+step 62 - lrate 0.000246, wchange 0.29989357, angledelta 117.8 deg
+step 63 - lrate 0.000241, wchange 0.28926344, angledelta 117.1 deg
+step 64 - lrate 0.000236, wchange 0.28208565, angledelta 118.1 deg
+step 65 - lrate 0.000231, wchange 0.27823745, angledelta 118.3 deg
+step 66 - lrate 0.000227, wchange 0.26955487, angledelta 117.8 deg
+step 67 - lrate 0.000222, wchange 0.26208574, angledelta 117.9 deg
+step 68 - lrate 0.000218, wchange 0.26719820, angledelta 118.3 deg
+step 69 - lrate 0.000214, wchange 0.26234253, angledelta 118.7 deg
+step 70 - lrate 0.000209, wchange 0.24791311, angledelta 118.0 deg
+step 71 - lrate 0.000205, wchange 0.24411523, angledelta 118.1 deg
+step 72 - lrate 0.000201, wchange 0.23792369, angledelta 118.0 deg
+step 73 - lrate 0.000197, wchange 0.22361218, angledelta 118.0 deg
+step 74 - lrate 0.000193, wchange 0.22480014, angledelta 117.6 deg
+step 75 - lrate 0.000189, wchange 0.21413777, angledelta 119.2 deg
+step 76 - lrate 0.000185, wchange 0.21367274, angledelta 117.3 deg
+step 77 - lrate 0.000182, wchange 0.21867612, angledelta 119.6 deg
+step 78 - lrate 0.000178, wchange 0.20366705, angledelta 118.2 deg
+step 79 - lrate 0.000174, wchange 0.20777520, angledelta 119.0 deg
+step 80 - lrate 0.000171, wchange 0.19654332, angledelta 119.3 deg
+step 81 - lrate 0.000168, wchange 0.18960377, angledelta 118.8 deg
+step 82 - lrate 0.000164, wchange 0.18576321, angledelta 118.1 deg
+step 83 - lrate 0.000161, wchange 0.18167078, angledelta 120.1 deg
+step 84 - lrate 0.000158, wchange 0.16764005, angledelta 117.8 deg
+step 85 - lrate 0.000155, wchange 0.16666771, angledelta 119.6 deg
+step 86 - lrate 0.000151, wchange 0.16086237, angledelta 117.5 deg
+step 87 - lrate 0.000148, wchange 0.16069947, angledelta 119.2 deg
+step 88 - lrate 0.000145, wchange 0.15832298, angledelta 117.9 deg
+step 89 - lrate 0.000143, wchange 0.16289662, angledelta 118.0 deg
+step 90 - lrate 0.000140, wchange 0.15554821, angledelta 119.5 deg
+step 91 - lrate 0.000137, wchange 0.15143329, angledelta 116.7 deg
+step 92 - lrate 0.000134, wchange 0.16166948, angledelta 119.9 deg
+step 93 - lrate 0.000131, wchange 0.15389965, angledelta 120.2 deg
+step 94 - lrate 0.000129, wchange 0.14258726, angledelta 117.8 deg
+step 95 - lrate 0.000126, wchange 0.13223785, angledelta 118.7 deg
+step 96 - lrate 0.000124, wchange 0.13313450, angledelta 119.6 deg
+step 97 - lrate 0.000121, wchange 0.14011404, angledelta 117.2 deg
+step 98 - lrate 0.000119, wchange 0.14075871, angledelta 121.8 deg
+step 99 - lrate 0.000116, wchange 0.12790463, angledelta 117.9 deg
+step 100 - lrate 0.000114, wchange 0.13334286, angledelta 118.1 deg
+step 101 - lrate 0.000112, wchange 0.11489013, angledelta 117.8 deg
+step 102 - lrate 0.000110, wchange 0.11122814, angledelta 118.6 deg
+step 103 - lrate 0.000107, wchange 0.11183763, angledelta 119.0 deg
+step 104 - lrate 0.000105, wchange 0.11661085, angledelta 119.7 deg
+step 105 - lrate 0.000103, wchange 0.10707311, angledelta 119.4 deg
+step 106 - lrate 0.000101, wchange 0.09923781, angledelta 118.5 deg
+step 107 - lrate 0.000099, wchange 0.10633595, angledelta 119.6 deg
+step 108 - lrate 0.000097, wchange 0.10306065, angledelta 120.5 deg
+step 109 - lrate 0.000095, wchange 0.09810271, angledelta 119.3 deg
+step 110 - lrate 0.000093, wchange 0.09419117, angledelta 119.7 deg
+step 111 - lrate 0.000091, wchange 0.09512425, angledelta 117.0 deg
+step 112 - lrate 0.000090, wchange 0.09627498, angledelta 120.9 deg
+step 113 - lrate 0.000088, wchange 0.09274916, angledelta 120.0 deg
+step 114 - lrate 0.000086, wchange 0.08855428, angledelta 118.8 deg
+step 115 - lrate 0.000084, wchange 0.08831430, angledelta 119.6 deg
+step 116 - lrate 0.000083, wchange 0.09066169, angledelta 119.2 deg
+step 117 - lrate 0.000081, wchange 0.08214206, angledelta 119.2 deg
+step 118 - lrate 0.000079, wchange 0.08061359, angledelta 117.5 deg
+step 119 - lrate 0.000078, wchange 0.08000452, angledelta 118.6 deg
+step 120 - lrate 0.000076, wchange 0.07669023, angledelta 120.0 deg
+step 121 - lrate 0.000075, wchange 0.07359218, angledelta 119.7 deg
+step 122 - lrate 0.000073, wchange 0.07367120, angledelta 119.9 deg
+step 123 - lrate 0.000072, wchange 0.07132084, angledelta 119.7 deg
+step 124 - lrate 0.000070, wchange 0.07106283, angledelta 119.3 deg
+step 125 - lrate 0.000069, wchange 0.06784049, angledelta 119.8 deg
+step 126 - lrate 0.000067, wchange 0.06673503, angledelta 119.1 deg
+step 127 - lrate 0.000066, wchange 0.06471020, angledelta 118.2 deg
+step 128 - lrate 0.000065, wchange 0.06630179, angledelta 118.6 deg
+step 129 - lrate 0.000064, wchange 0.06436349, angledelta 119.4 deg
+step 130 - lrate 0.000062, wchange 0.06129396, angledelta 120.0 deg
+step 131 - lrate 0.000061, wchange 0.06049850, angledelta 119.1 deg
+step 132 - lrate 0.000060, wchange 0.06177368, angledelta 121.0 deg
+step 133 - lrate 0.000059, wchange 0.05945934, angledelta 121.8 deg
+step 134 - lrate 0.000057, wchange 0.05523564, angledelta 118.8 deg
+step 135 - lrate 0.000056, wchange 0.05414705, angledelta 119.7 deg
+step 136 - lrate 0.000055, wchange 0.05321054, angledelta 119.4 deg
+step 137 - lrate 0.000054, wchange 0.05629419, angledelta 120.4 deg
+step 138 - lrate 0.000053, wchange 0.05374421, angledelta 122.1 deg
+step 139 - lrate 0.000052, wchange 0.05300123, angledelta 120.6 deg
+step 140 - lrate 0.000051, wchange 0.04976716, angledelta 121.4 deg
+step 141 - lrate 0.000050, wchange 0.04696759, angledelta 120.4 deg
+step 142 - lrate 0.000049, wchange 0.04443547, angledelta 119.9 deg
+step 143 - lrate 0.000048, wchange 0.04512832, angledelta 120.5 deg
+step 144 - lrate 0.000047, wchange 0.04280360, angledelta 119.0 deg
+step 145 - lrate 0.000046, wchange 0.04874723, angledelta 118.9 deg
+step 146 - lrate 0.000045, wchange 0.04253708, angledelta 120.4 deg
+step 147 - lrate 0.000044, wchange 0.04122825, angledelta 117.8 deg
+step 148 - lrate 0.000043, wchange 0.03918882, angledelta 120.5 deg
+step 149 - lrate 0.000042, wchange 0.04038842, angledelta 119.0 deg
+step 150 - lrate 0.000042, wchange 0.03903204, angledelta 119.5 deg
+step 151 - lrate 0.000041, wchange 0.03726925, angledelta 120.2 deg
+step 152 - lrate 0.000040, wchange 0.03566404, angledelta 118.6 deg
+step 153 - lrate 0.000039, wchange 0.03485757, angledelta 119.9 deg
+step 154 - lrate 0.000038, wchange 0.03409479, angledelta 119.8 deg
+step 155 - lrate 0.000038, wchange 0.03345693, angledelta 119.5 deg
+step 156 - lrate 0.000037, wchange 0.03381959, angledelta 121.1 deg
+step 157 - lrate 0.000036, wchange 0.03498431, angledelta 117.6 deg
+step 158 - lrate 0.000035, wchange 0.03171010, angledelta 121.9 deg
+step 159 - lrate 0.000035, wchange 0.03023828, angledelta 116.7 deg
+step 160 - lrate 0.000034, wchange 0.03019436, angledelta 119.7 deg
+step 161 - lrate 0.000033, wchange 0.02972864, angledelta 121.2 deg
+step 162 - lrate 0.000033, wchange 0.02996217, angledelta 117.4 deg
+step 163 - lrate 0.000032, wchange 0.02899461, angledelta 121.5 deg
+step 164 - lrate 0.000031, wchange 0.02711182, angledelta 115.9 deg
+step 165 - lrate 0.000031, wchange 0.02701976, angledelta 120.7 deg
+step 166 - lrate 0.000030, wchange 0.02563822, angledelta 119.8 deg
+step 167 - lrate 0.000029, wchange 0.02522823, angledelta 120.9 deg
+step 168 - lrate 0.000029, wchange 0.02471744, angledelta 119.7 deg
+step 169 - lrate 0.000028, wchange 0.02402981, angledelta 119.4 deg
+step 170 - lrate 0.000028, wchange 0.02336082, angledelta 120.7 deg
+step 171 - lrate 0.000027, wchange 0.02181770, angledelta 120.4 deg
+step 172 - lrate 0.000027, wchange 0.02120295, angledelta 119.2 deg
+step 173 - lrate 0.000026, wchange 0.02098177, angledelta 119.5 deg
+step 174 - lrate 0.000026, wchange 0.02195525, angledelta 120.2 deg
+step 175 - lrate 0.000025, wchange 0.02097980, angledelta 121.5 deg
+step 176 - lrate 0.000025, wchange 0.01907344, angledelta 120.6 deg
+step 177 - lrate 0.000024, wchange 0.01899481, angledelta 118.9 deg
+step 178 - lrate 0.000024, wchange 0.01963773, angledelta 121.0 deg
+step 179 - lrate 0.000023, wchange 0.01790566, angledelta 119.7 deg
+step 180 - lrate 0.000023, wchange 0.01837812, angledelta 119.3 deg
+step 181 - lrate 0.000022, wchange 0.01790358, angledelta 121.3 deg
+step 182 - lrate 0.000022, wchange 0.01685204, angledelta 118.1 deg
+step 183 - lrate 0.000021, wchange 0.01649045, angledelta 120.0 deg
+step 184 - lrate 0.000021, wchange 0.01543738, angledelta 119.5 deg
+step 185 - lrate 0.000020, wchange 0.01575437, angledelta 118.5 deg
+step 186 - lrate 0.000020, wchange 0.01529889, angledelta 118.0 deg
+step 187 - lrate 0.000020, wchange 0.01524156, angledelta 121.3 deg
+step 188 - lrate 0.000019, wchange 0.01399891, angledelta 118.8 deg
+step 189 - lrate 0.000019, wchange 0.01375219, angledelta 120.9 deg
+step 190 - lrate 0.000019, wchange 0.01288430, angledelta 119.3 deg
+step 191 - lrate 0.000018, wchange 0.01296405, angledelta 120.5 deg
+step 192 - lrate 0.000018, wchange 0.01247032, angledelta 120.5 deg
+step 193 - lrate 0.000017, wchange 0.01193520, angledelta 118.9 deg
+step 194 - lrate 0.000017, wchange 0.01203767, angledelta 121.0 deg
+step 195 - lrate 0.000017, wchange 0.01125431, angledelta 120.7 deg
+step 196 - lrate 0.000016, wchange 0.01108331, angledelta 118.2 deg
+step 197 - lrate 0.000016, wchange 0.01099391, angledelta 121.3 deg
+step 198 - lrate 0.000016, wchange 0.01049258, angledelta 121.6 deg
+step 199 - lrate 0.000015, wchange 0.01027523, angledelta 118.6 deg
+step 200 - lrate 0.000015, wchange 0.01021668, angledelta 121.6 deg
+step 201 - lrate 0.000015, wchange 0.00966530, angledelta 120.2 deg
+step 202 - lrate 0.000015, wchange 0.00894696, angledelta 119.1 deg
+step 203 - lrate 0.000014, wchange 0.00855272, angledelta 119.1 deg
+step 204 - lrate 0.000014, wchange 0.00858533, angledelta 120.0 deg
+step 205 - lrate 0.000014, wchange 0.00875049, angledelta 120.2 deg
+step 206 - lrate 0.000013, wchange 0.00788669, angledelta 117.8 deg
+step 207 - lrate 0.000013, wchange 0.00816201, angledelta 119.7 deg
+step 208 - lrate 0.000013, wchange 0.00788506, angledelta 119.1 deg
+step 209 - lrate 0.000013, wchange 0.00731973, angledelta 119.6 deg
+step 210 - lrate 0.000012, wchange 0.00733150, angledelta 118.4 deg
+step 211 - lrate 0.000012, wchange 0.00710845, angledelta 117.9 deg
+step 212 - lrate 0.000012, wchange 0.00630562, angledelta 118.1 deg
+step 213 - lrate 0.000012, wchange 0.00638629, angledelta 118.5 deg
+step 214 - lrate 0.000011, wchange 0.00614120, angledelta 121.0 deg
+step 215 - lrate 0.000011, wchange 0.00577342, angledelta 119.4 deg
+step 216 - lrate 0.000011, wchange 0.00533237, angledelta 117.6 deg
+step 217 - lrate 0.000011, wchange 0.00536009, angledelta 118.7 deg
+step 218 - lrate 0.000011, wchange 0.00514316, angledelta 119.6 deg
+step 219 - lrate 0.000010, wchange 0.00500869, angledelta 118.3 deg
+step 220 - lrate 0.000010, wchange 0.00484406, angledelta 120.1 deg
+step 221 - lrate 0.000010, wchange 0.00444738, angledelta 116.9 deg
+step 222 - lrate 0.000010, wchange 0.00418384, angledelta 119.0 deg
+step 223 - lrate 0.000010, wchange 0.00404027, angledelta 119.0 deg
+step 224 - lrate 0.000009, wchange 0.00397750, angledelta 119.6 deg
+step 225 - lrate 0.000009, wchange 0.00373959, angledelta 119.0 deg
+step 226 - lrate 0.000009, wchange 0.00353246, angledelta 118.2 deg
+step 227 - lrate 0.000009, wchange 0.00344262, angledelta 118.6 deg
+step 228 - lrate 0.000009, wchange 0.00343011, angledelta 119.2 deg
+step 229 - lrate 0.000008, wchange 0.00315541, angledelta 119.1 deg
+step 230 - lrate 0.000008, wchange 0.00298866, angledelta 115.8 deg
+step 231 - lrate 0.000008, wchange 0.00279324, angledelta 117.5 deg
+step 232 - lrate 0.000008, wchange 0.00278985, angledelta 117.5 deg
+step 233 - lrate 0.000008, wchange 0.00258252, angledelta 117.8 deg
+step 234 - lrate 0.000008, wchange 0.00248790, angledelta 116.0 deg
+step 235 - lrate 0.000007, wchange 0.00243638, angledelta 118.5 deg
+step 236 - lrate 0.000007, wchange 0.00227284, angledelta 114.9 deg
+step 237 - lrate 0.000007, wchange 0.00212757, angledelta 116.9 deg
+step 238 - lrate 0.000007, wchange 0.00216399, angledelta 115.2 deg
+step 239 - lrate 0.000007, wchange 0.00208767, angledelta 119.0 deg
+step 240 - lrate 0.000007, wchange 0.00189741, angledelta 116.2 deg
+step 241 - lrate 0.000007, wchange 0.00178424, angledelta 118.0 deg
+step 242 - lrate 0.000006, wchange 0.00173439, angledelta 116.2 deg
+step 243 - lrate 0.000006, wchange 0.00162701, angledelta 118.0 deg
+step 244 - lrate 0.000006, wchange 0.00154036, angledelta 115.3 deg
+step 245 - lrate 0.000006, wchange 0.00144680, angledelta 117.7 deg
+step 246 - lrate 0.000006, wchange 0.00136864, angledelta 116.2 deg
+step 247 - lrate 0.000006, wchange 0.00133780, angledelta 116.3 deg
+step 248 - lrate 0.000006, wchange 0.00127203, angledelta 117.9 deg
+step 249 - lrate 0.000006, wchange 0.00120919, angledelta 117.7 deg
+step 250 - lrate 0.000006, wchange 0.00108460, angledelta 116.1 deg
+step 251 - lrate 0.000005, wchange 0.00100077, angledelta 114.6 deg
+step 252 - lrate 0.000005, wchange 0.00109894, angledelta 115.1 deg
+step 253 - lrate 0.000005, wchange 0.00096108, angledelta 117.8 deg
+step 254 - lrate 0.000005, wchange 0.00081184, angledelta 113.3 deg
+step 255 - lrate 0.000005, wchange 0.00086053, angledelta 114.5 deg
+step 256 - lrate 0.000005, wchange 0.00080195, angledelta 115.0 deg
+step 257 - lrate 0.000005, wchange 0.00078116, angledelta 114.1 deg
+step 258 - lrate 0.000005, wchange 0.00069935, angledelta 114.1 deg
+step 259 - lrate 0.000005, wchange 0.00065809, angledelta 112.4 deg
+step 260 - lrate 0.000005, wchange 0.00065464, angledelta 115.5 deg
+step 261 - lrate 0.000004, wchange 0.00060212, angledelta 115.0 deg
+step 262 - lrate 0.000004, wchange 0.00054250, angledelta 112.5 deg
+step 263 - lrate 0.000004, wchange 0.00055694, angledelta 113.7 deg
+step 264 - lrate 0.000004, wchange 0.00052471, angledelta 115.4 deg
+step 265 - lrate 0.000004, wchange 0.00047336, angledelta 112.8 deg
+step 266 - lrate 0.000004, wchange 0.00044770, angledelta 113.7 deg
+step 267 - lrate 0.000004, wchange 0.00040604, angledelta 112.2 deg
+step 268 - lrate 0.000004, wchange 0.00040394, angledelta 112.3 deg
+step 269 - lrate 0.000004, wchange 0.00036487, angledelta 112.4 deg
+step 270 - lrate 0.000004, wchange 0.00035171, angledelta 112.4 deg
+step 271 - lrate 0.000004, wchange 0.00029800, angledelta 112.4 deg
+step 272 - lrate 0.000004, wchange 0.00027758, angledelta 110.2 deg
+step 273 - lrate 0.000003, wchange 0.00026803, angledelta 108.3 deg
+step 274 - lrate 0.000003, wchange 0.00027870, angledelta 110.8 deg
+step 275 - lrate 0.000003, wchange 0.00026086, angledelta 111.4 deg
+step 276 - lrate 0.000003, wchange 0.00023959, angledelta 113.0 deg
+step 277 - lrate 0.000003, wchange 0.00021572, angledelta 110.0 deg
+step 278 - lrate 0.000003, wchange 0.00021244, angledelta 110.8 deg
+step 279 - lrate 0.000003, wchange 0.00019538, angledelta 110.4 deg
+step 280 - lrate 0.000003, wchange 0.00018556, angledelta 108.9 deg
+step 281 - lrate 0.000003, wchange 0.00017540, angledelta 110.0 deg
+step 282 - lrate 0.000003, wchange 0.00015767, angledelta 110.2 deg
+step 283 - lrate 0.000003, wchange 0.00014875, angledelta 107.8 deg
+step 284 - lrate 0.000003, wchange 0.00013638, angledelta 109.5 deg
+step 285 - lrate 0.000003, wchange 0.00013053, angledelta 109.0 deg
+step 286 - lrate 0.000003, wchange 0.00012723, angledelta 110.0 deg
+step 287 - lrate 0.000003, wchange 0.00011407, angledelta 108.5 deg
+step 288 - lrate 0.000003, wchange 0.00010235, angledelta 107.8 deg
+step 289 - lrate 0.000003, wchange 0.00009889, angledelta 109.1 deg
+step 290 - lrate 0.000002, wchange 0.00009293, angledelta 107.6 deg
+step 291 - lrate 0.000002, wchange 0.00008998, angledelta 109.9 deg
+step 292 - lrate 0.000002, wchange 0.00007750, angledelta 105.6 deg
+step 293 - lrate 0.000002, wchange 0.00007884, angledelta 106.8 deg
+step 294 - lrate 0.000002, wchange 0.00007081, angledelta 109.3 deg
+step 295 - lrate 0.000002, wchange 0.00007073, angledelta 104.9 deg
+step 296 - lrate 0.000002, wchange 0.00006431, angledelta 106.9 deg
+step 297 - lrate 0.000002, wchange 0.00005718, angledelta 105.6 deg
+step 298 - lrate 0.000002, wchange 0.00005632, angledelta 106.3 deg
+step 299 - lrate 0.000002, wchange 0.00005123, angledelta 106.8 deg
+step 300 - lrate 0.000002, wchange 0.00004513, angledelta 107.2 deg
+step 301 - lrate 0.000002, wchange 0.00004342, angledelta 106.4 deg
+step 302 - lrate 0.000002, wchange 0.00004118, angledelta 106.1 deg
+step 303 - lrate 0.000002, wchange 0.00003899, angledelta 106.1 deg
+step 304 - lrate 0.000002, wchange 0.00003507, angledelta 104.9 deg
+step 305 - lrate 0.000002, wchange 0.00003340, angledelta 104.9 deg
+step 306 - lrate 0.000002, wchange 0.00003256, angledelta 105.6 deg
+step 307 - lrate 0.000002, wchange 0.00002900, angledelta 105.8 deg
+step 308 - lrate 0.000002, wchange 0.00002866, angledelta 103.1 deg
+step 309 - lrate 0.000002, wchange 0.00002523, angledelta 104.0 deg
+step 310 - lrate 0.000002, wchange 0.00002369, angledelta 103.5 deg
+step 311 - lrate 0.000002, wchange 0.00002205, angledelta 105.2 deg
+step 312 - lrate 0.000002, wchange 0.00001960, angledelta 102.7 deg
+step 313 - lrate 0.000002, wchange 0.00001810, angledelta 103.3 deg
+step 314 - lrate 0.000002, wchange 0.00001577, angledelta 98.8 deg
+step 315 - lrate 0.000001, wchange 0.00001567, angledelta 100.7 deg
+step 316 - lrate 0.000001, wchange 0.00001467, angledelta 103.7 deg
+step 317 - lrate 0.000001, wchange 0.00001442, angledelta 102.5 deg
+step 318 - lrate 0.000001, wchange 0.00001289, angledelta 103.4 deg
+step 319 - lrate 0.000001, wchange 0.00001200, angledelta 101.0 deg
+step 320 - lrate 0.000001, wchange 0.00001101, angledelta 101.9 deg
+step 321 - lrate 0.000001, wchange 0.00001048, angledelta 103.9 deg
+step 322 - lrate 0.000001, wchange 0.00000963, angledelta 101.6 deg
+step 323 - lrate 0.000001, wchange 0.00000911, angledelta 101.2 deg
+step 324 - lrate 0.000001, wchange 0.00000852, angledelta 101.4 deg
+step 325 - lrate 0.000001, wchange 0.00000742, angledelta 98.7 deg
+step 326 - lrate 0.000001, wchange 0.00000690, angledelta 99.1 deg
+step 327 - lrate 0.000001, wchange 0.00000630, angledelta 98.2 deg
+step 328 - lrate 0.000001, wchange 0.00000587, angledelta 99.7 deg
+step 329 - lrate 0.000001, wchange 0.00000607, angledelta 102.0 deg
+step 330 - lrate 0.000001, wchange 0.00000540, angledelta 101.0 deg
+step 331 - lrate 0.000001, wchange 0.00000510, angledelta 99.6 deg
+step 332 - lrate 0.000001, wchange 0.00000470, angledelta 100.5 deg
+step 333 - lrate 0.000001, wchange 0.00000430, angledelta 100.1 deg
+step 334 - lrate 0.000001, wchange 0.00000367, angledelta 100.3 deg
+step 335 - lrate 0.000001, wchange 0.00000369, angledelta 100.3 deg
+step 336 - lrate 0.000001, wchange 0.00000312, angledelta 98.6 deg
+step 337 - lrate 0.000001, wchange 0.00000320, angledelta 98.4 deg
+step 338 - lrate 0.000001, wchange 0.00000294, angledelta 98.3 deg
+step 339 - lrate 0.000001, wchange 0.00000261, angledelta 97.7 deg
+step 340 - lrate 0.000001, wchange 0.00000255, angledelta 96.5 deg
+step 341 - lrate 0.000001, wchange 0.00000227, angledelta 97.8 deg
+step 342 - lrate 0.000001, wchange 0.00000224, angledelta 99.4 deg
+step 343 - lrate 0.000001, wchange 0.00000201, angledelta 99.5 deg
+step 344 - lrate 0.000001, wchange 0.00000188, angledelta 94.8 deg
+step 345 - lrate 0.000001, wchange 0.00000171, angledelta 97.0 deg
+step 346 - lrate 0.000001, wchange 0.00000150, angledelta 96.8 deg
+step 347 - lrate 0.000001, wchange 0.00000143, angledelta 96.9 deg
+step 348 - lrate 0.000001, wchange 0.00000120, angledelta 97.0 deg
+step 349 - lrate 0.000001, wchange 0.00000122, angledelta 95.8 deg
+step 350 - lrate 0.000001, wchange 0.00000108, angledelta 98.6 deg
+step 351 - lrate 0.000001, wchange 0.00000098, angledelta 95.3 deg
+step 352 - lrate 0.000001, wchange 0.00000091, angledelta 96.5 deg
+step 353 - lrate 0.000001, wchange 0.00000080, angledelta 96.8 deg
+step 354 - lrate 0.000001, wchange 0.00000087, angledelta 93.7 deg
+step 355 - lrate 0.000001, wchange 0.00000078, angledelta 94.5 deg
+step 356 - lrate 0.000001, wchange 0.00000074, angledelta 94.6 deg
+step 357 - lrate 0.000001, wchange 0.00000066, angledelta 94.1 deg
+step 358 - lrate 0.000001, wchange 0.00000067, angledelta 96.5 deg
+step 359 - lrate 0.000001, wchange 0.00000056, angledelta 96.0 deg
+step 360 - lrate 0.000001, wchange 0.00000051, angledelta 96.3 deg
+step 361 - lrate 0.000001, wchange 0.00000051, angledelta 98.0 deg
+step 362 - lrate 0.000001, wchange 0.00000044, angledelta 93.0 deg
+step 363 - lrate 0.000001, wchange 0.00000042, angledelta 95.6 deg
+step 364 - lrate 0.000001, wchange 0.00000039, angledelta 97.0 deg
+step 365 - lrate 0.000001, wchange 0.00000036, angledelta 92.6 deg
+step 366 - lrate 0.000001, wchange 0.00000032, angledelta 92.9 deg
+step 367 - lrate 0.000001, wchange 0.00000027, angledelta 95.4 deg
+step 368 - lrate 0.000001, wchange 0.00000029, angledelta 91.5 deg
+step 369 - lrate 0.000000, wchange 0.00000026, angledelta 95.0 deg
+step 370 - lrate 0.000000, wchange 0.00000024, angledelta 92.1 deg
+step 371 - lrate 0.000000, wchange 0.00000022, angledelta 95.8 deg
+step 372 - lrate 0.000000, wchange 0.00000021, angledelta 93.9 deg
+step 373 - lrate 0.000000, wchange 0.00000019, angledelta 95.7 deg
+step 374 - lrate 0.000000, wchange 0.00000017, angledelta 94.8 deg
+step 375 - lrate 0.000000, wchange 0.00000015, angledelta 93.7 deg
+step 376 - lrate 0.000000, wchange 0.00000015, angledelta 94.7 deg
+step 377 - lrate 0.000000, wchange 0.00000013, angledelta 93.6 deg
+step 378 - lrate 0.000000, wchange 0.00000013, angledelta 94.5 deg
+step 379 - lrate 0.000000, wchange 0.00000012, angledelta 93.5 deg
+step 380 - lrate 0.000000, wchange 0.00000011, angledelta 91.9 deg
+step 381 - lrate 0.000000, wchange 0.00000010, angledelta 93.3 deg
+Sorting components in descending order of mean projected variance ...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Scaling components to RMS microvolt
+eeg_checkset: recomputing the ICA activation matrix ...
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+Cannot find option file /home/shaws5/.mcrCache9.5/offlin1/EEGLAB/functions/adminfunc/eeg_options.txt
+ICLabel: extracting features...
+ICLabel: calculating labels...
+Error using load
+Unable to read file '/home/shaws5/.mcrCache9.5/offlin1/project/6006749/shaws5/Research_code/EEGnet/Toolboxes/EEGLAB/plugins/ICLabel1.1/netICL'. No such file or directory.
+
+Error in run_ICL (line 26)
+
+Error in iclabel (line 53)
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 118)
+
+MATLAB:load:couldNotReadFile
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tp4a1f6586_6a18_4291_b7e1_849c42a841ba.mat: Signal 127
+Elapsed time is 926.227601 seconds.
+
+ ***************************** Finished Subject P1228 Session Post Run rest ***************************** 

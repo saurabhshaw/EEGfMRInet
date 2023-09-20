@@ -1,0 +1,6 @@
+Undefined variable "YY_final_continuous_SUB" or class "YY_final_continuous_SUB".
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('LiveEditorEvaluationHelperESectionEval', '/tmp/Editor/LiveEditorEvaluationHelperESectionEval.mlx', 445)" style="font-weight:bold">LiveEditorEvaluationHelperESectionEval</a> (<a href="matlab: opentoline('/tmp/Editor/LiveEditorEvaluationHelperESectionEval.mlx',445,0)">line 445</a>)
+                curr_Features = cat(1,Features_SUB{:}); curr_YY_final = cat(2,YY_final_SUB{:}); curr_YY_final_continuous = cat(1,YY_final_continuous_SUB{:});               
+
+Error in matlab.internal.editor.evaluateCode

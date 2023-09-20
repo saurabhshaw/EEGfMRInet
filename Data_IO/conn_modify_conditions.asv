@@ -1,0 +1,16 @@
+
+% Takes CONN_x as input and modificed conditions and durations:
+num_subjects = length(CONN_x.Setup.conditions.values);
+num_conditions = length(CONN_x.Setup.conditions.allnames);
+
+for i = 1:num_subjects
+   for j = 1:num_conditions
+       num_sessions = length(CONN_x.Setup.conditions.values{i}{j});
+       
+       for k = 1:num_sessions
+           
+           
+           
+       end      
+   end   
+end

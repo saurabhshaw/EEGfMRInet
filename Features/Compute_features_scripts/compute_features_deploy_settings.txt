@@ -1,0 +1,41 @@
+% Settings for Computing EEG features:
+% Options for FBCSP
+fbcsp_opt.features.cspcomps = 2;      % This is K from the lecture slides (you should have 2*K features per filter in the filter bank)
+fbcsp_opt.features.cspband = [4,32];  % The filter bank will be constructed within this frequency range
+fbcsp_opt.features.cspstep = 2;       % Adjacent filters will having initial frequency shifted by 2 Hz
+fbcsp_opt.features.cspwidth = 4;      % Each bandpass filter will cover a 4 Hz band
+fbcsp_opt.mode = 'concat';            % CSP can actually be computed according to about 4 mathematically equivalent formulations. I've selected one for you to use here.
+fbcsp_opt.filter.type = 'butter';     % The filter bank will be constructed of Butterworth bandpass filters
+fbcsp_opt.filter.order = 4;           % Each filter will be second-order
+fbcsp_opt.filter.sr = EEG.srate;      % This is just the sampling rate of the EEG signal (needed to compute the coefficients of each bandpass filters)
+
+% Options for Bispectrum
+downsample_factor = 16;
+
+% Options for Windowing:
+windowLength = [100]; % Could be multiple windowLengths [100,200,400,1000] 
+windowStep = [50]; % Could be multiple windowSteps [50, 100, 200, 500]
+numOfProt = length(windowLength);
+if length(size(EEG.data)) > 2 num_epochs = size(EEG.data,3);  else num_epochs = 1; end 
+
+% Options for frequency bands to compute features over:
+% frequency_bands = {'full','delta','theta','alpha','beta','gamma','high_gamma'};
+frequency_bands = {'full','delta','theta','alpha','beta','gamma'};
+
+% Options for PLI + dPLI:
+pli_opt.data_length_factor = 5;
+pli_opt.permutation = 10; % Was originally 20
+pli_opt.p_value = 0.05;
+
+% Options for PAC:
+% Should be in this order - {'full','delta','theta','alpha','beta','gamma','high_gamma'}
+pac_opt.frequency_bands = frequency_bands;
+pac_opt.numberOfBin = 10;
+pac_opt.data_length_factor = 5;
+pac_opt.bichannel = 1;
+
+% Options for CFC_SI:
+% Should be in this order - {'full','delta','theta','alpha','beta','gamma','high_gamma'}
+CFCSI_opt.frequency_bands = frequency_bands;
+precompute_parfor = 0;
+save_all = 0;

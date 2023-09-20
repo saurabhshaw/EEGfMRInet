@@ -1,0 +1,28 @@
+function sub_dir = update_subject_list(study_name,modality,base_path_data,file_prefix,num_stages)
+
+file_prefix = 'Subject_PreProcessing_Info_';
+
+% Get directory information:
+sub_dir = dir([base_path_data filesep '*_' study_name '_' modality '*']);
+sub_dir_mod = rmfield(sub_dir,{'folder','date','bytes','isdir','datenum'});
+
+% Get processing information:
+sub_dir_cell = {sub_dir.name};
+temp_PID = cellfun(@(x) strsplit(x,{'-','_'}),sub_dir_cell,'un',0); temp_PID = cellfun(@(x) x{4},temp_PID,'un',0); [sub_dir_mod.PID] = temp_PID{:};
+temp_SID = cellfun(@(x) strsplit(x,{'_','.mat'}),sub_dir_cell,'un',0); temp_SID = cellfun(@(x) x{4},temp_SID,'un',0); [sub_dir_mod.SID] = temp_SID{:};
+temp_isPreProcessed = cellfun(@(x,y,z) ~isempty(dir([base_path_data filesep x filesep 'PreProcessed' filesep y '_' z '_preprocessed.set'])),sub_dir_cell,temp_PID,temp_SID,'un',0); [sub_dir_mod.isPreProcessed] = temp_isPreProcessed{:};
+temp_StageCompletion_dir = cellfun(@(x,y,z) dir([base_path_data filesep x filesep 'PreProcessed' filesep y '_' z '_StageCompletion.mat']),sub_dir_cell,temp_PID,temp_SID,'un',0);
+temp_isStageCompletion = cellfun(@(x) ~isempty(x),temp_StageCompletion_dir);
+temp_StageCompletion = cell(size(temp_isStageCompletion)); temp_StageCompletion = cellfun(@(x) 0,temp_StageCompletion,'un',0);
+temp_StageCompletion(temp_isStageCompletion) = cellfun(@(x) load([x.folder filesep x.name],'max_finishedStage') ,temp_StageCompletion_dir(temp_isStageCompletion),'un',0);
+temp_StageCompletion(temp_isStageCompletion) = cellfun(@(x) x.max_finishedStage,temp_StageCompletion(temp_isStageCompletion),'un',0);
+[sub_dir_mod.max_finishe] = temp_SID{:};
+
+
+% Convert to table and write table as excel file:
+sub_dir_table = struct2table(sub_dir_mod); writetable(sub_dir_table,[base_path_data filesep file_prefix study_name],'FileType','spreadsheet');
+
+% Convert to JSON and write as .json file:
+sub_dir_json = jsonencode(sub_dir_table);
+fid = fopen([base_path_data filesep file_prefix study_name '.json'], 'w'); if fid == -1, error('Cannot create JSON file'); end
+fwrite(fid, sub_dir_json, 'char'); fclose(fid);

@@ -1,0 +1,14 @@
+% Run this script for manually rejecting components -
+% Stage4 of offline_preprocess_manual
+%
+
+[curr_filename,curr_dir] = uigetfile({'*Stage3-Workspace*.mat'},'Select the Stage3 file');
+load([curr_dir curr_filename]);
+eeglab redraw
+
+answer = 
+EEG_ICA_Manualrejcomp{1} = []; % Type all the component numbers you want to reject
+EEG = pop_subcomp(EEG, EEG_ICA_Manualrejcomp{1}, 0);
+
+EEG.setname = regexprep(EEG.setname,' pruned with ICA','_ICAreject1');
+EEG = pop_saveset( EEG, 'filename',['Stage3-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);

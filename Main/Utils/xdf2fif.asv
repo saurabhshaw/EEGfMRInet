@@ -1,0 +1,5 @@
+function xdf2fif(xdfdata_file,chanlocs_file)
+
+EEG = pop_loadxdf([curr_dir filesep curr_file] , 'streamtype', 'EEG', 'exclude_markerstreams', {});
+EEG = pop_chanedit(EEG, 'load',{chanlocs_file 'filetype' 'autodetect'}); EEG = eeg_checkset( EEG );
+EEG.setname = [dataset_name]; EEG = eeg_checkset( EEG );

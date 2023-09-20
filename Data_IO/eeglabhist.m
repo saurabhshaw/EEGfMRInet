@@ -1,0 +1,33 @@
+% EEGLAB history file generated on the 27-Feb-2020
+% ------------------------------------------------
+eeglab('redraw');
+[EEG ALLEEG CURRENTSET] = eeg_retrieve(ALLEEG,1);
+EEG = eeg_checkset( EEG );
+pop_eegplot( EEG, 1, 1, 1);
+EEG = eeg_checkset( EEG );
+pop_eegplot( EEG, 1, 1, 1);
+[ALLEEG EEG CURRENTSET] = eeg_store(ALLEEG, EEG, CURRENTSET);
+EEG = eeg_checkset( EEG );
+pop_eegplot( EEG, 1, 1, 1);
+EEG = eeg_checkset( EEG );
+EEG = pop_selectevent( EEG, 'omitevent',[1:14] ,'deleteevents','off');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'setname','test','gui','off'); 
+EEG = eeg_checkset( EEG );
+EEG = pop_selectevent( EEG, 'omitevent',[1:14] ,'select','inverse','deleteevents','off');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 2,'setname','test','gui','off'); 
+EEG = eeg_checkset( EEG );
+pop_eegplot( EEG, 1, 1, 1);
+EEG = eeg_checkset( EEG );
+[ALLEEG EEG CURRENTSET ALLCOM] = eeglab('rebuild');
+[ALLEEG EEG CURRENTSET] = eeg_store(ALLEEG, EEG, CURRENTSET);
+EEG = eeg_checkset( EEG );
+EEG=pop_chanedit(EEG, 'lookup','Z:\\research_code\\EEGnet\\Toolboxes\\EEGLAB\\plugins\\dipfit\\standard_BESA\\standard-10-5-cap385.elp','load',{'Z:\\research_code\\EEGnet\\Cap_files\\BrainProductsMR64_NZ_LPA_RPA_mod.sfp' 'filetype' 'autodetect'},'load',{'Z:\\research_code\\EEGnet\\Cap_files\\BrainProductsMR64_NZ_LPA_RPA.sfp' 'filetype' 'autodetect'},'load',{'Z:\\research_code\\EEGnet\\Cap_files\\BrainProductsMR64_NZ_LPA_RPA_mod.sfp' 'filetype' 'autodetect'},'delete',35,'delete',67,'insert',34,'changefield',{34 'labels' 'ECG'},'changefield',{34 'theta' '0'},'changefield',{34 'radius' '0'},'changefield',{34 'X' '0'},'changefield',{34 'Y' '0'},'changefield',{34 'Z' '0'},'changefield',{34 'sph_theta' '0'},'changefield',{34 'sph_phi' '0'},'changefield',{34 'sph_radius' '0'},'changefield',{34 'type' 'ECG'},'changefield',{34 'datachan' 1},'eval','pop_writelocs( chans, ''Z:\\research_code\\EEGnet\\Cap_files\\BrainProductsMR64_NZ_LPA_RPA_custommod.sfp'', ''filetype'',''sfp'',''format'',{''labels'' ''-Y'' ''X'' ''Z''},''header'',''off'',''customheader'','''');');
+[ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
+EEG = eeg_checkset( EEG );
+pop_eegplot( EEG, 1, 1, 1);
+eeglab('redraw');
+EEG = eeg_checkset( EEG );
+pop_eegplot( EEG, 1, 1, 1);
+EEG = eeg_eegrej( EEG, [8773 16266] );
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 3,'gui','off'); 
+eeglab redraw;

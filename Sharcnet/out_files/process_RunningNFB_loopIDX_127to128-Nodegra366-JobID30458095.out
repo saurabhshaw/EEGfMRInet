@@ -1,0 +1,245 @@
+Opening log file:  /tmp/java.log.27356
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2018 The MathWorks, Inc.
+                   R2018b (9.5.0.944444) 64-bit (glnxa64)
+                              August 28, 2018
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function iscolumn has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function ismatrix has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function isrow has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function isequaln has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function isstring has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function isstring has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 43)
+  In run (line 91)] 
+[Warning: Function labindex has the same name as a MATLAB builtin. We suggest
+you rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 44)
+  In run (line 91)] 
+[Warning: Function numlabs has the same name as a MATLAB builtin. We suggest you
+rename the function to avoid a potential name conflict.] 
+[> In path (line 109)
+  In addpath (line 86)
+  In process_RunningNFB_loopIDX_127to128 (line 44)
+  In run (line 91)] 
+
+ ***************************** Processing Subject P1195 Session Pre Run task ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (368005) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+
+--------------------------------------------------------------------------------
+          std::terminate() detected at Tue Apr 14 03:17:28 2020 -0400
+--------------------------------------------------------------------------------
+
+Configuration:
+  Crash Decoding           : Disabled - No sandbox or build area path
+  Crash Mode               : continue (default)
+  Default Encoding         : UTF-8
+  GNU C Library            : 2.24 stable
+  MATLAB Architecture      : glnxa64
+  MATLAB Root              : /cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2018b
+  MATLAB Version           : 9.5.0.944444 (R2018b)
+  Operating System         : "CentOS Linux release 7.5.1804 (Core) "
+  Process ID               : 32448
+  Processor ID             : x86 Family 6 Model 79 Stepping 1, GenuineIntel
+  Static TLS mitigation    : Disabled: Unable to open display
+
+Fault Count: 1
+
+
+Abnormal termination
+
+Register State (captured):
+  RAX = 0000000000000000  RBX = 00002ac77b3731f8
+  RCX = 000000000000000a  RDX = 00002ac77b356bf8
+  RSP = 00007fff4abf9d00  RBP = 00007fff4abfa0c0
+  RSI = 00002ac77b11b5a5  RDI = 00007fff4abf9d10
+
+   R8 = 00002ac77b363168   R9 = 00002ac77a9b6740
+  R10 = 00007fff4abf9e40  R11 = 000000000094bb80
+  R12 = 00002ac77b363168  R13 = 00007fff4abfa480
+  R14 = 00007fff4abfa970  R15 = 00007fff4abfa940
+
+  RIP = 00002ac77b07e49e  EFL = 0000000000000006
+
+   CS = 0000   FS = 0000   GS = 0000
+
+Stack Trace (captured):
+[  0] 0x00002ac77b0762d3                             bin/glnxa64/libmwfl.so+00762579
+[  1] 0x00002ac77b0764cc                             bin/glnxa64/libmwfl.so+00763084 _ZN10foundation4core4diag15stacktrace_base7captureEm+00000028
+[  2] 0x00002ac77b078c1c                             bin/glnxa64/libmwfl.so+00773148
+[  3] 0x00002ac78bd4be5a                            bin/glnxa64/libmwmcr.so+01093210
+[  4] 0x00002ac78bd4e47b                            bin/glnxa64/libmwmcr.so+01102971
+[  5] 0x00002ac78bd4e77a                            bin/glnxa64/libmwmcr.so+01103738
+[  6] 0x00002ac78bd4ed4d                            bin/glnxa64/libmwmcr.so+01105229
+[  7] 0x00002ac78bd4fd07                            bin/glnxa64/libmwmcr.so+01109255
+[  8] 0x00002ac77a6d13a6 /cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2018b/sys/os/glnxa64/libstdc++.so.6+00582566
+[  9] 0x00002ac77a6d13f1 /cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2018b/sys/os/glnxa64/libstdc++.so.6+00582641
+[ 10] 0x00002ac77a6d1406 /cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2018b/sys/os/glnxa64/libstdc++.so.6+00582662
+[ 11] 0x00002ac77a6d1062 /cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2018b/sys/os/glnxa64/libstdc++.so.6+00581730 __cxa_call_unexpected+00000050
+[ 12] 0x00002ac7a2725c7e                      bin/glnxa64/libmwdservices.so+00248958 _ZN24dsDirectoryExclusiveLock7acquireERKN7mwboost10posix_time13time_durationEb+00004414
+[ 13] 0x00002ac7a2726133                      bin/glnxa64/libmwdservices.so+00250163 _ZN24dsDirectoryExclusiveLock7acquireEb+00000035
+[ 14] 0x00002ac7a1ce0bc7                         bin/glnxa64/libmwmclmcr.so+02845639 _ZN7mwboost11unique_lockI24dsDirectoryExclusiveLockE4lockEv+00000039
+[ 15] 0x00002ac7a1cdce34                         bin/glnxa64/libmwmclmcr.so+02829876
+[ 16] 0x00002ac7a1c5858f                         bin/glnxa64/libmwmclmcr.so+02286991
+[ 17] 0x00002ac7a1c59097                         bin/glnxa64/libmwmclmcr.so+02289815 _ZN7mwboost6detail8function21function_obj_invoker0INS_3_bi6bind_tINS_10shared_ptrI21mclExtractedComponentEEPFS7_N6mclmcr12CtfExtractorEENS3_5list1INS3_5valueIS9_EEEEEES7_E6invokeERNS1_15function_bufferE+00000247
+[ 18] 0x00002ac7a1ca53f0                         bin/glnxa64/libmwmclmcr.so+02601968 _Z30mclInitializeComponentInstanceRKN7mwboost8functionIFiPKcEEES6_NS_9function0INS_10shared_ptrI21mclExtractedComponentEEEE+00000256
+[ 19] 0x00002ac7a1c7dfa0                         bin/glnxa64/libmwmclmcr.so+02441120
+[ 20] 0x00002ac78ba12940                        bin/glnxa64/libmwmclbase.so+00383296
+[ 21] 0x00002ac7a2e33797                       bin/glnxa64/libmwMVMLocal.so+00513943 _ZN7mwboost6detail8function21function_obj_invoker0INS_3_bi6bind_tINS3_11unspecifiedENS_9function1IiRKSt6vectorINSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEESaISD_EEEENS3_5list1INS3_5valueISF_EEEEEEiE6invokeERNS1_15function_bufferE+00000039
+[ 22] 0x00002ac78bcf72a7                            bin/glnxa64/libmwmcr.so+00746151
+[ 23] 0x00002ac78bcf77e8                            bin/glnxa64/libmwmcr.so+00747496
+[ 24] 0x00002ac78bcf7a94                            bin/glnxa64/libmwmcr.so+00748180 _Z12mcr_run_mainRKN7mwboost9function0IiEEbb+00000196
+[ 25] 0x00002ac7a2e2950b                       bin/glnxa64/libmwMVMLocal.so+00472331
+[ 26] 0x00002ac78c328857                            bin/glnxa64/libmwmvm.so+03401815 _ZN3mvm6detail11SessionImpl7runMainERKN7mwboost9function1IiRKSt6vectorINSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEESaISA_EEEESE_+00000087
+[ 27] 0x00002ac78ba12e3a                        bin/glnxa64/libmwmclbase.so+00384570 mclRunMain+00001194
+[ 28] 0x00002ac7a1c7f908                         bin/glnxa64/libmwmclmcr.so+02447624 mclStandaloneGenericMain+00001080
+[ 29] 0x00002ac77a232cf9                   bin/glnxa64/libmwlaunchermain.so+00044281
+[ 30] 0x0000000000407f91 /project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy+00036753
+[ 31] 0x00002ac77ac3e2e0 /cvmfs/soft.computecanada.ca/nix/store/63pk88rnmkzjblpxydvrmskkc8ci7cx6-glibc-2.24/lib/libc.so.6+00131808 __libc_start_main+00000240
+[ 32] 0x0000000000403fda /project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy+00020442
+[ 33] 0x0000000000000000                                   <unknown-module>+00000000
+
+** This crash report has been saved to disk as /home/shaws5/matlab_crash_dump.32448-1 **
+
+
+
+MATLAB is exiting because of fatal error
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tp6e6f9ba7_c561_4f5b_926f_b9c3336dacd0.mat: Killed
+Elapsed time is 7.509215 seconds.
+
+ ***************************** Finished Subject P1195 Session Pre Run task ***************************** 
+
+ ***************************** Processing Subject P1195 Session Pre Run rest ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (153600) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.32489
+Error using iclabel (line 44)
+You must have an ICA decomposition to use ICLabel
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 182)
+
+
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tp8ebbfe67_f057_4f24_9780_c44e8e3c7594.mat: Signal 127
+Elapsed time is 14.109585 seconds.
+
+ ***************************** Finished Subject P1195 Session Pre Run rest ***************************** 
+
+ ***************************** Processing Subject P1198 Session Pre Run task ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (405574) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.32576
+Error using iclabel (line 44)
+You must have an ICA decomposition to use ICLabel
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 182)
+
+
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tpa9c044e3_6e35_4ecf_b2bf_9ec71ddf1d4f.mat: Signal 127
+Elapsed time is 18.406276 seconds.
+
+ ***************************** Finished Subject P1198 Session Pre Run task ***************************** 
+
+ ***************************** Processing Subject P1198 Session Pre Run rest ***************************** 
+eeg_checkset warning: number of columns in data (128) does not match the number of channels (0): corrected
+eeg_checkset warning: 3rd dimension size of data (1) does not match the number of epochs (0), corrected
+eeg_checkset warning: number of columns in data (153600) does not match the number of points (0): corrected
+eeg_checkset note: upper time limit (xmax) adjusted so (xmax-xmin)*srate+1 = number of frames
+[Warning: channel labels should not be empty, creating unique labels] 
+readlocs(): 'sfp' format assumed from file extension
+
+ ***************************** Starting Pre-Processing ***************************** 
+Opening log file:  /tmp/java.log.32646
+Error using iclabel (line 44)
+You must have an ICA decomposition to use ICLabel
+
+Error in pop_iclabel (line 59)
+
+Error in offline_preprocess_manual_deploy (line 182)
+
+
+/project/6006749/shaws5/Research_code/EEGnet/PreProcessing/offline_preprocess_manual_deploy /home/shaws5/scratch/Research_data/temp_deploy_files/tpde1fd47c_cbec_4cdc_8df0_9ee951337fcc.mat: Signal 127
+Elapsed time is 13.532265 seconds.
+
+ ***************************** Finished Subject P1198 Session Pre Run rest ***************************** 

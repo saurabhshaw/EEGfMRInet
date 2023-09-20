@@ -1,0 +1,27 @@
+% Run this script for manually rejecting components -
+% Stage5 of offline_preprocess_manual
+%
+current_stage = 5;
+file_toLoad = ['*Stage' num2str(current_stage-1) '-Workspace*.mat'];
+[curr_filename,curr_dir] = uigetfile({file_toLoad},['Select the Stage' num2str(current_stage-1) ' file']);
+load([curr_dir curr_filename],'max_finishedStage');
+if max_finishedStage == current_stage
+    
+    load([curr_dir curr_filename]);
+    eeglab redraw
+    
+    answer = inputdlg('ICA component numbers you want to reject (separated by spaces):','Manual ICA component rejection', [1 50]);
+    EEG_ICA_Manualrejcomp{1} = str2num(answer{1}); % Type all the component numbers you want to reject
+    EEG = pop_subcomp(EEG, EEG_ICA_Manualrejcomp{1}, 0);
+    
+    EEG.setname = regexprep(EEG.setname,' pruned with ICA','_ICAreject1');
+    EEG = pop_saveset( EEG, 'filename',['Stage5-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
+    
+    % Update preprocessing_stageCompletion
+    preprocessing_stageCompletion(current_stage) = 1; max_finishedStage = max(find(preprocessing_stageCompletion));
+    
+    % Save breakpoint after updating preprocessing_stageCompletion
+    save([curr_dir_preprocessed filesep dataset_name '_Stage' num2str(current_stage) '-Workspace']);
+else
+    f = errordlg('Previous stages not completed. Please run them and try again','Stage Error');
+end

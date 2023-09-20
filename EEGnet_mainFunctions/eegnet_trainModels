@@ -1,0 +1,1 @@
+function outputModel = eegnet(inputData,inputLabels,classifierType,retrain)
