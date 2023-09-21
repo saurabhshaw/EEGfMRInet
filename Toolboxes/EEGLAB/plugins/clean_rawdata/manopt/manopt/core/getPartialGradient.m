@@ -25,6 +25,9 @@ function grad = getPartialGradient(problem, x, I, storedb, key)
 % Original author: Nicolas Boumal, June 28, 2016
 % Contributors: 
 % Change log: 
+%
+%   Feb. 10, 2020 (NB):
+%       Allowing M.egrad2rgrad to take (storedb, key) as extra inputs.
 
 
     % Allow omission of the key, and even of storedb.
@@ -43,7 +46,7 @@ function grad = getPartialGradient(problem, x, I, storedb, key)
     
     if isfield(problem, 'partialgrad')
     %% Compute the partial gradient using partialgrad.
-	
+    
         % Check whether this function wants to deal with storedb or not.
         switch nargin(problem.partialgrad)
             case 2
@@ -66,7 +69,17 @@ function grad = getPartialGradient(problem, x, I, storedb, key)
     %% Compute the partial gradient using the Euclidean partial gradient.
         
         egrad = getPartialEuclideanGradient(problem, x, I, storedb, key);
-        grad = problem.M.egrad2rgrad(x, egrad);
+        % Convert to the Riemannian gradient
+        switch nargin(problem.M.egrad2rgrad)
+            case 2
+                grad = problem.M.egrad2rgrad(x, egrad);
+            case 4
+                grad = problem.M.egrad2rgrad(x, egrad, storedb, key);
+            otherwise
+                up = MException('manopt:getPartialGradient:egrad2rgrad', ...
+                    'egrad2rgrad should accept 2 or 4 inputs.');
+                throw(up);
+        end
 
     else
     %% Abandon computing the partial gradient.

@@ -1,9 +1,9 @@
-% pop_erpimparams() - Set plotting and statistics parameters for 
+% POP_ERPIMPARAMS - Set plotting and statistics parameters for 
 %                    computing and plotting STUDY mean ERPimages and measure 
 %                    statistics. Settings are stored within the STUDY 
 %                    structure (STUDY.etc.erpimparams) which is used
 %                    whenever plotting is performed by the function
-%                    std_erpimage().
+%                    STD_ERPIMAGE.
 % Usage:    
 %   >> STUDY = pop_erpimparams(STUDY, 'key', 'val', ...);   
 %
@@ -77,8 +77,8 @@ if isempty(varargin)
     geometry = { 1 [0.6 .4] [0.6 .4] 1 1 chanline };    
     
     if icaFlag
-        uilist = uilist(1:end-5);
-        geometry = geometry(1:end-4);
+        uilist = uilist(1:end-4);
+        geometry = geometry(1:end-3);
     end
     
     [~, ~, ~, res] = inputgui( 'geometry' , geometry, 'uilist', uilist, ...

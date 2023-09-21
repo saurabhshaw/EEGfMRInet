@@ -1,3 +1,0 @@
-Array indices must be positive integers or logical values.
-
-Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('EEGfMRI_preprocess', 'F:

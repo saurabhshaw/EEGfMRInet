@@ -43,7 +43,7 @@ function M = positivefactory(m, n)
     M.name = @() sprintf('Element-wise positive %dx%d matrices', m, n);
     
     M.dim = @() m*n;
-    	
+        
     % The metric is the scale invariant metric for scalars.
     M.inner = @myinner;
     function innerproduct = myinner(X, eta, zeta)
@@ -130,8 +130,7 @@ function M = positivefactory(m, n)
     % present factory.
     M.paralleltransp = @parallel_transport;
     function zeta = parallel_transport(X, Y, eta)
-        E = sqrt(Y./X);
-        zeta = E.*eta.*E;
+        zeta = eta.*Y./X;
     end
     
     % vec and mat are not isometries, because of the unusual inner metric.

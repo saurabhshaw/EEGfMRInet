@@ -1,4 +1,4 @@
-% std_plottf() - plot ERSP/ITC images a component
+% STD_PLOTTF - plot ERSP/ITC images a component
 %              or channel cluster in a STUDY. Also allows plotting scalp
 %              maps.
 % Usage:
@@ -38,7 +38,7 @@
 %  'maskdata'    - ['on'|'off'] when threshold is non-NaN and not both 
 %                  condition and group statistics are computed, the user 
 %                  has the option to mask the data for significance.
-%                  {defualt: 'off'}
+%                  {default: 'off'}
 %
 % Other plotting options:
 %  'plotmode'    - ['normal'|'condensed'] statistics plotting mode:
@@ -48,10 +48,10 @@
 %  'freqscale'   - ['log'|'linear'|'auto'] frequency plotting scale. This
 %                  will only change the ordinate not interpolate the data.
 %                  If you change this option blindly, your frequency scale
-%                  might be innacurate {default: 'auto'}
+%                  might be inaccurate {default: 'auto'}
 %
 % ITC/ERSP image plotting options:
-%  'tftopoopt'   - [cell array] tftopo() plotting options (ERSP and ITC)
+%  'tftopoopt'   - [cell array] TFTOPO plotting options (ERSP and ITC)
 %  'caxis'       - [min max] color axis (ERSP, ITC, scalp maps)
 %
 % Scalp map plotting options:
@@ -59,7 +59,7 @@
 %
 % Author: Arnaud Delorme, CERCO, CNRS, 2006-
 %
-% See also: pop_erspparams(), pop_erpparams(), pop_specparams(), statcond()
+% See also: POP_ERSPPARAMS, POP_ERPPARAMS, POP_SPECPARAMS, STATCOND
 
 % Copyright (C) 2006 Arnaud Delorme
 %
@@ -108,7 +108,7 @@ opt = finputcheck( varargin, { 'titles'         'cell'   []              cellfun
                                'unitx'          'string' []              'ms'; % just for titles
                                'unitcolor'      'string' {}              'dB';
                                'chanlocs'       'struct' []              struct('labels', {});
-                               'freqscale'      'string' { 'log','linear','auto' }  'auto';
+                               'freqscale'      'string' { 'log','linear','auto' }  'auto'; % note that paramsersp in std_erspplot contains the information as well
                                'effect'         'string' { 'main','marginal' }   'marginal';
                                'averagemode'    'string' { 'rms','ave' }   'rms';
                                'events'         'cell'   []              {};
@@ -146,9 +146,9 @@ end
 % test log frequencies
 % --------------------
 if length(freqs) > 2 && strcmpi(opt.freqscale, 'auto')
-    midfreq = (freqs(3)+freqs(1))/2;
-    if midfreq*.9999 < freqs(2) && midfreq*1.0001 > freqs(2), opt.freqscale = 'linear';
-    else                                                     opt.freqscale = 'log';
+    midind  = floor(length(freqs)/2);
+    if abs(freqs(midind)/freqs(end) - 1/2) < 0.1, opt.freqscale = 'linear';
+    else                                          opt.freqscale = 'log';
     end
 end
 
@@ -180,7 +180,7 @@ if strcmpi(opt.plotmode, 'condensed')
     return; 
 end
 
-% plotting paramters
+% plotting parameters
 % ------------------
 if ng > 1 && ~isempty(opt.groupstats), addc = 1; else addc = 0; end
 if nc > 1 && ~isempty(opt.condstats  ), addr = 1; else addr = 0; end
@@ -200,13 +200,13 @@ if strcmpi(opt.effect, 'marginal') || ng == 1 || nc == 1
     end
 elseif strcmpi(opt.effect, 'main') && ~isempty(opt.interstats)
     if ~isnan(opt.threshold) && ( ~isempty(opt.groupstats) || ~isempty(opt.condstats) )    
-        pcondplot  = { opt.interstats{1} };
-        pgroupplot = { opt.interstats{2} };
+        pcondplot  = { opt.interstats{2} };
+        pgroupplot = { opt.interstats{1} };
         pinterplot = opt.interstats{3};
         maxplot = 1;
     else
-        if ~isempty(opt.interstats{1}), pcondplot  = { -log10(opt.interstats{1}) }; end
-        if ~isempty(opt.interstats{2}), pgroupplot = { -log10(opt.interstats{2}) }; end
+        if ~isempty(opt.interstats{2}), pcondplot  = { -log10(opt.interstats{2}) }; end
+        if ~isempty(opt.interstats{1}), pgroupplot = { -log10(opt.interstats{1}) }; end
         if ~isempty(opt.interstats{3}), pinterplot = -log10(opt.interstats{3}); end
         maxplot = 3;
     end
@@ -239,21 +239,8 @@ if strcmpi(opt.transpose, 'off'), set(gcf, 'position', [ pos(1) pos(2) pos(4) po
 else                              set(gcf, 'position', pos);
 end
 
-% color axis
-% ----------
-if isempty(opt.caxis)
-    % default tftopo is RMS
-    if strcmpi(opt.averagemode, 'rms')
-        tmpx = cellfun(@(x)reshape(sqrt(mean(x.^2,4)), size(x,1)*size(x,2)*size(x,3),1), data(:), 'uniformoutput', false);
-    else
-        tmpx = cellfun(@(x)reshape(mean(x,4), size(x,1)*size(x,2)*size(x,3),1), data(:), 'uniformoutput', false);
-    end
-    opt.caxis = max(cellfun(@max, tmpx));
-    opt.caxis = [-opt.caxis opt.caxis];
-    if strcmpi(opt.datatype, 'itc')
-        opt.caxis = [ 0 opt.caxis(2) ];
-    end
-end
+% options
+% -------
 options = { 'limits' [NaN NaN NaN NaN opt.caxis] 'verbose' 'off' 'mode' opt.averagemode options{:} };
 
 for c = 1:nc
@@ -289,7 +276,7 @@ for c = 1:nc
             end
         end
     
-        % statistics accross groups
+        % statistics across groups
         % -------------------------
         if strcmpi(opt.effect, 'marginal') || (strcmpi(opt.effect, 'main') && c == 1)
             if g == ng && ng > 1 && ~isempty(opt.groupstats) && ~isinf(pgroupplot{c}(1)) && ~statmask
@@ -309,7 +296,7 @@ for c = 1:nc
 end
 
 for g = 1:ng
-    % statistics accross conditions
+    % statistics across conditions
     % -----------------------------
     if strcmpi(opt.effect, 'marginal') || (strcmpi(opt.effect, 'main') && g == 1)
         if ~isempty(opt.condstats) && ~isinf(pcondplot{g}(1)) && ~statmask && nc > 1
@@ -327,7 +314,7 @@ for g = 1:ng
     end
 end
 
-% statistics accross group and conditions
+% statistics across group and conditions
 % ---------------------------------------
 if ~isempty(opt.groupstats) && ~isempty(opt.condstats) && ng > 1 && nc > 1 && ~isempty(pinterplot)
     hdl(nc+1,ng+1) = mysubplot(nc+addr, ng+addc, nc+addr, ng+1, opt.transpose);

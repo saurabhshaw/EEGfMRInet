@@ -1,6 +1,5 @@
-% eegplugin_dipfit() - DIPFIT plugin version 2.0 for EEGLAB menu. 
-%                      DIPFIT is the dipole fitting Matlab Toolbox of 
-%                      Robert Oostenveld (in collaboration with A. Delorme).
+% eegplugin_dipfit() - DIPFIT is the dipole fitting Matlab Toolbox of 
+%                      Robert Oostenveld and Arnaud Delorme
 %
 % Usage:
 %   >> eegplugin_dipfit(fig, trystrs, catchstrs);
@@ -41,7 +40,7 @@
 
 function vers = eegplugin_dipfit(fig, trystrs, catchstrs)
     
-    vers = 'dipfit3.3';
+    vers = 'dipfit5.0';
     if nargin < 3
         error('eegplugin_dipfit requires 3 arguments');
     end
@@ -56,34 +55,38 @@ function vers = eegplugin_dipfit(fig, trystrs, catchstrs)
     % 'export'       -> File > export
     % 'tools'        -> tools menu
     % 'plot'         -> plot menu
-    lightMenuFlag = isempty(findobj(fig, 'Label', 'Reject data epochs'));
 
     % command to check that the '.source' is present in the EEG structure 
     % -------------------------------------------------------------------
-    check_dipfit = [trystrs.no_check 'if ~isfield(EEG, ''dipfit''), error(''Run the dipole setting first''); end;'  ...
-                    'if isempty(EEG.dipfit), error(''Run the dipole setting first''); end;'  ];
+    check_dipfit = [trystrs.no_check 'if ~isfield(EEG(1), ''dipfit''), error(''Run the dipole setting first''); end;'  ...
+                    'if isempty(EEG(1).dipfit), error(''Run the dipole setting first''); end;'  ];
     check_dipfitnocheck = [ trystrs.no_check 'if ~isfield(EEG, ''dipfit''), error(''Run the dipole setting first''); end; ' ];
-    check_chans = [ '[EEG tmpres] = eeg_checkset(EEG, ''chanlocs_homogeneous'');' ...
+    check_chans = [ '[EEG,tmpres] = eeg_checkset(EEG, ''chanlocs_homogeneous'');' ...
                        'if ~isempty(tmpres), eegh(tmpres), end; clear tmpres;' ];
     
     % menu callback commands
     % ----------------------
-    comsetting = [ trystrs.check_ica check_chans '[EEG LASTCOM]=pop_dipfit_settings(EEG);'    catchstrs.store_and_hist ]; 
+    comhead    = [ trystrs.check_chanlocs '[EEG LASTCOM]=pop_dipfit_headmodel(EEG);'   catchstrs.store_and_hist ]; 
+    comsetting = [ trystrs.check_chanlocs '[EEG LASTCOM]=pop_dipfit_settings(EEG);'    catchstrs.store_and_hist ]; 
     combatch   = [ check_dipfit check_chans  '[EEG LASTCOM] = pop_dipfit_gridsearch(EEG);'    catchstrs.store_and_hist ];
     comfit     = [ check_dipfitnocheck check_chans [ 'EEG = pop_dipfit_nonlinear(EEG); ' ...
                         'LASTCOM = ''% === History not supported for manual dipole fitting ==='';' ]  catchstrs.store_and_hist ];
     comauto    = [ check_dipfit check_chans  '[EEG LASTCOM] = pop_multifit(EEG);'        catchstrs.store_and_hist ];
     % preserve the '=" sign in the comment above: it is used by EEGLAB to detect appropriate LASTCOM
-    complot    = [ check_dipfit check_chans 'LASTCOM = pop_dipplot(EEG);'                     catchstrs.add_to_hist ];
-    comloreta  = [ check_dipfit check_chans 'LASTCOM = pop_dipfit_loreta(EEG);'               catchstrs.add_to_hist ];
+    complot    = [ check_dipfit check_chans 'LASTCOM = pop_dipplot(EEG);'               catchstrs.add_to_hist ];
+    comleadfield  = [ check_dipfit check_chans '[EEG, LASTCOM] = pop_leadfield(EEG);'   catchstrs.store_and_hist ];
+    comloreta  = [ check_dipfit check_chans 'LASTCOM = pop_dipfit_loreta(EEG);'         catchstrs.add_to_hist ];
     
     % create menus
     % ------------
-    submenu = uimenu( menu, 'Label', 'Locate dipoles using DIPFIT', 'separator', 'on', 'tag', 'difpit', 'userdata', 'startup:off');
-    if lightMenuFlag, set(submenu, 'position', 14); end
-    uimenu( submenu, 'Label', 'Head model and settings'  , 'CallBack', comsetting);
-    uimenu( submenu, 'Label', 'Coarse fit (grid scan)'   , 'CallBack', combatch);
-    uimenu( submenu, 'Label', 'Fine fit (iterative)'     , 'CallBack', comfit);
-    uimenu( submenu, 'Label', 'Autofit (coarse fit, fine fit & plot)', 'CallBack', comauto);
-    uimenu( submenu, 'Label', 'Locate components using eLoreta', 'CallBack', comloreta);
-    uimenu( submenu, 'Label', 'Plot component dipoles'   , 'CallBack', complot, 'separator', 'on');
+    submenu = uimenu( menu, 'Label', 'Source localization using DIPFIT', 'separator', 'on', 'tag', 'dipfit', 'userdata', 'startup:off;study:on');
+    lightMenuFlag = isempty(findobj(fig, 'Label', 'Reject data epochs'));
+    if ~isdeployed && lightMenuFlag, try set(submenu, 'position', 14); catch, end; end
+    uimenu( submenu, 'Label', 'Create a head model from an MRI'  , 'CallBack', comhead, 'userdata', 'startup:off;study:off');
+    uimenu( submenu, 'Label', 'Head model and settings'  , 'CallBack', comsetting, 'userdata', 'startup:off;study:on');
+    uimenu( submenu, 'Label', 'Component dipole coarse fit', 'CallBack', combatch, 'userdata', 'startup:off', 'separator', 'on');
+    uimenu( submenu, 'Label', 'Component dipole fine fit'  , 'CallBack', comfit, 'userdata', 'startup:off');
+    uimenu( submenu, 'Label', 'Component dipole plot '     , 'CallBack', complot, 'userdata', 'startup:off');
+    uimenu( submenu, 'Label', 'Component dipole autofit'   , 'CallBack', comauto, 'userdata', 'startup:off;study:on');
+    uimenu( submenu, 'Label', 'Distributed source Leadfield matrix', 'CallBack', comleadfield, 'userdata', 'startup:off;study:on', 'separator', 'on');
+    uimenu( submenu, 'Label', 'Distributed source component modelling', 'CallBack', comloreta, 'userdata', 'startup:off');

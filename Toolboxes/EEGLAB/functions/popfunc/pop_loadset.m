@@ -28,7 +28,7 @@
 
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
-% This file is part of EEGLAB, see http://www.eeglab.org
+% This file is part of EEGLAB, see https://urldefense.com/v3/__http://www.eeglab.org__;!!Mih3wA!FEwHgHjctkJ2D0Ove-79slevEDsE1K2jouFDmdOkovvn1Kvf81VoHnoq4zw64tfGlyoLA0vXGN7Y$ 
 % for the documentation and details.
 %
 % Redistribution and use in source and binary forms, with or without
@@ -71,7 +71,12 @@ else
     % account for old calling format
     % ------------------------------
     if ~strcmpi(inputname, 'filename') && ~strcmpi(inputname, 'filepath') && ~strcmpi(inputname, 'eeg') && ~strcmpi(inputname, 'loadmode') && ~strcmpi(inputname, 'check')
-        options = { 'filename' inputname }; 
+        if nargin == 1
+            [filepath, filename, ext] = fileparts(inputname);
+            options = { 'filename' [filename ext], 'filepath' filepath }; 
+        else
+            options = { 'filename' inputname }; 
+        end
         if nargin > 1
             options = { options{:} 'filepath' inputpath }; 
         end
@@ -89,6 +94,7 @@ g = finputcheck( options, ...
                  { 'filename'   { 'string';'cell' }    []   '';
                    'filepath'   'string'               []   '';
                    'check'      'string'               { 'on';'off' }   'on';
+                   'verbose'    'string'               { 'on';'off' }   'on';
                    'loadmode'   { 'string';'integer' } { { 'info' 'all' } [] }  'all';
                    'eeg'        'struct'               []   struct('data',{}) }, 'pop_loadset');
 if ischar(g), error(g); end
@@ -114,12 +120,41 @@ else
         % read file
         % ---------
         filename = fullfile(g.filepath, g.filename{ifile});
-        fprintf('pop_loadset(): loading file %s ...\n', filename);
-        %try
-        TMPVAR = load('-mat', filename);
-        %catch,
-        %    error([ filename ': file is protected or does not exist' ]);
-        %end
+        if strcmpi(g.verbose, 'on')
+            fprintf('pop_loadset(): loading file %s ...\n', filename);
+        end
+        if strcmpi(g.loadmode, 'info')
+            if ismatlab
+                TMPVAR = load('-mat', filename, '-regexp', '^((?!data).)*$');
+            else
+                TMPVAR = load('-mat', filename);
+                if isfield(TMPVAR, 'data')
+                    TMPVAR = rmfield(TMPVAR, 'data');
+                end
+            end
+            if isfield(TMPVAR, 'datfile') && ~isempty(TMPVAR.datfile)
+                if exist(TMPVAR.datfile, 'file')
+                    TMPVAR.data = TMPVAR.datfile;
+                else
+                    warning('.fdt file not found, checking if .set contains data')
+                    TMPVAR = load('-mat', filename);
+                    if ~isnumeric(TMPVAR.data) && ~isempty(TMPVAR.data) 
+                        warning('.fdt file not found, but data found in .set EEGLAB file')
+                        TMPVAR.data = 'in set file';
+                    else
+                        warning('.fdt file not found, this EEGLAB file is missing raw data')
+                    end
+                end
+            else
+                TMPVAR.data = 'in set file';
+            end
+        else
+            TMPVAR = load('-mat', filename);
+            if isstruct(TMPVAR) && isfield(TMPVAR, 'data') && isequal(TMPVAR.data, 'in set file')
+                fprintf(2, 'Something is wrong with the data file, trying to use the associated .fdt file\n');
+                TMPVAR.data = TMPVAR.datfile;
+            end
+        end
 
         % variable not found
         % ------------------
@@ -185,10 +220,12 @@ else
             end
         else
             EEG = checkoldformat(TMPVAR);
+            [ EEG.filepath EEG.filename ext ] = fileparts( g.filename{ifile} );
+            EEG.filename = [ EEG.filename ext ];
             if ~isfield( EEG, 'data')
                 error('pop_loadset(): not an EEG dataset file');
             end
-            if ischar(EEG.data), EEG.filepath = g.filepath; end
+            if ischar(EEG.data) && ~isempty(g.filepath), EEG.filepath = g.filepath; end
         end
         
         %ALLEEGLOC = pop_newset(ALLEEGLOC, EEG, 1);

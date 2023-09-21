@@ -5,15 +5,6 @@
 % Usage: 
 %  >> EEGOUT = dipfit_nonlinear( EEGIN, optarg)
 %
-% Inputs:
-%    ...
-%
-% Optional inputs are specified in key/value pairs and can be:
-%    ...
-%
-% Output:
-%    ...
-%
 % Author: Robert Oostenveld, SMI/FCDC, Nijmegen 2003
 %         Thanks to Nicolas Robitaille for his help on the CTF MEG
 %         implementation
@@ -91,7 +82,7 @@ comp = eeglab2fieldtrip(EEG, 'componentanalysis', 'dipfit');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Do some trick to force fieldtrip to use the multiple sphere model
-if strcmpi(EEG.dipfit.coordformat, 'CTF')
+if strcmpi(EEG.dipfit.coordformat, 'CTF') && ~isstruct(EEG.dipfit.chanfile)
    cfg = rmfield(cfg, 'channel');
    comp = rmfield(comp, 'elec');
    cfg.gradfile = EEG.dipfit.chanfile;

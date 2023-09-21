@@ -16,6 +16,11 @@ function checkmanifold(M)
 % Original author: Nicolas Boumal, Aug. 31, 2018.
 % Contributors: 
 % Change log: 
+%   April 12, 2020 (NB):
+%       Now checking M.dist(x, M.exp(x, v, t)) for several values of t
+%       because this test is only valid for norm(x, tv) <= inj(x).
+%   May 19, 2020 (NB):
+%       Now checking M.dim().
 
     assert(isstruct(M), 'M must be a structure.');
     
@@ -56,10 +61,14 @@ function checkmanifold(M)
     try
         x = M.rand();
         v = M.randvec(x);
-        t = randn(1);
-        y = M.exp(x, v, t);
-        d = M.dist(x, y);
-        fprintf('dist(x, M.exp(x, v, t)) - abs(t)*M.norm(x, v) = %g (should be zero).\n', d - abs(t)*M.norm(x, v));
+        for t = logspace(-8, 1, 10)
+            y = M.exp(x, v, t);
+            d = M.dist(x, y);
+            err = d - abs(t)*M.norm(x, v);
+            fprintf(['dist(x, M.exp(x, v, t)) - abs(t)*M.norm(x, v) = ' ...
+                     '%g (t = %.1e; should be zero for small enough t).\n'], ...
+                     err, t);
+        end
     catch up %#ok<NASGU>
         fprintf('Couldn''t check exp and dist.\n');
         % Perhaps we want to rethrow(up) ?
@@ -80,7 +89,8 @@ function checkmanifold(M)
         if ~isreal(U) || ~isreal(V)
             fprintf('M.vec should return real vectors: they are not real.\n');
         end
-        fprintf('M.vec seems to return real column vectors, as intended.\n');
+        fprintf(['Unless otherwise stated, M.vec seems to return real ' ...
+                 'column vectors, as intended.\n']);
         ru = M.norm(x, M.lincomb(x, 1, M.mat(x, U), -1, u));
         rv = M.norm(x, M.lincomb(x, 1, M.mat(x, V), -1, v));
         fprintf(['Checking mat/vec are inverse pairs: ' ...
@@ -99,6 +109,27 @@ function checkmanifold(M)
     catch up %#ok<NASGU>
         fprintf('Couldn''t check mat, vec, vecmatareisometries.\n');
     end
+    
+    %% Checking dim
+    dim_threshold = 200;
+    if M.dim() <= dim_threshold
+        x = M.rand();
+        n = M.dim() + 1;
+        B = cell(n, 1);
+        for k = 1 : n
+            B{k} = M.randvec(x);
+        end
+        G = grammatrix(M, x, B);
+        eigG = sort(real(eig(G)), 'descend');
+        fprintf('Testing M.dim() (works best when dimension is small):\n');
+        fprintf('\tIf this number is machine-precision zero, then M.dim() may be too large: %g\n', eigG(n-1));
+        fprintf('\tIf this number is not machine-precision zero, then M.dim() may be too small: %g\n', eigG(n));
+    else
+        fprintf('M.dim() not tested because it is > %d.\n', dim_threshold);
+    end
+    
+    %% Recommend calling checkretraction
+    fprintf('It is recommended also to call checkretraction.\n');
 
 end
 

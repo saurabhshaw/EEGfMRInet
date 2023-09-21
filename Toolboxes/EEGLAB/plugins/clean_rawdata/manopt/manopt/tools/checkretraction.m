@@ -12,21 +12,21 @@ function checkretraction(M, x, v)
 % vector v at x if one is provided (otherwise, a tangent vector at x is
 % picked at random.)
 %
-% See also: checkdiff checkgradient checkhessian
+% See also: checkmanifold checkdiff checkgradient checkhessian
 
 % This file is part of Manopt: www.manopt.org.
 % Original author: Nicolas Boumal, Oct. 21, 2016.
 % Contributors: 
 % Change log: 
 
-	if ~isfield(M, 'exp')
-		error(['This manifold has no exponential (M.exp): ' ...
+    if ~isfield(M, 'exp')
+        error(['This manifold has no exponential (M.exp): ' ...
                'no reference to compare the retraction.']);
-	end
-	if ~isfield(M, 'dist')
-		error(['This manifold has no distance (M.dist): ' ...
+    end
+    if ~isfield(M, 'dist')
+        error(['This manifold has no distance (M.dist): ' ...
                'this is required to run this check.']);
-	end
+    end
 
     if ~exist('x', 'var') || isempty(x)
         x = M.rand();
@@ -80,5 +80,7 @@ function checkretraction(M, x, v)
     fprintf('The slope must be at least 2 to have a proper retraction.\n');
     fprintf('For the retraction to be second order, the slope should be 3.\n');
     fprintf('It appears the slope is: %g.\n', poly(1));
+    fprintf('Note: if exp and retr are identical, this is about zero: %g.\n', norm(ee));
+    fprintf('In the latter case, the slope test is irrelevant.\n');
 
 end

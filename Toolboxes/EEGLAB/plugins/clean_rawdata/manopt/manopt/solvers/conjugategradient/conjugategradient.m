@@ -120,7 +120,7 @@ function [x, cost, info, options] = conjugategradient(problem, x, options)
 %   Sept. 13, 2013, NB:
 %       Now logging beta parameter too.
 %    
-%	Nov. 7, 2013, NB:
+%   Nov. 7, 2013, NB:
 %       The search direction is no longer normalized before it is passed
 %       to the linesearch. This way, it is up to the designers of the
 %       linesearch to decide whether they want to use the norm of the
@@ -130,7 +130,7 @@ function [x, cost, info, options] = conjugategradient(problem, x, options)
 %       norm information. The base linesearch does not. You may select it
 %       by setting options.linesearch = @linesearch;
 %
-%	Nov. 29, 2013, NB:
+%   Nov. 29, 2013, NB:
 %       Documentation improved: options are now explicitly described.
 %       Removed the Daniel rule for beta: it was not appropriate for
 %       preconditioned CG and I could not find a proper reference for it.
@@ -287,10 +287,10 @@ while true
     % Apply the CG scheme to compute the next search direction.
     %
     % This paper https://www.math.lsu.edu/~hozhang/papers/cgsurvey.pdf
-	% by Hager and Zhang lists many known beta rules. The rules defined
+    % by Hager and Zhang lists many known beta rules. The rules defined
     % here can be found in that paper (or are provided with additional
     % references), adapted to the Riemannian setting.
-	% 
+    % 
     if strcmpi(options.beta_type, 'steep') || ...
        strcmpi(options.beta_type, 'S-D')              % Gradient Descent
         

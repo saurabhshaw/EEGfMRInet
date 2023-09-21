@@ -1,5 +1,7 @@
-% eeglab_options() - handle EEGLAB options. This script (not function)
-%                    set the various options in the eeg_options() file.
+echo off;
+
+% EEGLAB_OPTIONS - handle EEGLAB options. This script (not function)
+%                    set the various options in the EEG_OPTIONS file.
 %
 % Usage:
 %   eeglab_options;
@@ -40,8 +42,8 @@ try
     %clear eeg_options; % note: we instead clear this function handle in pop_editoptions()
     
     eeg_optionsbackup;
-    if iseeglabdeployed
-        fileName = fullfile( ctfroot, 'EEGLAB', 'functions', 'adminfunc', 'eeg_options.txt');
+    if isdeployed || (exist('ismcc') && ismcc)
+        fileName = which('eeg_options.txt');
         
         com2 = readtxtfile(fileName);
         eval( com2 );
@@ -52,8 +54,9 @@ try
         if ~isempty(EEGOPTION_PATH) % in icadefs above
              homefolder = EEGOPTION_PATH;
         elseif ispc
-             if ~exist('evalc'), eval('evalc = @(x)(eval(x));'); end
-             homefolder = deblank(evalc('!echo %USERPROFILE%'));
+%              if ~exist('evalc'), eval('evalc = @(x)(eval(x));'); end
+%              homefolder = deblank(evalc('!echo %USERPROFILE%'));
+            homefolder = getenv('USERPROFILE');
         else homefolder = '~';
         end
         
@@ -67,11 +70,15 @@ try
                 cd(tmpp2);
             end
         catch, end
+        echo off;
         eeg_options; % default one with EEGLAB
         cd(oldp);
     end
     option_savematlab = ~option_savetwofiles;
     
+    if option_donotusetoolboxes
+        disp('Not using signal processing toolbox, if you experience problem, reset your Matlab path to default')
+    end
 catch 
     lasterr
     disp('Warning: could not access the local eeg_options file');

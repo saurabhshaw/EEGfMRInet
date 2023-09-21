@@ -11,7 +11,7 @@ function M = fixedrankembeddedfactory(m, n, k)
 %
 % A point X on the manifold is represented as a structure with three
 % fields: U, S and V. The matrices U (mxk) and V (nxk) are orthonormal,
-% while the matrix S (kxk) is any /diagonal/, full rank matrix.
+% while the matrix S (kxk) is any /diagonal/ full-rank matrix.
 % Following the SVD formalism, X = U*S*V'. Note that the diagonal entries
 % of S are not constrained to be nonnegative.
 %
@@ -57,14 +57,14 @@ function M = fixedrankembeddedfactory(m, n, k)
 %       Doi     = {10.1137/110845768}
 %     }
 %
-% See also: fixedrankfactory_2factors fixedrankfactory_3factors
+% See also: fixedrankfactory_2factors fixedrankfactory_3factors fixedranktensorembeddedfactory
 
 % This file is part of Manopt: www.manopt.org.
 % Original author: Nicolas Boumal, Dec. 30, 2012.
-% Contributors: 
+% Contributors: Bart Vandereycken, Eitan Levin
 % Change log: 
 %
-%	Feb. 20, 2014 (NB):
+%   Feb. 20, 2014 (NB):
 %       Added function tangent to work with checkgradient.
 %
 %   June 24, 2014 (NB):
@@ -96,6 +96,22 @@ function M = fixedrankembeddedfactory(m, n, k)
 %       Added M.matrix2triplet and M.triplet2matrix to allow easy
 %       conversion between matrix representations either as full matrices
 %       or as triplets (U, S, V).
+%
+%    Dec. 14, 2019 (EL):
+%       The original retraction code was repaced with a somewhat slower but
+%       numerically more stable version. With the original code, trouble
+%       could arise when the matrices Up, Vp defining the tangent vector
+%       being retracted were ill-conditioned.
+%
+%    Jan. 28, 2020 (NB):
+%       In retraction code, moved parameter t around to highlight the fact
+%       that it comes up in only one computation.
+%       Replaced vec/mat codes: they are still isometries, but they produce
+%       representations of length k*(m+n+k) instead of m*n, which is much
+%       more efficient: it only exceeds the true dimension by 2k^2. Also,
+%       mat does not attempt to project to the tangent space (which it did
+%       before but shouldn't): compose mat with tangent if that is the
+%       desired effect.
 
     M.name = @() sprintf('Manifold of %dx%d matrices of rank %d', m, n, k);
     
@@ -104,7 +120,8 @@ function M = fixedrankembeddedfactory(m, n, k)
     M.inner = @(x, d1, d2) d1.M(:).'*d2.M(:) + d1.Up(:).'*d2.Up(:) ...
                                              + d1.Vp(:).'*d2.Vp(:);
     
-    M.norm = @(x, d) sqrt(M.inner(x, d, d));
+    M.norm = @(x, d) sqrt(norm(d.M, 'fro')^2 + norm(d.Up, 'fro')^2 ...
+                                             + norm(d.Vp, 'fro')^2);
     
     M.dist = @(x, y) error('fixedrankembeddedfactory.dist not implemented yet.');
     
@@ -211,32 +228,43 @@ function M = fixedrankembeddedfactory(m, n, k)
     % mat = @(X) X.U*X.S*X.V';
     % g = @(t) entry(mat(M.retr(X, V, t)));
     % ezplot(g, [-2, 2]);
+    %
     M.retr = @retraction;
     function Y = retraction(X, Z, t)
         if nargin < 3
             t = 1.0;
         end
 
-        % See personal notes June 28, 2012 (NB)
-        [Qu, Ru] = qr(Z.Up, 0);
-        [Qv, Rv] = qr(Z.Vp, 0);
+        % Mathematically, Z.Up is orthogonal to X.U, and likewise for
+        % Z.Vp compared to X.V. Thus, in principle, we could call QR
+        % on Z.Up and Z.Vp alone, which should be about 4 times faster
+        % than the calls here where we orthonormalize twice as many
+        % vectors. However, when Z.Up, Z.Vp are poorly conditioned,
+        % orthonormalizing them can lead to loss of orthogonality
+        % against X.U, X.V.
+        [Qu, Ru] = qr([X.U, Z.Up], 0);
+        [Qv, Rv] = qr([X.V, Z.Vp], 0);
         
         % Calling svds or svd should yield the same result, but BV
         % advocated svd is more robust, and it doesn't change the
         % asymptotic complexity to call svd then trim rather than call
         % svds. Also, apparently Matlab calls ARPACK in a suboptimal way
         % for svds in this scenario.
-        % [Ut St Vt] = svds([X.S+t*Z.M , t*Rv' ; t*Ru , zeros(k)], k);
-        [Ut, St, Vt] = svd([X.S+t*Z.M , t*Rv' ; t*Ru , zeros(k)]);
+        % Notice that the parameter t appears only here. Thus, in princple,
+        % we could make some savings for line-search procedures where we
+        % retract the same vector multiple times, only with different
+        % values of t. The asymptotic complexity remains the same though
+        % (up to a constant factor) because of the matrix-matrix products
+        % below which cost essentially the same as the QR factorizations.
+        [U, S, V] = svd(Ru*[X.S + t*Z.M, t*eye(k); t*eye(k), zeros(k)]*Rv');
+    
+        Y.U = Qu*U(:, 1:k); 
+        Y.V = Qv*V(:, 1:k); 
+        Y.S = S(1:k, 1:k);
         
-        Y.U = [X.U Qu]*Ut(:, 1:k);
-        Y.V = [X.V Qv]*Vt(:, 1:k);
-        Y.S = St(1:k, 1:k) + eps*eye(k);
-        
-        % equivalent but very slow code
-        % [U S V] = svds(X.U*X.S*X.V' + t*(X.U*Z.M*X.V' + Z.Up*X.V' + X.U*Z.Vp'), k);
+        % Equivalent but very slow code
+        % [U, S, V] = svds(X.U*X.S*X.V' + t*(X.U*Z.M*X.V' + Z.Up*X.V' + X.U*Z.Vp'), k);
         % Y.U = U; Y.V = V; Y.S = S;
-        
     end
 
 
@@ -256,8 +284,8 @@ function M = fixedrankembeddedfactory(m, n, k)
         % orthogonal matrices and S0 is of size r by r.
         [U1, ~] = qr(t*(X.U*Z.M  + Z.Up) + X.U*X.S, 0);
         [V1, ~] = qr(t*(X.V*Z.M' + Z.Vp) + X.V*X.S, 0);
-        S0 = (U1'*X.U)*(X.S + t*Z.M)*(X.V'*V1) + ...
-             t*((U1'*Z.Up)*(X.V'*V1) + (U1'*X.U)*(Z.Vp'*V1));
+        S0 = (U1'*X.U)*(X.S + t*Z.M)*(X.V'*V1) ...
+                         + t*((U1'*Z.Up)*(X.V'*V1) + (U1'*X.U)*(Z.Vp'*V1));
         
         % Then, obtain the singular value decomposition of Y.
         [U2, S2, V2] = svd(S0);
@@ -288,20 +316,20 @@ function M = fixedrankembeddedfactory(m, n, k)
     % unit-norm tangent vectors.
     M.randvec = @randomvec;
     function Z = randomvec(X)
+        Z.M  = randn(k);
         Z.Up = randn(m, k);
         Z.Vp = randn(n, k);
-        Z.M  = randn(k);
         Z = tangent(X, Z);
         nrm = M.norm(X, Z);
+        Z.M  = Z.M  / nrm;
         Z.Up = Z.Up / nrm;
         Z.Vp = Z.Vp / nrm;
-        Z.M  = Z.M  / nrm;
     end
     
     M.lincomb = @lincomb;
     
-    M.zerovec = @(X) struct('Up', zeros(m, k), 'M', zeros(k, k), ...
-                                                        'Vp', zeros(n, k));
+    M.zerovec = @(X) struct('M', zeros(k, k), 'Up', zeros(m, k), ...
+                                              'Vp', zeros(n, k));
     
     % New vector transport on June 24, 2014 (as indicated by Bart)
     % Reference: Absil, Mahony, Sepulchre 2008 section 8.1.3:
@@ -313,15 +341,25 @@ function M = fixedrankembeddedfactory(m, n, k)
         Z2 = projection(X2, tangent2ambient(X1, Z1));
     end
 
-
+    % The function 'vec' is isometric from the tangent space at X to real
+    % vectors of length k(m+n+k). The function 'mat' is the left-inverse
+    % of 'vec'. It is sometimes useful to apply 'tangent' to the output of
+    % 'mat'.
     M.vec = @vec;
-    function Zvec = vec(X, Z)
-        Zamb = tangent2ambient(X, Z);
-        Zamb_mat = Zamb.U*Zamb.S*Zamb.V';
-        Zvec = Zamb_mat(:);
+    function Zvec = vec(X, Z) %#ok<INUSL>
+        A = Z.M;
+        B = Z.Up;
+        C = Z.Vp;
+        Zvec = [A(:) ; B(:) ; C(:)];
     end
-    M.mat = @(X, Zvec) projection(X, reshape(Zvec, [m, n]));
+    rangeM = 1:(k^2);
+    rangeUp = (k^2)+(1:(m*k));
+    rangeVp = (k^2+m*k)+(1:(n*k));
+    M.mat = @(X, Zvec) struct('M',  reshape(Zvec(rangeM),  [k, k]), ...
+                              'Up', reshape(Zvec(rangeUp), [m, k]), ...
+                              'Vp', reshape(Zvec(rangeVp), [n, k]));
     M.vecmatareisometries = @() true;
+    
     
     % It is sometimes useful to switch between representation of matrices
     % as triplets or as full matrices of size m x n. The function to

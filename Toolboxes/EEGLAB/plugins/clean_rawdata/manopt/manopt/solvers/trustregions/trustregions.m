@@ -40,33 +40,33 @@ function [x, cost, info, options] = trustregions(problem, x, options)
 %   iter (integer)
 %       The (outer) iteration number, or number of steps considered
 %       (whether accepted or rejected). The initial guess is 0.
-%	cost (double)
+%   cost (double)
 %       The corresponding cost value.
-%	gradnorm (double)
+%   gradnorm (double)
 %       The (Riemannian) norm of the gradient.
-%	numinner (integer)
+%   numinner (integer)
 %       The number of inner iterations executed to compute this iterate.
 %       Inner iterations are truncated-CG steps. Each one requires a
 %       Hessian (or approximate Hessian) evaluation.
-%	time (double)
+%   time (double)
 %       The total elapsed time in seconds to reach the corresponding cost.
-%	rho (double)
+%   rho (double)
 %       The performance ratio for the iterate.
-%	rhonum, rhoden (double)
+%   rhonum, rhoden (double)
 %       Regularized numerator and denominator of the performance ratio:
 %       rho = rhonum/rhoden. See options.rho_regularization.
-%	accepted (boolean)
+%   accepted (boolean)
 %       Whether the proposed iterate was accepted or not.
-%	stepsize (double)
+%   stepsize (double)
 %       The (Riemannian) norm of the vector returned by the inner solver
 %       tCG and which is retracted to obtain the proposed next iterate. If
 %       accepted = true for the corresponding iterate, this is the size of
 %       the step from the previous to the new iterate. If accepted is
 %       false, the step was not executed and this is the size of the
 %       rejected step.
-%	Delta (double)
+%   Delta (double)
 %       The trust-region radius at the outer iteration.
-%	cauchy (boolean)
+%   cauchy (boolean)
 %       Whether the Cauchy point was used or not (if useRand is true).
 %   And possibly additional information logged by options.statsfun.
 % For example, type [info.gradnorm] to obtain a vector of the successive
@@ -92,13 +92,13 @@ function [x, cost, info, options] = trustregions(problem, x, options)
 %       The algorithm terminates if maxiter (outer) iterations were executed.
 %   maxtime (Inf)
 %       The algorithm terminates if maxtime seconds elapsed.
-%	miniter (3)
+%   miniter (3)
 %       Minimum number of outer iterations (used only if useRand is true).
-%	mininner (1)
+%   mininner (1)
 %       Minimum number of inner iterations (for tCG).
-%	maxinner (problem.M.dim() : the manifold's dimension)
+%   maxinner (problem.M.dim() : the manifold's dimension)
 %       Maximum number of inner iterations (for tCG).
-%	Delta_bar (problem.M.typicaldist() or sqrt(problem.M.dim()))
+%   Delta_bar (problem.M.typicaldist() or sqrt(problem.M.dim()))
 %       Maximum trust-region radius. If you specify this parameter but not
 %       Delta0, then Delta0 will be set to 1/8 times this parameter.
 %   Delta0 (Delta_bar/8)
@@ -107,21 +107,21 @@ function [x, cost, info, options] = trustregions(problem, x, options)
 %       may pay off to try to tune this parameter to shorten the plateau.
 %       You should not set this parameter without setting Delta_bar too (at
 %       a larger value).
-%	useRand (false)
+%   useRand (false)
 %       Set to true if the trust-region solve is to be initiated with a
 %       random tangent vector. If set to true, no preconditioner will be
 %       used. This option is set to true in some scenarios to escape saddle
 %       points, but is otherwise seldom activated.
-%	kappa (0.1)
+%   kappa (0.1)
 %       tCG inner kappa convergence tolerance.
 %       kappa > 0 is the linear convergence target rate: tCG will terminate
 %       early if the residual was reduced by a factor of kappa.
-%	theta (1.0)
+%   theta (1.0)
 %       tCG inner theta convergence tolerance.
 %       1+theta (theta between 0 and 1) is the superlinear convergence
 %       target rate. tCG will terminate early if the residual was reduced
 %       by a power of 1+theta.
-%	rho_prime (0.1)
+%   rho_prime (0.1)
 %       Accept/reject threshold : if rho is at least rho_prime, the outer
 %       iteration is accepted. Otherwise, it is rejected. In case it is
 %       rejected, the trust-region radius will have been decreased.
@@ -170,6 +170,10 @@ function [x, cost, info, options] = trustregions(problem, x, options)
 %       If memory usage is an issue, you may try to lower this number.
 %       Profiling or manopt counters may then help to investigate if a
 %       performance hit was incurred as a result.
+%   hook (none)
+%       A function handle which allows the user to change the current point
+%       x at the beginning of each iteration, before the stopping criterion
+%       is evaluated. See applyHook for help on how to use this option.
 %
 % Notice that statsfun is called with the point x that was reached last,
 % after the accept/reject decision. Hence: if the step was accepted, we get
@@ -211,10 +215,10 @@ function [x, cost, info, options] = trustregions(problem, x, options)
 % finite-differences of the gradient. The resulting method is called
 % RTR-FD. Some convergence theory for it is available in this paper:
 % @incollection{boumal2015rtrfd
-% 	author={Boumal, N.},
-% 	title={Riemannian trust regions with finite-difference Hessian approximations are globally convergent},
-% 	year={2015},
-% 	booktitle={Geometric Science of Information}
+%    author={Boumal, N.},
+%    title={Riemannian trust regions with finite-difference Hessian approximations are globally convergent},
+%    year={2015},
+%    booktitle={Geometric Science of Information}
 % }
 
 
@@ -293,6 +297,9 @@ function [x, cost, info, options] = trustregions(problem, x, options)
 %   NB Aug. 2, 2018:
 %       Using storedb.remove() to keep the cache lean, which allowed to
 %       reduce storedepth to 2 from 20 (by default).
+%
+%   NB July 19, 2020:
+%       Added support for options.hook.
 
 M = problem.M;
 
@@ -433,9 +440,18 @@ consecutive_TRminus = 0;
 % **********************
 while true
     
-	% Start clock for this outer iteration
+    % Start clock for this outer iteration
     ticstart = tic();
 
+    % Apply the hook function if there is one: this allows external code to
+    % move x to another point. If the point is changed (indicated by a true
+    % value for the boolean 'hooked'), we update our knowledge about x.
+    [x, key, info, hooked] = applyHook(problem, x, storedb, key, options, info, k+1);
+    if hooked
+        [fx, fgradx] = getCostGrad(problem, x, storedb, key);
+        norm_grad = M.norm(x, fgradx);
+    end
+    
     % Run standard stopping criterion checks
     [stop, reason] = stoppingcriterion(problem, x, options, info, k+1);
     
@@ -520,14 +536,14 @@ while true
     end
     
 
-	% Compute the tentative next iterate (the proposal)
-	x_prop  = M.retr(x, eta);
+    % Compute the tentative next iterate (the proposal)
+    x_prop  = M.retr(x, eta);
     key_prop = storedb.getNewKey();
 
-	% Compute the function value of the proposal
-	fx_prop = getCost(problem, x_prop, storedb, key_prop);
+    % Compute the function value of the proposal
+    fx_prop = getCost(problem, x_prop, storedb, key_prop);
 
-	% Will we accept the proposal or not?
+    % Will we accept the proposal or not?
     % Check the performance of the quadratic model against the actual cost.
     rhonum = fx - fx_prop;
     vecrho = M.lincomb(x, 1, fgradx, .5, Heta);
@@ -733,13 +749,13 @@ while true
         if options.useRand && used_cauchy
             fprintf('USED CAUCHY POINT\n');
         end
-		fprintf('%3s %3s    k: %5d     num_inner: %5d     %s\n', ...
-				accstr, trstr, k, numit, srstr);
-		fprintf('       f(x) : %+e     |grad| : %e\n',fx,norm_grad);
-		if options.debug > 0
-			fprintf('      Delta : %f          |eta| : %e\n',Delta,norm_eta);
-		end
-		fprintf('        rho : %e\n',rho);
+        fprintf('%3s %3s    k: %5d     num_inner: %5d     %s\n', ...
+                accstr, trstr, k, numit, srstr);
+        fprintf('       f(x) : %+e     |grad| : %e\n',fx,norm_grad);
+        if options.debug > 0
+            fprintf('      Delta : %f          |eta| : %e\n',Delta,norm_eta);
+        end
+        fprintf('        rho : %e\n',rho);
     end
     if options.debug > 0
         fprintf('DBG: cos ang(eta,gradf): %d\n',testangle);

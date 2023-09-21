@@ -1,13 +1,13 @@
-% mri3dplot() - plot 3-D density image translucently on top of the mean MR 
-%               brain image used in dipplot(). Plot brain slices in directions
+% MRI3DPLOT - plot 3-D density image translucently on top of the mean MR 
+%               brain image used in DIPPLOT. Plot brain slices in directions
 %               'top' (axial), or 'side' (sagittal), or 'rear' (coronal).
-%               Creates a new figure(). Smoothing uses Matlab smooth3()
+%               Creates a new FIGURE. Smoothing uses Matlab SMOOTH3
 % Usage:
 %      >> [smoothed_3ddens, mriplanes] = mri3dplot(array3d, mri, 'key', 'val', ...);
 %
 % Input: 
 %   array3d     - 3-D array to plot translucently on top of MRI image planes
-%                  (e.g., as returned by dipoledensity(), unit: dipoles/cc).
+%                  (e.g., as returned by DIPOLEDENSITY, unit: dipoles/cc).
 %   mri         - [string or struct] base MR image structure (as returned by 
 %                 dipoledensity.m or mri file (matlab format or file format read 
 %                 by fcdc_read_mri. See dipplot.m help for more information.
@@ -36,8 +36,8 @@
 %                 Default is 'on'.
 %   'mixfact'   - [float] factor for mixing the background image with the
 %                 array3d information. Default is 0.5.
-%   'mixmode'   - ['add'|'overwrite'] 'add' will allow for trasnparency
-%                 while 'overwrite' will preserve the orginal MRI image 
+%   'mixmode'   - ['add'|'overwrite'] 'add' will allow for transparency
+%                 while 'overwrite' will preserve the original MRI image 
 %                 and overwrite the pixel showind density changes.
 %
 % Outputs:
@@ -52,7 +52,7 @@
 %   array = gauss3d(91,109,91);
 %   mri3dplot(array, mri);
 %
-% See also: plotmri()
+% See also: PLOTMRI
 
 % Copyright (C) Arnaud Delorme, sccn, INC, UCSD, 2003-
 % 03/29/2013 Makoto. Line 370 added to avoid negative matrix indices.
@@ -82,7 +82,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 % THE POSSIBILITY OF SUCH DAMAGE.
 
-function [smoothprob3d, mriplanes] = mri3dplot(prob3d, mri, varargin)
+function [newprob3dori, mriplanes] = mri3dplot(prob3d, mri, varargin)
 
     % REDUCEPATCH  Reduce number of patch faces.
 
@@ -110,7 +110,7 @@ function [smoothprob3d, mriplanes] = mri3dplot(prob3d, mri, varargin)
                         'rotate'    'integer'  { 0,90,180,270 }          90;
                         'kernel'    'float'    []                        0; 
                         'addrow'    'integer'  []                        0;
-                        'fighandle' 'integer'  []                        []});
+                        'fighandle' ''         []                        []});
     if ischar(g), error(g); end
     if ischar(g.mriview) == 1, g.plotintersect = 'off'; end
     if strcmpi(g.mriview,'sagittal'),    g.mriview = 'side'; 
@@ -121,12 +121,12 @@ function [smoothprob3d, mriplanes] = mri3dplot(prob3d, mri, varargin)
         g.cbar = 'off';
     end
     if ischar(mri)
-         try, 
+         try
             mri = load('-mat', mri);
             mri = mri.mri;
-        catch,
+         catch
             disp('Failed to read Matlab file. Attempt to read MRI file using function read_fcdc_mri');
-            try,
+            try
                 warning off;
                 mri = read_fcdc_mri(mri);
                 mri.anatomy = round(gammacorrection( mri.anatomy, 0.8));
@@ -136,7 +136,7 @@ function [smoothprob3d, mriplanes] = mri3dplot(prob3d, mri, varargin)
                 % WARNING: the transform matrix is not 1, 1, 1 on the diagonal, some slices may be 
                 % misplaced
                 warning on;
-            catch,
+            catch
                 error('Cannot load file using read_fcdc_mri');
             end
          end
@@ -151,8 +151,8 @@ function [smoothprob3d, mriplanes] = mri3dplot(prob3d, mri, varargin)
         [newprob3d{2}] = prepare_dens(prob3d{2}, g, 'abscolor');
     else
         if isempty(g.cmax), g.cmax = max(prob3d{1}(:)); end
-        [newprob3d{1} maxdens1] = prepare_dens(prob3d{1}, g, 'usecmap');
-    end;    
+        [newprob3d{1}, maxdens1] = prepare_dens(prob3d{1}, g, 'usecmap');
+    end
     fprintf('Brightest color denotes a density of: %1.6f (presumed unit: dipoles/cc)\n', g.cmax);
     
     % plot MRI slices
@@ -162,7 +162,7 @@ function [smoothprob3d, mriplanes] = mri3dplot(prob3d, mri, varargin)
     end
     
     if strcmpi(g.cbar, 'on'), add1 = 1; else add1 = 0; end
-    if isempty(g.geom), 
+    if isempty(g.geom)
         g.geom = ceil(sqrt(length(g.mrislices)+add1)); 
         g.geom(2) = ceil((length(g.mrislices)+add1)/g.geom)+g.addrow;
     end
@@ -406,7 +406,7 @@ function [newprob3d maxdens] = prepare_dens(prob3d, g, col);
     maxdens = max(prob3d(:));
     ncolors = size(g.cmap,1);
     
-    prob3d    = round((prob3d-g.cmin)/(g.cmax - g.cmin)*(ncolors-1))+1; % project desnity image into the color space: [1:ncolors]
+    prob3d    = round((prob3d-g.cmin)/(g.cmax - g.cmin)*(ncolors-1))+1; % project density image into the color space: [1:ncolors]
     prob3d( find(prob3d > ncolors) ) = ncolors;
     prob3d( find(prob3d < 1))        = 1; % added by Makoto
     newprob3d = zeros(size(prob3d,1), size(prob3d,2), size(prob3d,3), 3);

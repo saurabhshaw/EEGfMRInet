@@ -1,11 +1,11 @@
-% pop_topoplot() - Plot scalp map(s) in a figure window. If number of input
+% POP_TOPOPLOT - Plot scalp map(s) in a figure window. If number of input
 %                  arguments is less than 3, pop up an interactive query window.
-%                  Makes (possibly repeated) calls to topoplot().
+%                  Makes (possibly repeated) calls to TOPOPLOT.
 % 
-%                  If field 'EEG.chanmatrix' exists, will use the topoplot() 'plotgrid' option 
+%                  If field 'EEG.chanmatrix' exists, will use the TOPOPLOT 'plotgrid' option 
 %                  to plot the data on the indicated channel matrix instead of plotting 
 %                  on the head (see 'plotgrid' in >> help topoplot).
-
+%
 % Usage:
 %   >> pop_topoplot( EEG); % pops up a parameter query window
 %   >> pop_topoplot( EEG, typeplot, items, title, plotdip, options...); % no pop-up
@@ -29,7 +29,11 @@
 %
 % Optional Key-Value Pair Inputs
 %   'colorbar' - ['on' or 'off'] Switch to turn colorbar on or off. {Default: 'on'}
-%   options   - optional topoplot() arguments. Separate using commas. 
+%   'iclabel'  - ['on' or 'off'] Activate the display of ICLabel
+%                classification of the IC maps. Option is functional only
+%                when plotting IC maps and ICLabel has been computed for
+%                the EEG set provided
+%   options   - optional TOPOPLOT arguments. Separate using commas. 
 %               Example 'style', 'straight'. See >> help topoplot
 %               for further details. {default: none}
 %
@@ -40,7 +44,7 @@
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 2001
 %
-% See also: topoplot(), eeglab()
+% See also: TOPOPLOT, EEGLAB
 
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -74,22 +78,22 @@
 % 02-16-02 added axcopy -ad & sm
 % 03-18-02 added title -ad & sm
 
-function com = pop_topoplot( EEG, typeplot, arg2, topotitle, rowcols, varargin);
+function com = pop_topoplot( EEG, typeplot, arg2, topotitle, rowcols, varargin)
 
 com = '';
 if nargin < 1
    help pop_topoplot;
    return;
-end;   
+end
 if nargin < 2   
    typeplot = 1;
 end
 if typeplot == 0 && isempty(EEG.icasphere)
    disp('Error: no ICA data for this set, first run ICA'); return;
-end;   
+end 
 if isempty(EEG.chanlocs) && ~isfield(EEG, 'chanmatrix')
    disp('Error: cannot plot topography without channel location file'); return;
-end;   
+end
 
 if nargin < 3
 	% which set to save
@@ -103,8 +107,8 @@ if nargin < 3
 		txtwhat2plot1 = 'Component numbers';
 		txtwhat2plot2 = '(negate index to invert component polarity; NaN -> empty subplot; Ex: -1 NaN 3)';
         editwhat2plot = ['1:' int2str(size(EEG.icaweights,1))];
- 	end;	
-        if EEG.nbchan > 64, 
+    end
+        if EEG.nbchan > 64
             elecdef = ['''electrodes'', ''off''']; 
         else, 
             elecdef = ['''electrodes'', ''on''']; 
@@ -157,12 +161,12 @@ if nargin < 3
         plotdip     = result{4};
         try, options      = eval( [ '{ ' result{5} ' }' ]);
         catch, error('Invalid scalp map options'); end
-    end;        
-    if length(arg2) == 1, 
+    end       
+    if length(arg2) == 1
       figure('paperpositionmode', 'auto'); curfig=gcf; 
       try, icadefs; 
          set(curfig, 'color', BACKCOLOR); 
-      catch, end; 
+      catch, end
     end
 else
     if ~isempty(varargin) && isnumeric(varargin{1})
@@ -213,11 +217,11 @@ end
 nbgraph = size(arg2(:),1);
 if ~exist('topotitle')
     topotitle = '';
-end;    
+end
 if ~exist('rowcols') || isempty(rowcols) || rowcols(1) == 0
     rowcols(2) = ceil(sqrt(nbgraph));
     rowcols(1) = ceil(nbgraph/rowcols(2));
-end;    
+end
 
 SIZEBOX = 150;
 
@@ -240,8 +244,17 @@ if typeplot
     pos = round( (arg2/1000-EEG.xmin)/(EEG.xmax-EEG.xmin) * (EEG.pnts-1))+1;
     nanpos = find(isnan(pos));
     pos(nanpos) = 1;
-    SIGTMPAVG = mean(SIGTMP(:,pos,:),3);
-    SIGTMPAVG(:, nanpos) = NaN;
+    if ~isempty(EEG.chanlocs) && isfield(EEG.chanlocs, 'X')
+        nonEmptyChans = find(~cellfun(@isempty, { EEG.chanlocs.X}));
+    else
+        nonEmptyChans = [];
+    end
+    if isempty(nonEmptyChans)
+        nonEmptyChans = 1:EEG.nbchan;
+    end
+    SIGTMPAVG = mean(SIGTMP(nonEmptyChans,pos,:),3);
+    SIGTMPAVG(nonEmptyChans, nanpos) = NaN;
+
     if isempty(maplimits)
         maxlim = max(SIGTMPAVG(:));
         minlim = min(SIGTMPAVG(:));
@@ -277,62 +290,78 @@ for index = 1:size(arg2(:),1)
 			posy = pos(2)+pos(4)-SIZEBOX*rowcols(1);
 			set(curfig,'Position', [posx posy  SIZEBOX*rowcols(2)  SIZEBOX*rowcols(1)]);
 			try, icadefs; set(curfig, 'color', BACKCOLOR); catch, end
-        end;    
+        end
 		curax = subplot( rowcols(1), rowcols(2), mod(index-1, rowcols(1)*rowcols(2))+1,'Parent',curfig);
         set(curax, 'visible', 'off')
     end
 
 	% add dipole location if present
     % ------------------------------
+        
     dipoleplotted = 0;
     if plotdip && typeplot == 0
         if isfield(EEG, 'dipfit') && isfield(EEG.dipfit, 'model')
-            if length(EEG.dipfit.model) >= index && ~strcmpi(EEG.dipfit.coordformat, 'CTF')
-                %curpos = EEG.dipfit.model(arg2(index)).posxyz/EEG.dipfit.vol.r(end);
-                curpos = EEG.dipfit.model(arg2(index)).posxyz;
-                curmom = EEG.dipfit.model(arg2(index)).momxyz;
-                try,
-                    select = EEG.dipfit.model(arg2(index)).select;
-                catch select = 0;
-                end
-                if ~isempty(curpos)
-                    if strcmpi(EEG.dipfit.coordformat, 'MNI') % from MNI to sperical coordinates
-                        transform = pinv( sph2spm );
-                        tmpres = transform * [ curpos(1,:) 1 ]'; curpos(1,:) = tmpres(1:3);
-                        tmpres = transform * [ curmom(1,:) 1 ]'; curmom(1,:) = tmpres(1:3);
-                        try, tmpres = transform * [ curpos(2,:) 1 ]'; curpos(2,:) = tmpres(1:3); catch, end
-                        try, tmpres = transform * [ curmom(2,:) 1 ]'; curmom(2,:) = tmpres(1:3); catch, end
+            if 0 %isfield(EEG.chanlocs, 'type') && ~isempty(strfind(char(EEG.chanlocs(1).type), 'meg'))
+                disp('Cannot plot dipoles on scalp topography for MEG data')
+            else
+                if length(EEG.dipfit.model) >= index
+                    %curpos = EEG.dipfit.model(arg2(index)).posxyz/EEG.dipfit.vol.r(end);
+                    curpos = EEG.dipfit.model(arg2(index)).posxyz;
+                    curmom = EEG.dipfit.model(arg2(index)).momxyz;
+                    try,
+                        select = EEG.dipfit.model(arg2(index)).select;
+                    catch select = 0;
                     end
-                    curpos = curpos / 85;
-                    if size(curpos,1) > 1 && length(select) == 2
-                        dipole_index = find(strcmpi('dipole',options),1);
-                        if  ~isempty(dipole_index) % if 'dipoles' is already defined in options{:}
-                            options{dipole_index+1} = [ curpos(:,1:2) curmom(:,1:3) ];
-                        else
-                            options = { options{:} 'dipole' [ curpos(:,1:2) curmom(:,1:3) ] };
+                    if ~isempty(curpos)
+                        
+                        % rotate dipole back to electrode space
+                        % by using the inverse transformation matrix
+                        if ~isempty(EEG.dipfit.coord_transform)
+                            transform = EEG.dipfit.coord_transform;
+                            transform = pinv(traditionaldipfit(transform));
+
+                            % first dipole
+                            tmpres = transform * [ curpos(1,:) 1 ]'; curpos(1,:) = tmpres(1:3);
+                            tmpres = transform * [ curmom(1,:) 1 ]'; curmom(1,:) = tmpres(1:3);
+                            
+                            % second dipole
+                            if size(curpos,1) == 2
+                                tmpres = transform * [ curpos(2,:) 1 ]'; curpos(2,:) = tmpres(1:3)
+                                tmpres = transform * [ curmom(2,:) 1 ]'; curmom(2,:) = tmpres(1:3);
+                            end
                         end
-                        dipoleplotted = 1;
-                    else
-                        if any(curpos(1,:) ~= 0)
+                            
+                        curpos = curpos / 85;
+                        if size(curpos,1) > 1 && length(select) == 2
                             dipole_index = find(strcmpi('dipole',options),1);
                             if  ~isempty(dipole_index) % if 'dipoles' is already defined in options{:}
-                                options{dipole_index+1} = [ curpos(1,1:2) curmom(1,1:3) ];
+                                options{dipole_index+1} = [ curpos(:,1:2) curmom(:,1:3) ];
                             else
-                                options = { options{:} 'dipole' [ curpos(1,1:2) curmom(1,1:3) ] };
+                                options = { options{:} 'dipole' [ curpos(:,1:2) curmom(:,1:3) ] };
                             end
                             dipoleplotted = 1;
+                        else
+                            if any(curpos(1,:) ~= 0)
+                                dipole_index = find(strcmpi('dipole',options),1);
+                                if  ~isempty(dipole_index) % if 'dipoles' is already defined in options{:}
+                                    options{dipole_index+1} = [ curpos(1,1:2) curmom(1,1:3) ];
+                                else
+                                    options = { options{:} 'dipole' [ curpos(1,1:2) curmom(1,1:3) ] };
+                                end
+                                dipoleplotted = 1;
+                            end
                         end
                     end
-                end
-                if nbgraph ~= 1
-                    dipscale_index = find(strcmpi('dipscale',options),1);
-                    if ~isempty(dipscale_index) % if 'dipscale' is already defined in options{:}
-                        options{dipscale_index+1} = 0.6;
-                    else
-                        options = {  options{:} 'dipscale' 0.6 };
+                    if nbgraph ~= 1
+                        dipscale_index = find(strcmpi('dipscale',options),1);
+                        if ~isempty(dipscale_index) % if 'dipscale' is already defined in options{:}
+                            options{dipscale_index+1} = 0.6;
+                        else
+                            options = {  options{:} 'dipscale' 0.6 };
+                        end
                     end
+                    %options = { options{:} 'dipsphere' max(EEG.dipfit.vol.r) };
                 end
-                %options = { options{:} 'dipsphere' max(EEG.dipfit.vol.r) };
             end
         end
     end
@@ -340,12 +369,12 @@ for index = 1:size(arg2(:),1)
 	% plot scalp map
     % --------------
     if index == 1
-        addopt = { 'verbose', 'on' };
+        adopt = { 'verbose', 'on' };
     else 
-        addopt = { 'verbose', 'off' };
+        adopt = { 'verbose', 'off' };
     end
     %fprintf('Printing to figure %d.\n',curfig);
-    options = {  'maplimits' maplimits options{:} addopt{:} };
+    options = {  'maplimits' maplimits options{:} adopt{:} };
     if ~isnan(arg2(index))
 		if typeplot
             if nbgraph > 1, axes(curax); end
@@ -369,6 +398,21 @@ for index = 1:size(arg2(:),1)
 			else             texttitle = ['IC ' int2str(arg2(index))];
 			end
             if dipoleplotted, texttitle = [ texttitle ' (' num2str(EEG.dipfit.model(arg2(index)).rv*100,2) '%)']; end
+            
+            % Adding ICLabel results
+            optpos = find(strcmpi('iclabel', options(1:2:end))); % Under the assumption that there is always default options
+            if ~isempty(optpos)
+                iclabelopt = options{2*optpos};
+                if strcmp(iclabelopt, 'on') && isfield(EEG.etc, 'ic_classification')
+                    try
+                        [maxval,indmax]=max(EEG.etc.ic_classification.ICLabel.classifications(arg2(index),:));
+                        iclabel_label = [EEG.etc.ic_classification.ICLabel.classes{indmax} ' : ' num2str(round(maxval*100,1)) ' %' ];
+                        texttitle = {texttitle;iclabel_label};
+                    catch
+                        disp('pop_topoplot: Something went wrong while plotting ICLabel labels');
+                    end
+                end
+            end
             figure(curfig);  if nbgraph > 1, axes(curax); end; htmp = title(texttitle);
             try, icadefs; set(htmp,'FontSize',AXES_FONTSIZE_L); catch, end; clear htmp;
 		end
@@ -402,11 +446,11 @@ if colorbar_switch
     end
 end
 
-if nbgraph> 1, 
+if nbgraph> 1
    figure(curfig); a = textsc(0.5, 0.05, topotitle); 
    set(a, 'fontweight', 'bold'); 
 end
-if nbgraph== 1, 
+if nbgraph== 1
    com = 'figure;'; 
 end
 set(allobj(1:countobj-1), 'visible', 'on');
@@ -417,5 +461,3 @@ axcopy(curfig, 'set(gcf, ''''units'''', ''''pixels''''); postmp = get(gcf, ''''p
 com = [com sprintf('pop_topoplot(EEG, %d, %s);', ...
                    typeplot, vararg2str({arg2 topotitle rowcols plotdip outoptions{:} }))];
 return;
-
-		

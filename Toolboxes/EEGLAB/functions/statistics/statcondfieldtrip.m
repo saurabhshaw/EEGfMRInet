@@ -1,11 +1,11 @@
-% statcondfiledtrip()  - same as statcond except that it uses the fieldtrip
+% STATCONDFILEDTRIP  - same as statcond except that it uses the fieldtrip
 %                        statistical functions. This is useful to perform
 %                        a wider variety of corrections for multiple 
 %                        comparisons for instance.
 % Usage:
 %          >> [stats, df, pvals, surrog] = statcond( data, 'key','val'... );
 % Inputs:
-%   data       = same as for statcond()
+%   data       = same as for STATCOND
 %
 % Optional inputs:
 %   'paired'   = ['on'|'off'] pair the data array {default: 'on' unless 
@@ -19,8 +19,8 @@
 %                corresponds to the 'analytic' method of Fieldtrip and
 %                'permutation' correspond to the 'montecarlo' method.
 %   'naccu'    = this input is passed on as 'numrandomization' to Fieldtrip
-%   'neighbours' = Fieldtrip channel neighbour structure to perfom statistics
-%                and cluster correction for multiple comparisons accross 
+%   'neighbours' = Fieldtrip channel neighbour structure to perform statistics
+%                and cluster correction for multiple comparisons across 
 %                channels.
 %   'alpha'    = [float] p-value threshold value. Allow returning
 %                confidence intervals and mask (requires structoutput below).
@@ -31,7 +31,9 @@
 % Fieldtrip options:
 %   Any option to the freqanalysis, the statistics_montecarlo, the
 %   statistics_analysis, statistics_stat, statistics_glm may be used
-%   using 'key', val argument pairs.
+%   using 'key', val argument pairs. Note that although 'fieldtripmcorrect'
+%   is used by std_stat, this function uses 'mcorrect'. See Fieldtrip
+%   documentation for more information.
 %
 % Outputs:
 %   stats      = F- or T-value array of the same size as input data without 
@@ -47,7 +49,7 @@
 %         With thanks to Robert Oostenveld for fruitful discussions 
 %         and advice on this function.
 %
-% See also: freqanalysis(), statistics_montecarlol()
+% See also: FREQANALYSIS, STATISTICS_MONTECARLOL
 
 % Copyright (C) Arnaud Delorme
 %
@@ -77,14 +79,14 @@
 % THE POSSIBILITY OF SUCH DAMAGE.
 
 
-function [ ori_vals, df, pvals ] = statcondfieldtrip( data, varargin );
+function [ ori_vals, df, pvals ] = statcondfieldtrip( data, varargin )
     
     if nargin < 1
         help statcondfieldtrip;
         return;
     end
     
-    [g cfgparams] = finputcheck( varargin, { 'naccu'      ''          []             [];
+    [g, cfgparams] = finputcheck( varargin, { 'naccu'      ''          []             [];
                                              'method'     'string'    { }            'param';
                                              'mode'       'string'    { }            ''; % deprecated (old method)
                                              'chanlocs'   'struct'    { }            struct([]);
@@ -93,11 +95,13 @@ function [ ori_vals, df, pvals ] = statcondfieldtrip( data, varargin );
                                              'neighbours' 'struct'    { }            struct([]);
                                              'structoutput' 'string'  { 'on','off' }      'off';
 %                                             'method'    'string'    {  } 'analytic'; % 'montecarlo','analytic','stat','glm'
-                                             'paired'     'string'    { 'on','off' }      'on' }, 'statcond', 'ignore');
+                                             'paired'     'string'    { 'on','off' }      'on' }, ... % NOT USED IN THIS FUNCTION
+                                             'statcond', 'ignore');
     if ischar(g), error(g); end;    
     if ~isempty(g.mode), g.method = g.mode; end
     if strcmpi(g.method, 'parametric'), g.method = 'param'; end
     if strcmpi(g.method, 'permutation'), g.method = 'montecarlo'; end
+    if isfield(g, 'fieldtripmcorrect'), error('THIS FUNCTION DOES NOT RECOGNIZE "fieldtripmcorrect" USE "mcorrect" INSTEAD'); end
     if ~isempty(g.neighbours) && isempty(g.chanlocs)
         g.chanlocs = struct('labels', { g.neighbours(:).label });
     end
@@ -176,7 +180,7 @@ function [ ori_vals, df, pvals ] = statcondfieldtrip( data, varargin );
     end
     cfg.correcttail = 'alpha';
     
-    if size(data,1) == 1, % only one row
+    if size(data,1) == 1 % only one row
         
         if size(data,2) == 2 && strcmpi(g.paired, 'on')
             

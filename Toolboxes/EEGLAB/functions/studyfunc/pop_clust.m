@@ -1,7 +1,7 @@
-% pop_clust() - select and run a clustering algorithm on components from an EEGLAB STUDY 
+% POP_CLUST - select and run a clustering algorithm on components from an EEGLAB STUDY 
 %               structure of EEG datasets. Clustering data should be prepared beforehand using 
-%               pop_preclust() and/or std_preclust(). The number of clusters must be
-%               specified in advance. If called in gui mode, the pop_clustedit() window
+%               POP_PRECLUST and/or STD_PRECLUST. The number of clusters must be
+%               specified in advance. If called in gui mode, the POP_CLUSTEDIT window
 %               appears when the clustering is complete to display clustering results
 %               and allow the user to review and edit them.
 % Usage: 
@@ -17,8 +17,8 @@
 %                 'kmeanscluster' option is included in EEGLAB. The 'Neural Network' 
 %                  option requires the Matlab Neural Net toolbox {default: 'kmeans'} 
 %   'clus_num'  - [integer] the number of desired clusters (must be > 1)
-%                 {default: 20}. Not neccesary when using Affinity Propagation algorithm 
-%   'maxiter'   - maximun numer of iterations when using Affinity Propagation algorithm 
+%                 {default: 20}. Not necessary when using Affinity Propagation algorithm 
+%   'maxiter'   - maximum number of iterations when using Affinity Propagation algorithm 
 %   'outliers'  - [integer] identify outliers further than the given number of standard
 %                 deviations from any cluster centroid. Inf --> identify no such outliers.
 %                 {default: Inf from the command line; 3 for 'kmeans' from the pop window}
@@ -38,7 +38,7 @@
 %  "Save STUDY"         - [check box] check to save the updated STUDY after clustering 
 %                         is performed. If no file entered, overwrites the current STUDY. 
 %
-%  See also  pop_clustedit(), pop_preclust(), std_preclust(), pop_clust()
+%  See also  POP_CLUSTEDIT, POP_PRECLUST, STD_PRECLUST, POP_CLUST
 %
 % Authors:  Hilit Serby & Arnaud Delorme, SCCN, INC, UCSD, October 11, 2004
 
@@ -123,9 +123,9 @@ if isempty(varargin) %GUI call
 	set_outliers = ['set(findobj(''parent'', gcbf, ''tag'', ''outliers_std''), ''enable'', fastif(get(gcbo, ''value''), ''on'', ''off''));'...
                             'set(findobj(''parent'', gcbf, ''tag'', ''std_txt''), ''enable'', fastif(get(gcbo, ''value''), ''on'', ''off''));']; 
                         
-	algoptions = [ 'set(findobj(''parent'', gcbf, ''userdata'', ''kmeans''), ''enable'', fastif(get(gcbo, ''value'')==1, ''on'', ''off''));' ...
+	algoptions = [ 'set(findobj(''parent'', gcbf, ''userdata'', ''kmeans''), ''enable'', fastif(get(gcbo, ''value'')==1, ''on'', ''off''), ''visible'', fastif(get(gcbo, ''value'')==1, ''on'', ''off''));' ...
                   'if  get(findobj(''parent'', gcbf, ''tag'', ''clust_algorithm''),''value'') == 4 ;'...
-                  'set(findobj(''parent'', gcbf, ''tag'', ''clust_num''), ''enable'', ''off''); else; set(findobj(''parent'', gcbf, ''tag'', ''clust_num''), ''enable'', ''on''); end;'];
+                  'set(findobj(''parent'', gcbf, ''userdata'', ''clust_num''), ''enable'', ''off'', ''visible'', ''off''); else; set(findobj(''parent'', gcbf, ''userdata'', ''clust_num''), ''enable'', ''on'', ''visible'', ''on''); end;'];
 	
     saveSTUDY = [ 'set(findobj(''parent'', gcbf, ''userdata'', ''save''), ''enable'', fastif(get(gcbo, ''value'')==1, ''on'', ''off''));' ];
 	browsesave = [ '[filename, filepath] = uiputfile2(''*.study'', ''Save STUDY with .study extension -- pop_clust()''); ' ... 
@@ -151,10 +151,10 @@ if isempty(varargin) %GUI call
 	{ {'style' 'text'       'string' strclust 'fontweight' 'bold'  } {} ...
       {'style' 'text'       'string' 'Clustering algorithm:' } ...
       {'style' 'popupmenu'  'string' alg_options  'value' valalg 'tag' 'clust_algorithm'  'Callback' algoptions } ...
-      {'style' 'text'       'string' 'Number of clusters to compute:' } ...
-      {'style' 'edit'       'string' numClustStr 'tag' 'clust_num' } {} ...
+      {'style' 'text'       'string' 'Number of clusters to compute:' 'userdata' 'clust_num' } ...
+      {'style' 'edit'       'string' numClustStr 'tag' 'clust_num' 'userdata' 'clust_num' } {} ...
       {'style' 'checkbox'   'string' 'Separate outliers (enter std.)' 'tag' 'outliers_on' 'value' 0 'Callback' set_outliers 'userdata' 'kmeans' 'enable' 'on' } ...
-      {'style' 'edit'       'string' '3' 'tag' 'outliers_std' 'enable' 'off' } {} },...
+      {'style' 'edit'       'string' '3' 'tag' 'outliers_std' 'userdata' 'kmeans' 'enable' 'off' } {} },...
                             'pophelp(''pop_clust'')', 'Set clustering algorithm -- pop_clust()' , [] , 'normal', [ 1 .5 1 1 1]);
 	
 	if ~isempty(clust_param)
@@ -179,7 +179,7 @@ if isempty(varargin) %GUI call
         try
             clustdata = STUDY.etc.preclust.preclustdata;
         catch
-            error('Error accesing preclustering data. Perform pre-clustering.');
+            error('Error accessing preclustering data. Perform pre-clustering.');
         end
         command = '[STUDY] = pop_clust(STUDY, ALLEEG,';
         
@@ -246,7 +246,7 @@ if isempty(varargin) %GUI call
            
        % Call menu to plot clusters (use EEGLAB menu which include std_envtopo)
        LASTCOM = command;
-       eval([ get(findobj(findobj('tag', 'EEGLAB'), 'Label', 'Edit/plot clusters'), 'callback') ] );
+       eval([ get(findobj(findobj('tag', 'EEGLAB'), 'Label', 'Edit/plot component clusters'), 'callback') ] );
        %[STUDY com] = pop_clustedit(STUDY, ALLEEG); 
 	end
     
@@ -326,7 +326,7 @@ else %command line call
         case 'neural network'
             [IDX,C] = neural_net(clustdata,clus_num);
             [STUDY] = std_createclust(STUDY, ALLEEG, 'clusterind', IDX, 'algorithm',  {'Neural Network', clus_num});
-        case 'Affinity Propagation'           
+        case 'affinity propagation'           
              [IDX,C,sumd] = std_apcluster(clustdata,'maxits',maxiter);
              [STUDY]      = std_createclust(STUDY, ALLEEG, 'clusterind', IDX, 'algorithm', {'Affinity Propagation',size(C,1)});
         otherwise

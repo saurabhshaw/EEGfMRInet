@@ -53,14 +53,17 @@ if ~isfield(EEG, 'icawinv')
 end
         
 if ~isfield(EEG, 'dipfit')
-    error('General dipolefit settings not specified');
+    error('General dipole fit settings not specified');
 end
 
-if ~isfield(EEG.dipfit, 'vol') && ~isfield(EEG.dipfit, 'hdmfile')
-    error('Dipolefit volume conductor model not specified');
+if ~isfield(EEG.dipfit, 'sourcemodel') || isempty(EEG.dipfit.sourcemodel)
+    error('You need to compute a Liedfield matrix first');
+end
+if ~isfield(EEG.dipfit, 'coordformat') || ~strcmpi(EEG.dipfit.coordformat, 'MNI')
+    error('For this function, you must use the template BEM model MNI in dipole fit settings');
 end
 
-dipfitdefs
+dipfitdefs;
 if nargin < 2
      uilist = { { 'style' 'text'        'string'  [ 'Enter indices of components ' 10 '(one figure generated per component)'] } ...
                 { 'style' 'edit'        'string'  '1' } ...
@@ -91,6 +94,7 @@ if ~isempty(setdiff(select, [1:size(EEG.icaweights,1)]))
 end
 
 g = finputcheck(options, { 'ft_sourceanalysis_params'  'cell'    {}         { 'method' 'eloreta' };
+                           'plotmode'                  'string'  {'2d' '3d'} '2d';
                            'ft_sourceplot_params'      'cell'    []         { 'method' 'slice' } }, 'pop_dipfit_loreta');
 if isstr(g), error(g); end;
 
@@ -114,18 +118,53 @@ cfg                 = [];
 cfg.elec            = freqPre.elec;
 cfg.headmodel       = headmodel;
 cfg.reducerank      = 2;
-cfg.grid.resolution = 10;   % use a 3-D grid with a 1 cm resolution
-cfg.grid.unit       = 'mm';
+cfg.sourcemodel.unit       = 'mm';
+cfg.resolution = 5;
 cfg.channel         = { 'all' };
-[grid] = ft_prepare_leadfield(cfg);
+fprintf('\nGrid creation below is only to assess inside/outside brain voxels, use DIPFIT to create Leadfield matrix\n');
+grid = ft_prepare_sourcemodel(cfg);
 
 % source localization
 cfg              = struct(g.ft_sourceanalysis_params{:}); 
 cfg.frequency    = 18;  
-cfg.grid         = grid; 
-cfg.headmodel    = headmodel;
-cfg.dics.projectnoise = 'yes';
-cfg.dics.lambda       = 0;
+
+sourcemodeltmp = EEG.dipfit.sourcemodel;
+if isfield(sourcemodeltmp, 'tri')
+    fprintf(2, '\nYou are using a surface source model. Plotting interpolated 3-D volume is not recommended\n\n');
+end
+
+% find position futher than 5 mm from source model
+% same as above but specific to the current model
+% also will not interpolate white matter if no voxel as present there
+% grid.inside = grid.inside;
+% grid.inside(:) = true;
+% for iPos = 1:size(grid.pos,1)
+%     if all(sqrt(sum(bsxfun(@minus, tmp.pos, grid.pos(iPos,:)).^2,2)) > 10)
+%         grid.inside(iPos) = false;
+%     end
+% end
+
+sourcemodeltmp.inside    = [ sourcemodeltmp.inside;grid.inside(~grid.inside)];
+sourcemodeltmp.pos(end+1:end+sum(~grid.inside),:) = grid.pos(~grid.inside,:);
+sourcemodeltmp.leadfield = [ sourcemodeltmp.leadfield cell(1, sum(~grid.inside)) ];
+
+if strcmpi(g.plotmode, '2d')
+    cfg.sourcemodel = sourcemodeltmp;
+    cfg.headmodel    = headmodel;
+    cfg.dics.projectnoise = 'yes';
+    cfg.dics.lambda       = 0;
+else
+    if 1
+        [ftVer, ftPath] = ft_version;
+        cfg.sourcemodel = ft_read_headshape(fullfile(ftPath, 'template', 'sourcemodel', 'cortex_8196.surf.gii'));
+    else
+        cfg.sourcemodel = headmodel.bnd(3);
+        cfg.sourcemodel.pnt = cfg.sourcemodel.pnt*0.98;
+    end
+    cfg.headmodel    = headmodel;
+    cfg.dics.projectnoise = 'yes';
+    cfg.dics.lambda       = 0;
+end
 
 for iSelect = select(:)'
     freqPre.powspctrm = EEG.icawinv(:,iSelect).*EEG.icawinv(:,iSelect);
@@ -133,23 +172,35 @@ for iSelect = select(:)'
     
     sourcePost_nocon = ft_sourceanalysis(cfg, freqPre);
 
-    %% load MRI and plot
-    mri = load('-mat', EEG.dipfit.mrifile);
-    mri = ft_volumereslice([], mri.mri);
-    
-    cfg2            = [];
-    cfg2.downsample = 2;
-    cfg2.parameter = 'avg.pow';
-    sourcePost_nocon.oridimord = 'pos';
-    sourcePost_nocon.momdimord = 'pos';
-    sourcePostInt_nocon  = ft_sourceinterpolate(cfg2, sourcePost_nocon , mri);
-    
-    cfg2              = struct(g.ft_sourceplot_params{:});
-    cfg2.funparameter = 'avg.pow';
-    ft_sourceplot(cfg2,sourcePostInt_nocon);
-    textsc(sprintf('eLoreta source localization of component %d power', iSelect), 'title');
+    if strcmpi(g.plotmode, '2d')
+        %% load MRI and plot
+        mri = load('-mat', EEG.dipfit.mrifile);
+        mri = ft_volumereslice([], mri.mri);
+        
+        cfg2            = [];
+        cfg2.downsample = 2;
+        cfg2.parameter = 'avg.pow';
+        sourcePost_nocon.oridimord = 'pos';
+        sourcePost_nocon.momdimord = 'pos';
+        sourcePostInt_nocon  = ft_sourceinterpolate(cfg2, sourcePost_nocon , mri);
+        
+        cfg2              = struct(g.ft_sourceplot_params{:});
+        cfg2.funparameter = 'avg.pow';
+        ft_sourceplot(cfg2,sourcePostInt_nocon);
+        textsc(sprintf('eLoreta source localization of component %d power', iSelect), 'title');
+    else
+        %% Surface source plot
+        cfg = [];
+        cfg.funparameter = 'pow';
+        cfg.maskparameter = 'pow';
+        cfg.method = 'surface';
+        cfg.latency = 0.4;
+        cfg.colorbar = 'off';
+        cfg.opacitylim = [0 200];
+        ft_sourceplot(cfg, sourcePost_nocon);
+    end
 end
 
 %% history
 disp('Done');
-com = sprintf('EEG = pop_dipfit_loreta(EEG, %s);', vararg2str( { select }));
+com = sprintf('pop_dipfit_loreta(EEG, %s);', vararg2str( { select }));

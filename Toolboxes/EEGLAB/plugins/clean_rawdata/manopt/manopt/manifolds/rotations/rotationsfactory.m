@@ -53,6 +53,9 @@ function M = rotationsfactory(n, k)
 %       isometric.
 %   June 18, 2019 (NB)
 %       Using qr_unique for the QR-based retraction.
+%   Nov. 19, 2019 (NB)
+%       Clarified that the isometric transport is not parallel transport
+%       along geodesics.
 
     
     if ~exist('k', 'var') || isempty(k)
@@ -81,18 +84,18 @@ function M = rotationsfactory(n, k)
     
     M.tangent2ambient_is_identity = false;
     M.tangent2ambient = @(X, U) multiprod(X, U);
-	
-	M.egrad2rgrad = M.proj;
-	
-	M.ehess2rhess = @ehess2rhess;
-	function Rhess = ehess2rhess(X, Egrad, Ehess, H)
+    
+    M.egrad2rgrad = M.proj;
+    
+    M.ehess2rhess = @ehess2rhess;
+    function Rhess = ehess2rhess(X, Egrad, Ehess, H)
         % Reminder : H contains skew-symmeric matrices. The actual
         % direction that the point X is moved along is X*H.
-		Xt = multitransp(X);
-		XtEgrad = multiprod(Xt, Egrad);
+        Xt = multitransp(X);
+        XtEgrad = multiprod(Xt, Egrad);
         symXtEgrad = multisym(XtEgrad);
-		XtEhess = multiprod(Xt, Ehess);
-		Rhess = multiskew( XtEhess - multiprod(H, symXtEgrad) );
+        XtEhess = multiprod(Xt, Ehess);
+        Rhess = multiskew( XtEhess - multiprod(H, symXtEgrad) );
     end
     
     % This QR-based retraction is only a first-order approximation
@@ -204,7 +207,7 @@ function M = rotationsfactory(n, k)
     
     M.log = @logarithm;
     function U = logarithm(X, Y)
-		U = multiprod(multitransp(X), Y);
+        U = multiprod(multitransp(X), Y);
         for kk = 1 : k
             % The result of logm should be real in theory, but it is
             % numerically useful to force it.
@@ -229,8 +232,11 @@ function M = rotationsfactory(n, k)
     
     M.zerovec = @(x) zeros(n, n, k);
     
+    % Cheap vector transport
     M.transp = @(x1, x2, d) d;
-    M.isotransp = M.transp; % the transport is isometric
+    % This transporter is isometric (but it is /not/ parallel transport
+    % along geodesics.)
+    M.isotransp = M.transp;
     
     M.pairmean = @pairmean;
     function Y = pairmean(X1, X2)
