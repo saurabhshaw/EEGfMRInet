@@ -1,4 +1,4 @@
-function [general_param, scan_param, control_param, feature_param] = get_setup_params()
+function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_setup_params()
 
 %% GENERAL PARAMS (ie filepaths)
 general_param.study_name = 'HCWMIVO';
@@ -52,7 +52,6 @@ scan_param.low_srate = 500;
 control_param.overwrite_files = 0;
 
 %% PREPROCESSING PARAMS - eegfmri
-EEGfMRI_preprocess_param = []; % Setting the parameters for the FASTR GA Filtering algorithm 
 EEGfMRI_preprocess_param.use_fastr_gui = 0; % whether or not to use the fastr gui
 EEGfMRI_preprocess_param.use_pas_gui = 0; % whether or not to use the fastr gui
 EEGfMRI_preprocess_param.lpf = 70; % Low Pass Filter Cut-off

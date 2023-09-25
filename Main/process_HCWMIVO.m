@@ -1,3 +1,5 @@
+% get req'd parameters
+[general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_setup_params();
 
 % File naming constants:
 study_name = 'HCWMIVO';
@@ -6,18 +8,18 @@ modality = 'EEGfMRI';
 % Study specific parameters:
 study_conditions = {'RestPre','NeutralDirect','NeutralAverted','NeutralImagery','NeutralCue','MoralDirect','MoralAverted','MoralImagery','MoralCue','RestPost'};
 replace_files = 0;
-scan_parameters = [];
-scan_parameters.TR = 3; % MRI Repetition Time (in seconds)
-scan_parameters.anat_num_images = 176; % check
-scan_parameters.slicespervolume = 57;
-scan_parameters.rsfunc_time_points = 160;
-scan_parameters.tfunc_time_points = 118;
-scan_parameters.rsfunc_num_images = scan_parameters.rsfunc_time_points * scan_parameters.slicespervolume; %9120
-scan_parameters.tfunc_num_images = scan_parameters.tfunc_time_points * scan_parameters.slicespervolume; %6726
-scan_parameters.slice_marker = 100008; % Was a string
-scan_parameters.ECG_channel = 67; % heart beat channel
-scan_parameters.srate = 5000;
-scan_parameters.low_srate = 500;
+scan_param = [];
+scan_param.TR = 3; % MRI Repetition Time (in seconds)
+scan_param.anat_num_images = 176; % check
+scan_param.slicespervolume = 57;
+scan_param.rsfunc_time_points = 160;
+scan_param.tfunc_time_points = 118;
+scan_param.rsfunc_num_images = scan_param.rsfunc_time_points * scan_param.slicespervolume; %9120
+scan_param.tfunc_num_images = scan_param.tfunc_time_points * scan_param.slicespervolume; %6726
+scan_param.slice_marker = 100008; % Was a string
+scan_param.ECG_channel = 67; % heart beat channel
+scan_param.srate = 5000;
+scan_param.low_srate = 500;
 
 % Control Parameters:
 runs_to_include = {'task'}; % From the description of the dataset can be 'task', 'rest' or 'combined'
@@ -146,7 +148,7 @@ model_file = [base_path filesep 'Models' filesep 'SVM_Models' filesep final_feat
 %     EEGfMRI_corrIDX(i,:) = cell2mat(temp_corrIDX);
 % end
 %% Run Loop:
-temp_scan_parameters = scan_parameters;
+temp_scan_parameters = scan_param;
 for ii = length(sub_dir):-1:1 % GRAHAM_PARFOR-1
     for jj = 1:length(runs_to_include)
         %%
@@ -160,7 +162,7 @@ for ii = length(sub_dir):-1:1 % GRAHAM_PARFOR-1
             %curr_file = [curr_dir filesep dataset_name '.set'];
             
             %% Read in the file:
-            scan_parameters.slice_marker = temp_scan_parameters.slice_marker;
+            scan_param.slice_marker = temp_scan_parameters.slice_marker;
             switch runs_to_include{jj}
                 case 'task'
                     % curr_file = [curr_dir filesep 'EEG' filesep 'Inside_Scanner' filesep 'Acquisition 03.cdt'];                    
@@ -360,10 +362,10 @@ for ii = length(sub_dir):-1:1 % GRAHAM_PARFOR-1
                         fprintf(['\n ***************************** Starting Pre-Processing Task ***************************** \n']);
                         [EEG] = pop_loadset(['task_' dataset_name '_MInjury.set'],[curr_dir filesep 'EEG' filesep 'MInjury' filesep 'EEGfMRI_Raw']);
                         
-                        if sum(cellfun(@(x)x == -1,{EEG.event(:).type})) == 118 scan_parameters.slice_marker = -1; end
+                        if sum(cellfun(@(x)x == -1,{EEG.event(:).type})) == 118 scan_param.slice_marker = -1; end
                         
                         
-                        [EEG] = run_rest_EEGfMRI_preprocess(EEG,task_dir,scan_parameters,dataset_name,offline_preprocess_cfg,overwrite_files,base_path);%dmer1
+                        [EEG] = run_rest_EEGfMRI_preprocess(EEG,task_dir,scan_param,dataset_name,offline_preprocess_cfg,overwrite_files,base_path);%dmer1
                         toc
 
 
@@ -392,9 +394,9 @@ for ii = length(sub_dir):-1:1 % GRAHAM_PARFOR-1
                         tic;
                         fprintf(['\n ***************************** Starting Pre-Processing Rest ***************************** \n']);
                         
-                        if sum(cellfun(@(x)x == -1,{EEG.event(:).type})) == 160 scan_parameters.slice_marker = -1; end
+                        if sum(cellfun(@(x)x == -1,{EEG.event(:).type})) == 160 scan_param.slice_marker = -1; end
                         
-                        [EEG] = run_rest_EEGfMRI_preprocess(EEG,rest_dir,scan_parameters,dataset_name,offline_preprocess_cfg,overwrite_files,base_path);
+                        [EEG] = run_rest_EEGfMRI_preprocess(EEG,rest_dir,scan_param,dataset_name,offline_preprocess_cfg,overwrite_files,base_path);
                         toc
                 end
                 
@@ -412,15 +414,15 @@ for ii = length(sub_dir):-1:1 % GRAHAM_PARFOR-1
                 
                 %% Compute EEG features:
                 
-                if scan_parameters.slice_marker == -1
+                if scan_param.slice_marker == -1
                     % Splice the dataset into sliding windows, creating Epochs to compute features over:
                     if length(size(EEG.data)) == 2
                         % slice_latencies = [EEG.event(find(strcmp(scan_parameters.slice_marker,{EEG.event.type}))).latency]; last_slice_latency = slice_latencies(length(slice_latencies));
                         % vol_latencies = slice_latencies(1:scan_parameters.slicespervolume:length(slice_latencies));
-                        vol_latencies = [EEG.event(find(strcmp(num2str(scan_parameters.slice_marker),{EEG.event.type}))).latency];
+                        vol_latencies = [EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency];
 
-                        TR_window_step = CONN_cfg.window_step/scan_parameters.TR; % The window_step in terms of the TR
-                        TR_window_length = CONN_cfg.window_length/scan_parameters.TR; % The window_length in terms of the TR
+                        TR_window_step = CONN_cfg.window_step/scan_param.TR; % The window_step in terms of the TR
+                        TR_window_length = CONN_cfg.window_length/scan_param.TR; % The window_length in terms of the TR
 
                         % [start_idx, end_idx] = create_windows(size(EEG.data,2), window_step*EEG.srate, window_length*EEG.srate);
                         [vol_start_idx, vol_end_idx] = create_windows(length(vol_latencies), TR_window_step, TR_window_length); % Compute the start and end indicies in terms of MR volumes
@@ -455,7 +457,7 @@ for ii = length(sub_dir):-1:1 % GRAHAM_PARFOR-1
                     [compute_feat] = curate_features_deploy(feature_names, featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
                 else
                     
-                    vol_latencies = [EEG.event(find(strcmp(num2str(scan_parameters.slice_marker),{EEG.event.type}))).latency];
+                    vol_latencies = [EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency];
                     pause = dataset_name
                 end 
 
