@@ -49,12 +49,12 @@ for kk = 1:length(general_param.sub_dir)
                     end
 
                     % check if slice marker injection is needed
-                    if sum(cellfun(@(x)x == -1,{EEG.event(:).type})) < num_volumes
+                    if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) < num_volumes
                         [EEG] = inject_missing_markers(EEG,EEG.srate,scan_param.slice_marker,num_volumes,scan_param.TR);  
                     end 
 
                     % sanity check slice marker injection success
-                    if sum(cellfun(@(x)x == -1,{EEG.event(:).type})) == num_volumes
+                    if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) == num_volumes
                     tic 
                     [EEG] = EEGfMRI_preprocess_full(EEG,condition_dir,scan_param,participant_id,curr_condition,num_volumes,offline_preprocess_cfg,EEGfMRI_preprocess_param,control_param.overwrite_files,general_param.base_path);
                     toc
