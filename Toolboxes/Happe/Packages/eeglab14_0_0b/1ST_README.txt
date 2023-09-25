@@ -1,3 +1,4 @@
+dmer note: deleted eeglab.m from this directory, redudancy when using toolbox addgen 
 
 This dir contains original Matlab functions from the EEGLAB (formerly ICA/EEG)
 Matlab toolbox, all released under the Gnu public license (see eeglablicence.txt). 

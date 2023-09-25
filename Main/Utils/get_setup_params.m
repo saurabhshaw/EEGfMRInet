@@ -1,30 +1,31 @@
 function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_setup_params()
 
 %% GENERAL PARAMS (ie filepaths)
+% set file naming params
 general_param.study_name = 'HCWMIVO';
 general_param.modality = 'EEGfMRI';
-
-% setting filepaths
 data_subset_folder = 'all_data';
+
+% setting base paths
 general_param.base_path_src = fileparts(matlab.desktop.editor.getActiveFilename); cd(general_param.base_path_src); cd ..;
 general_param.base_path = pwd;
-general_param.base_path_data = [general_param.base_path_rd filesep general_param.study_name];
-general_param.base_path_data = [general_param.base_path_data filesep data_subset_folder];
-[general_param.sub_dir,general_param.sub_dir_mod] = update_subject_list(general_param.study_name,general_param.modality,general_param.base_path_data,runs_to_include);
 
+% add paths to wd 
+addpath(genpath(general_param.base_path));
+
+% set research code/research data paths
 [~,host_name] = system('hostname'); host_name = strtrim(host_name);
 switch host_name        
     case 'DESKTOP-8S2HATP' % Dan home PC
-        general_param.base_path_rc = ['C:\Users\DaniWorkstation\Documents_local\neuroscience_phd\research_code'];
+        % general_param.base_path_rc = ['C:\Users\DaniWorkstation\OneDrive\Documents_personal\Neuroscience PhD\research_code'];
+        % base_path_rd = 'D:\research_data';
         general_param.base_path_rd = 'E:\research_data';
 
     case 'MSI' % Dan laptop
-        general_param.base_path_rc = ['idk'];
+        % general_param.base_path_rc = ['idk'];
         general_param.base_path_rd = 'D:\research_data';
+        % base_path_rd = 'E:\research_data';
 end
-
-% add path to wd 
-addpath(genpath(general_param.base_path));
 
 % define runs and conditions
 general_param.dict_runs_w_conditions = dictionary('task',{['MInjury','-','Neutral']},'rest',{['rsEEG_Post','-','rsEEG_Pre']}); %sep with '-' when adding new conditions
@@ -33,6 +34,11 @@ runs_to_include = {};
 for i = 1:length(general_param.runs)
     runs_to_include = [runs_to_include general_param.runs(i)];
 end
+
+% get base paths
+general_param.base_path_data = [general_param.base_path_rd filesep general_param.study_name];
+general_param.base_path_data = [general_param.base_path_data filesep data_subset_folder];
+[general_param.sub_dir,general_param.sub_dir_mod] = update_subject_list(general_param.study_name,general_param.modality,general_param.base_path_data,runs_to_include);
 
 % parfor configs -- distcomp, distributed computing
 distcomp.feature( 'LocalUseMpiexec', false );
