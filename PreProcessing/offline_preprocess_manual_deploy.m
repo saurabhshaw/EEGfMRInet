@@ -22,8 +22,9 @@ current_stage = 1;
 if max_finishedStage == current_stage-1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Stage Code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     EEG = pop_eegfiltnew(EEG,cfg.filter_lp,cfg.filter_hp); EEG.setname = [EEG.setname '_filt']; EEG = eeg_checkset( EEG );
+    EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'bpfilt']; EEG = eeg_checkset( EEG );
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-   
+
     % Update preprocessing_stageCompletion
     preprocessing_stageCompletion(current_stage) = 1; max_finishedStage = max(find(preprocessing_stageCompletion));
     save(stageCompletion_file);
@@ -59,6 +60,7 @@ if max_finishedStage == current_stage-1
         % Save removed channels
         selected_channel_locations = EEG.chanlocs; selected_channel_labels = {selected_channel_locations.labels};
         output_struct.bad_channels_removed = setdiff({full_channel_locations(:).labels}, selected_channel_labels);
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'bad_chan_check']; EEG = eeg_checkset( EEG );
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -73,8 +75,8 @@ if max_finishedStage == current_stage-1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Stage Code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if cfg.segment_data
         EEG = pop_epoch(EEG, cfg.segment_markers, [cfg.task_segment_start cfg.task_segment_end], 'epochinfo', 'yes');
-        EEG.setname = [EEG.setname '_segmented'];
-        EEG = pop_saveset( EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'segmented']; EEG = eeg_checkset( EEG );
+        % EEG = pop_saveset( EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -114,8 +116,9 @@ if max_finishedStage == current_stage-1
     EEG = pop_subcomp(EEG, components, 0);
     EEG = pop_iclabel(EEG,'default'); EEG = eeg_checkset( EEG );
     
-    EEG.setname = regexprep(EEG.setname,' pruned with ICA','_ICAreject1');
-    EEG = pop_saveset( EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
+    EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'ICA_reject_1']; EEG = eeg_checkset( EEG );
+    % EEG.setname = regexprep(EEG.setname,' pruned with ICA','_ICAreject1');
+    % EEG = pop_saveset( EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Update preprocessing_stageCompletion
@@ -178,8 +181,9 @@ if max_finishedStage == current_stage-1
         EEG = pop_subcomp(EEG, components, 0);
         EEG = pop_iclabel(EEG,'default'); EEG = eeg_checkset( EEG );
         
-        EEG.setname = regexprep(EEG.setname,' pruned with ICA','_ICAreject2');
-        EEG = pop_saveset(EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'ICA_reject_2']; EEG = eeg_checkset( EEG );
+        % EEG.setname = regexprep(EEG.setname,' pruned with ICA','_ICAreject2');
+        % EEG = pop_saveset(EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         % Update preprocessing_stageCompletion
@@ -222,7 +226,9 @@ if max_finishedStage == current_stage-1
         end
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Stage Code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        EEG = pop_reref( EEG, []); EEG.setname = [EEG.setname '_reRef']; EEG = eeg_checkset( EEG );
+        EEG = pop_reref( EEG, []); 
+        % EEG.setname = [EEG.setname '_reRef']; EEG = eeg_checkset( EEG );
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'reRef']; EEG = eeg_checkset( EEG );
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
         % Update preprocessing_stageCompletion
@@ -247,8 +253,9 @@ if max_finishedStage == current_stage-1
         output_struct.preprocess_segRej = EEG.reject.rejjp; % list of epochs rejected
         EEG = eeg_rejsuperpose(EEG, 1, 0, 1, 1, 1, 1, 1, 1);
         EEG = pop_rejepoch(EEG, [EEG.reject.rejglobal] ,0);
-        EEG.setname = [EEG.setname '_segRej']; EEG = eeg_checkset( EEG );
-        EEG = pop_saveset(EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'segRej']; EEG = eeg_checkset( EEG );
+        % EEG.setname = [EEG.setname '_segRej']; EEG = eeg_checkset( EEG );
+        % EEG = pop_saveset(EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -263,8 +270,9 @@ if max_finishedStage == current_stage-1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Stage Code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if cfg.remove_electrodes && ~isempty(output_struct.bad_channels_removed)
         EEG = pop_interp(EEG, full_channel_locations, 'spherical');
-        EEG.setname = [EEG.setname '_chanInterp']; EEG = eeg_checkset( EEG );
-        EEG = pop_saveset(EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'chanInterp']; EEG = eeg_checkset( EEG );
+        % EEG.setname = [EEG.setname '_chanInterp']; EEG = eeg_checkset( EEG );
+        % EEG = pop_saveset(EEG, 'filename',['Stage' num2str(current_stage) '-' EEG.setname '.set'],'filepath',curr_dir_preprocessed);
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -277,13 +285,6 @@ end
 if max_finishedStage == current_stage
     EEG = pop_saveset(EEG, 'filename',[dataset_name '_preprocessed.set'],'filepath',curr_dir_preprocessed);
     save([curr_dir_preprocessed filesep dataset_name '_preprocessed'],'-struct','output_struct');
-%     if remove_electrodes && segment_data
-%         save([curr_dir_preprocessed filesep dataset_name '_preprocessed'],'EEG_ICA','EEG_ICA_IClabelrejcomp','preprocess_segRej','bad_channels_removed');
-%     elseif segment_data
-%         save([curr_dir_preprocessed filesep dataset_name '_preprocessed'],'EEG_ICA','EEG_ICA_IClabelrejcomp','preprocess_segRej');
-%     else
-%         save([curr_dir_preprocessed filesep dataset_name '_preprocessed'],'EEG_ICA','EEG_ICA_IClabelrejcomp');
-%     end
     if cfg.save_Workspace save([curr_dir_preprocessed filesep dataset_name '_preprocessed-Workspace']); end
     delete([curr_dir_preprocessed filesep 'Stage*.set']);
     delete([curr_dir_preprocessed filesep 'Stage*.fdt']);
