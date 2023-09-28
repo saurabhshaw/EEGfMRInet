@@ -1,4 +1,4 @@
-function [EEG] = EEGfMRI_preprocess_full(EEG,condition_dir,scan_param,participant_id,curr_condition,num_volumes,offline_preprocess_cfg,EEGfMRI_preprocess_param,overwrite_files,base_path)
+function [EEG] = EEGfMRI_preprocess_full(EEG,condition_dir,scan_param,num_volumes,offline_preprocess_cfg,EEGfMRI_preprocess_param,overwrite_files)
 % Loads the Raw EEG files into EEGLAB and preprocesses them to remove the
 % Gradient and Ballistocardiogram Artifacts present in simultaneous
 % EEG_fMRI recordings
@@ -23,6 +23,7 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
         mkdir([condition_dir filesep 'EEGfMRI_PreProcessed']);
     end
     condition_dir_eegfmri_preprocess = [condition_dir filesep 'EEGfMRI_PreProcessed'];
+    EEG.preprocess_steps_completed = {};
     
     %% Run the FASTR Gradient Artifact Removal:
     curr_files_fastr = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_backup_FASTR*'));
@@ -70,6 +71,7 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
             EEG.data = EEG.data(:,1:original_EEG_length);
         end 
         
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'GArem']; EEG = eeg_checkset( EEG );
         EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_FASTR'),'filepath',condition_dir_eegfmri_preprocess);
     
     else % If Backup already present - Load the backup file    
@@ -81,6 +83,7 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
     curr_files_qrs = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_backup_QRS*'));
     if overwrite_files || isempty(curr_files_qrs) % Check if backup present    
         EEG = pop_fmrib_qrsdetect(EEG,scan_param.ECG_channel,EEGfMRI_preprocess_param.qrs_event_marker,'yes');
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'QRSid']; EEG = eeg_checkset( EEG );
         EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_QRS'),'filepath',condition_dir_eegfmri_preprocess);
         
     else % If Backup already present - Load the backup file
@@ -113,6 +116,7 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
                     EEG = fmrib_pas_gpu(EEG,QRSevents,'obs',4);
             end
         end
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'QRSrem']; EEG = eeg_checkset( EEG );
         EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_PAS'),'filepath',condition_dir_eegfmri_preprocess);
         
     else % If Backup already present - Load the backup file    
@@ -124,14 +128,44 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
     curr_files_resamp = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_backup_RESAMP*'));
     if overwrite_files || isempty(curr_files_resamp) % Check if backup present
         EEG = pop_resample(EEG, scan_param.low_srate);
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,['resampled_' scan_param.low_srate]]; EEG = eeg_checkset( EEG );
         EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_RESAMP'),'filepath',condition_dir_eegfmri_preprocess);
     
     else % If Backup already present - Load the backup file    
         EEG = pop_loadset('filename',strcat(EEG.setname,'_backup_RESAMP.set'),'filepath',condition_dir_eegfmri_preprocess);
         EEG = eeg_checkset( EEG );
     end
+    
+    %% Filter the data using a bandpass filter:
+    if EEGfMRI_preprocess_param.EEGLAB_preprocess_BPfilter
+        curr_files_filt = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_backup_bpFILT*'));
+        if overwrite_files || isempty(curr_files_filt) % Check if backup present
+            %bp filtering (isolating eeg)
+            EEG = pop_eegfiltnew(EEG, EEGfMRI_preprocess_param.low_bp_filt, EEGfMRI_preprocess_param.high_bp_filt, 16500, 0, [], 1);
+            EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'bpfilt']; EEG = eeg_checkset( EEG );
+            EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_bpFILT'),'filepath',condition_dir_eegfmri_preprocess);
+        else % If Backup already present - Load the backup file
+            EEG = pop_loadset('filename',strcat(EEG.setname,'_backup_bpFILT.set'),'filepath',condition_dir_eegfmri_preprocess);
+            EEG = eeg_checkset( EEG );
+        end
+    end
 
-    %% Check for NaN values in the electrodes - interpolate if req'd
+    %% Filter the data using notch filter(s):dev in progress
+    if EEGfMRI_preprocess_param.EEGLAB_preprocess_Nfilter
+        curr_files_filt = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_backup_nFILT*'));
+        if overwrite_files || isempty(curr_files_filt) % Check if backup present     
+            %notch filtering (removing ac power artifacts, slice artifacts)
+            % EEG = 
+            EEG = eeg_checkset( EEG );
+            EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'nfilt']; EEG = eeg_checkset( EEG );
+            EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_nFILT'),'filepath',condition_dir_eegfmri_preprocess);
+        else % If Backup already present - Load the backup file
+            EEG = pop_loadset('filename',strcat(EEG.setname,'_backup_nFILT.set'),'filepath',condition_dir_eegfmri_preprocess);
+            EEG = eeg_checkset( EEG );
+        end
+    end
+
+    %% Check for NaN values in the electrodes - interpolate if req'd (NaN values may have been introduced above)
     if (sum(isnan(EEG.data(:))) > 0)
         curr_files_interp = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_INTERP*'));
         if isempty(curr_files_interp) || control_param.overwrite_files
@@ -144,6 +178,7 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
                 end
                 fprintf(['\n Interpolating NaN electrodes' EEG_isnan_ind_str ' \n']);
                 EEG = pop_interp(EEG, EEG_isnan_ind, 'spherical');
+                EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'interp']; EEG = eeg_checkset( EEG );
                 EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_INTERP'),'filepath',condition_dir_eegfmri_preprocess);
             else
                 fprintf('\n FAULT - Too many electrodes with NaNs - Will be removed with segments \n');
@@ -154,38 +189,9 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
         end
     end
     
-    % %% Filter the data using a bandpass filter:
-    % if EEGfMRI_preprocess_param.EEGLAB_preprocess_BPfilter
-    %     curr_files_filt = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_backup_bpFILT*'));
-    %     if overwrite_files || isempty(curr_files_filt) % Check if backup present
-    %         %bp filtering (isolating eeg)
-    %         EEG = pop_eegfiltnew(EEG, EEGfMRI_preprocess_param.low_bp_filt, EEGfMRI_preprocess_param.high_bp_filt, 16500, 0, [], 1);
-    %         EEG = eeg_checkset( EEG );
-    %         EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_bpFILT'),'filepath',condition_dir_eegfmri_preprocess);
-    %     else % If Backup already present - Load the backup file
-    %         EEG = pop_loadset('filename',strcat(EEG.setname,'_backup_bpFILT.set'),'filepath',condition_dir_eegfmri_preprocess);
-    %         EEG = eeg_checkset( EEG );
-    %     end
-    % end
-    % 
-    % %% Filter the data using notch filter(s):dev in progress
-    % if EEGfMRI_preprocess_param.EEGLAB_preprocess_Nfilter
-    %     curr_files_filt = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_backup_nFILT_bpFILT*'));
-    %     if overwrite_files || isempty(curr_files_filt) % Check if backup present     
-    %         %notch filtering (removing ac power artifacts, slice artifacts)
-    %         % EEG = 
-    %         EEG = eeg_checkset( EEG );
-    %         EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_nFILT_bpFILT'),'filepath',condition_dir_eegfmri_preprocess);
-    %     else % If Backup already present - Load the backup file
-    %         EEG = pop_loadset('filename',strcat(EEG.setname,'_backup_nFILT_bpFILT.set'),'filepath',condition_dir_eegfmri_preprocess);
-    %         EEG = eeg_checkset( EEG );
-    %     end
-    % end
-
     %% Select data around triggers to remove artifactual data for ICA:
     if EEGfMRI_preprocess_param.ICA_data_select
-        % Note that EEG event type datatype is string after qrs detection
-        % therefore cannot use the slice_latencies logic seen line 34
+        % NOTE that EEG event type datatype is string after qrs detection
         slice_latencies = [EEG.event((find(strcmp({EEG.event.type},num2str(scan_param.slice_marker))))).latency];
         startidx = max(min(slice_latencies) - EEGfMRI_preprocess_param.ICA_data_select_range*EEG.srate,1);
         endidx = min(max(slice_latencies) + EEGfMRI_preprocess_param.ICA_data_select_range*EEG.srate,length(EEG.times));
@@ -197,6 +203,7 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
     EEG = eeg_checkset( EEG );
     
     %finished eegfmri-specific preprocessing - onto general preprocessing
+    %of eegfmri-preprocessed data
     
 else
     EEG = pop_loadset('filename',[EEG.setname '_EEGfMRIpreprocessed.set'],'filepath',[condition_dir filesep 'EEGfMRI_PreProcessed']); EEG = eeg_checkset( EEG );
