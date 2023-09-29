@@ -62,21 +62,7 @@ for kk = 1:length(general_param.sub_dir)
                     end
                     
                     % begin feature computation
-                    [EEG] = eegfmri_create_windows(EEG, scan_param);
-                    % Splice the dataset into sliding windows, creating Epochs to compute features over:
-                    % if length(size(EEG.data)) == 2
-                    %     vol_latencies = [EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency];
-                    % 
-                    %     TR_window_step = CONN_param.window_step/scan_param.TR; % The window_step in units of TR
-                    %     TR_window_length = CONN_param.window_length/scan_param.TR; % The window_length in units of TR
-                    % 
-                    %     % [start_idx, end_idx] = create_windows(size(EEG.data,2), window_step*EEG.srate, window_length*EEG.srate);
-                    %     [vol_start_idx, vol_end_idx] = create_windows(length(vol_latencies), TR_window_step, TR_window_length); % Compute the start and end indicies in terms of MR volumes
-                    %     start_idx = vol_latencies(vol_start_idx); % Convert the start and end indices in terms of the EEG latencies
-                    %     end_idx = min((start_idx + (CONN_param.window_length*EEG.srate)),size(EEG.data,2)) - 1;
-                    %     temp_data = arrayfun(@(x,y) EEG.data(:,x:y),start_idx,end_idx,'un',0); temp_time = arrayfun(@(x,y) EEG.times(1,x:y),start_idx,end_idx,'un',0);
-                    %     EEG.data = cat(3,temp_data{:}); EEG.times = cat(3,temp_time{:});
-                    % end
+                    [EEG] = eegfmri_create_windows(EEG, scan_param, feature_param);
 
                     % Define directory names and paths:
                     curr_dataset_name = [curr_run '_' participant_id '_' curr_condition];

@@ -99,6 +99,8 @@ EEG_preprocess_param.remove_electrodes = 1;
 EEG_preprocess_param.manualICA_check = 0;
 
 %% FEATURE PARAMS
+feature_param.window_step = 3;
+feature_param.window_length = 3;
 feature_param.max_features = 1000; % Keep this CPU-handle-able
 feature_param.testTrainSplit = 0.75; % Classifier - trained on 25%
 feature_param.num_CV_folds = 20; % Classifier - increased folds = more accurate but more computer-intensive??
@@ -121,8 +123,6 @@ CONN_param.net_to_analyze = {'CEN', 'DMN', 'SN'}; % List all networks to analyze
 CONN_param.use_All_cond = 1; % If this is 1, use the timecourses from condition 'All'
 CONN_param.p_norm = 0; % Lp norm to use to normalize the timeseries data:  For data normalization - set to 0 to skip it, 1 = L1 norm and 2 = L2 norm
 CONN_param.conditions_to_include = [1 2]; % The condition indices to sum up in the norm
-CONN_param.window_step = 3; % in seconds - Used for Feature windows:
-CONN_param.window_length = 3; % in seconds - Used for Feature windows:
 CONN_param.threshold = 0.3; % Threshold for making the time course binary
 CONN_param.class_types = 'networks'; % Can be 'subnetworks' or 'networks' which will be based on the CONN_cfg.net_to_analyze
 CONN_param.multilabel = 0; % Whether classification is multilabel or single label
