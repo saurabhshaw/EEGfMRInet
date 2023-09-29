@@ -268,7 +268,7 @@ EEG.icaact = [];
 % store dataset
 fprintf('resampling finished\n');
 
-EEG.setname = [EEG.setname ' resampled'];
+% EEG.setname = [EEG.setname ' resampled'];
 
 command = sprintf('EEG = pop_resample( EEG, %d);', freq);
 return;

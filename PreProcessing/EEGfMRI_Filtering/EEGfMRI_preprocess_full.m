@@ -128,7 +128,8 @@ if overwrite_files || isempty(dir([condition_dir filesep 'EEGfMRI_PreProcessed' 
     curr_files_resamp = dir(strcat(condition_dir_eegfmri_preprocess,filesep,EEG.setname,'_backup_RESAMP*'));
     if overwrite_files || isempty(curr_files_resamp) % Check if backup present
         EEG = pop_resample(EEG, scan_param.low_srate);
-        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,['resampled_' scan_param.low_srate]]; EEG = eeg_checkset( EEG );
+        EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,['resampled_' num2str(scan_param.low_srate)]]; 
+        EEG = eeg_checkset( EEG );
         EEG = pop_saveset( EEG, 'filename',strcat(EEG.setname,'_backup_RESAMP'),'filepath',condition_dir_eegfmri_preprocess);
     
     else % If Backup already present - Load the backup file    
