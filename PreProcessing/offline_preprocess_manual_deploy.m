@@ -21,7 +21,7 @@ end
 current_stage = 1;
 if max_finishedStage == current_stage-1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Stage Code %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    EEG = pop_eegfiltnew(EEG,cfg.filter_lp,cfg.filter_hp); EEG.setname = [EEG.setname '_filt']; EEG = eeg_checkset( EEG );
+    EEG = pop_eegfiltnew(EEG,cfg.filter_lp,cfg.filter_hp);
     EEG.preprocess_steps_completed = [EEG.preprocess_steps_completed,'bpfilt']; EEG = eeg_checkset( EEG );
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

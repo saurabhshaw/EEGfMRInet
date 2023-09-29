@@ -1,4 +1,4 @@
-function [EEG] = create_windows(EEG, scan_param, feature_param)
+function [EEG, start_idx, end_idx] = create_windows(EEG, scan_param, feature_param)
 
 % create epochs over which to compute features - sliding windows
 slice_latencies = floor([EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency]);
