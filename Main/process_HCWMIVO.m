@@ -62,7 +62,7 @@ for kk = 1:length(general_param.sub_dir)
                     end
                     
                     % begin feature computation
-                    [EEG] = eegfmri_create_windows(EEG, scan_param, feature_param);
+                    [EEG] = create_windows(EEG, scan_param, feature_param);
 
                     % Define directory names and paths:
                     curr_dataset_name = [curr_run '_' participant_id '_' curr_condition];
