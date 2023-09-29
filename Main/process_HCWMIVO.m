@@ -62,11 +62,7 @@ for kk = 1:length(general_param.sub_dir)
                     end
                     
                     % begin feature computation
-                    [EEG] = create_windows(EEG, scan_param, feature_param);
-
-                    % Define directory names and paths:
-                    curr_dataset_name = [curr_run '_' participant_id '_' curr_condition];
-                    save([curr_dir filesep curr_dataset_name '_FeatureEpochDefinitions' ],'start_idx','end_idx');
+                    [EEG] = create_windows(EEG, scan_param, feature_param, curr_dir);
 
                     % Compute Features:
                     currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' curr_dataset_name '_Epoch*.mat']);
