@@ -1,4 +1,4 @@
-function [EEG] = create_windows(EEG, scan_param, feature_param, curr_dir)
+function [EEG] = create_windows(EEG, scan_param, feature_param,curr_dir)
 
 % create epochs over which to compute features - sliding windows
 slice_latencies = floor([EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency]);
@@ -13,8 +13,10 @@ while (start_idx(end) < max_idx)
 end
 end_idx = ceil(start_idx + window_length)-1;
 
+% save window definitions
+save([curr_dir filesep EEG.setname '_FeatureEpochDefinitions' ],'start_idx','end_idx');
+
+% create epochs from window definition
 temp_data = arrayfun(@(x,y) EEG.data(:,x:y),start_idx,end_idx,'un',0); temp_time = arrayfun(@(x,y) EEG.times(1,x:y),start_idx,end_idx,'un',0);
 EEG.data = cat(3,temp_data{:}); EEG.times = cat(3,temp_time{:});
-
-save([curr_dir filesep EEG.setname '_FeatureEpochDefinitions' ],'start_idx','end_idx');
 

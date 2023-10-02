@@ -15,7 +15,7 @@ elseif isunix
     % [status,results] = system([base_path filesep 'Features' filesep 'Compute_features_scripts' filesep 'compute_features_deploy ' temp_name '.mat'],'-echo');
 
 elseif ispc
-    [status,results] = system([base_path filesep 'Features' filesep 'Compute_features_scripts' filesep 'compute_features_deploy.exe ' temp_name '.mat'],'-echo');
+    %[status,results] = system([base_path filesep 'Features' filesep 'Compute_features_scripts' filesep 'compute_features_deploy.exe ' temp_name '.mat'],'-echo');
     % EEG = offline_preprocess_manual_deploy_mod(temp_name);
 end
 % [status,results] = system(['test_deploy.exe ' temp_name '.mat'],'-echo')

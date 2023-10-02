@@ -55,15 +55,16 @@ for kk = 1:length(general_param.sub_dir)
 
                     % sanity check slice marker injection success
                     if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) == num_volumes
-                    tic 
-                    % [EEG] = EEGfMRI_preprocess_full(EEG,condition_dir,scan_param,participant_id,curr_condition,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files,general_param.base_path);
+                    tic
                     [EEG] = EEGfMRI_preprocess_full(EEG,condition_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
                     toc
                     end
                     
                     % begin feature computation
-                    [EEG] = create_windows(EEG, scan_param, feature_param, curr_dir);
 
+                    % define windows & save definitions
+                    [EEG] = create_windows(EEG, scan_param, feature_param, curr_dir);
+                    
                     % Compute Features:
                     currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' curr_dataset_name '_Epoch*.mat']);
                     currFeatures_finished = cellfun(@(x) strsplit(x,{'Epoch','.mat'}),{currFeatures_dir.name},'un',0); currFeatures_finished = cellfun(@(x) str2num(x{2}),currFeatures_finished);
@@ -71,7 +72,7 @@ for kk = 1:length(general_param.sub_dir)
                     if ~isempty(epochs_to_process)
                         %if isempty(dir([curr_dir filesep 'EEG_Features' filesep 'Rev_*Epoch*.mat']))
                         fprintf(['\n ***************************** Starting Feature Computation ***************************** \n']);
-                        tic; compute_features_compiled(EEG,curr_dir,curr_dataset_name,feature_names,general_param.base_path); toc
+                        tic; compute_features_compiled(EEG,curr_dir,curr_dataset_name,feature_param.feature_names,general_param.base_path); toc
                     else
                         fprintf(['\n ***************************** Features Computed for All Epochs ***************************** \n']);
                     end
