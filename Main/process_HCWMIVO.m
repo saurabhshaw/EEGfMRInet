@@ -81,8 +81,6 @@ for kk = 1:length(general_param.sub_dir)
                     % create epochs from definitions
                     temp_data = arrayfun(@(x,y) EEG.data(:,x:y),start_idx,end_idx,'un',0); temp_time = arrayfun(@(x,y) EEG.times(1,x:y),start_idx,end_idx,'un',0);
                     EEG.data = cat(3,temp_data{:}); EEG.times = cat(3,temp_time{:});
-                    
-                    %%
 
                     % Compute Features:
                     currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' curr_dataset_name '_Epoch*.mat']);
