@@ -62,9 +62,28 @@ for kk = 1:length(general_param.sub_dir)
                     
                     % begin feature computation
 
-                    % define windows & save definitions
-                    [EEG] = create_windows(EEG, scan_param, feature_param, curr_dir);
+                    % define epochs
+                    slice_latencies = ceil([EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency]);
+                    start_idx = min(slice_latencies);
+                    max_idx = max(slice_latencies);
+                    append_idx = start_idx;
+                    window_length = scan_param.TR*EEG.srate;
+                    window_step = scan_param.TR*EEG.srate;     
+                    while (start_idx(end) < max_idx)
+                        start_idx = [start_idx, append_idx+window_step];
+                        append_idx = start_idx(end);
+                    end
+                    end_idx = ceil(start_idx + window_length)-1;
+
+                    % save epoch definitions
+                    save([curr_dir filesep EEG.setname '_FeatureEpochDefinitions' ],'start_idx','end_idx');
+
+                    % create epochs from definitions
+                    temp_data = arrayfun(@(x,y) EEG.data(:,x:y),start_idx,end_idx,'un',0); temp_time = arrayfun(@(x,y) EEG.times(1,x:y),start_idx,end_idx,'un',0);
+                    EEG.data = cat(3,temp_data{:}); EEG.times = cat(3,temp_time{:});
                     
+                    %%
+
                     % Compute Features:
                     currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' curr_dataset_name '_Epoch*.mat']);
                     currFeatures_finished = cellfun(@(x) strsplit(x,{'Epoch','.mat'}),{currFeatures_dir.name},'un',0); currFeatures_finished = cellfun(@(x) str2num(x{2}),currFeatures_finished);

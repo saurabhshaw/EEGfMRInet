@@ -50,8 +50,8 @@ scan_param.rsfunc_num_volumes = 160; % # of volumes per each rest condition run
 scan_param.tfunc_num_volumes = 118; % # of volumes per each task condition run
 scan_param.slice_marker = -1;
 scan_param.ECG_channel = 67; % heart beat channel
-scan_param.rsfunc_num_images = scan_param.rsfunc_num_volumes * scan_param.slicespervolume; %# of images per each rest condition run
-scan_param.tfunc_num_images = scan_param.tfunc_num_volumes * scan_param.slicespervolume; %# of images per each task condition run
+scan_param.rsfunc_num_images = scan_param.rsfunc_num_volumes * scan_param.slicespervolume; % num of images per each rest condition run
+scan_param.tfunc_num_images = scan_param.tfunc_num_volumes * scan_param.slicespervolume; % num of images per each task condition run
 scan_param.low_srate = 500;
 
 %% CONTROL PARAMS
@@ -99,8 +99,6 @@ EEG_preprocess_param.remove_electrodes = 1;
 EEG_preprocess_param.manualICA_check = 0;
 
 %% FEATURE PARAMS
-feature_param.window_step = 3;
-feature_param.window_length = 3;
 feature_param.max_features = 1000; % Keep this CPU-handle-able
 feature_param.testTrainSplit = 0.75; % Classifier - trained on 25%
 feature_param.num_CV_folds = 20; % Classifier - increased folds = more accurate but more computer-intensive??
