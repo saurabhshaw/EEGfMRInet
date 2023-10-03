@@ -60,7 +60,7 @@ for kk = 1:length(general_param.sub_dir)
                     toc
                     end
                     
-                    % begin feature computation
+                    % BEGIN FEATURE COMPUTATION
 
                     % define epochs
                     slice_latencies = ceil([EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency]);
@@ -82,9 +82,10 @@ for kk = 1:length(general_param.sub_dir)
                     temp_data = arrayfun(@(x,y) EEG.data(:,x:y),start_idx,end_idx,'un',0); temp_time = arrayfun(@(x,y) EEG.times(1,x:y),start_idx,end_idx,'un',0);
                     EEG.data = cat(3,temp_data{:}); EEG.times = cat(3,temp_time{:});
 
-                    % Compute Features:
+                    % COMPUTE FEATURES
                     currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' curr_dataset_name '_Epoch*.mat']);
-                    currFeatures_finished = cellfun(@(x) strsplit(x,{'Epoch','.mat'}),{currFeatures_dir.name},'un',0); currFeatures_finished = cellfun(@(x) str2num(x{2}),currFeatures_finished);
+                    % currFeatures_finished = cellfun(@(x) strsplit(x,{'Epoch','.mat'}),{currFeatures_dir.name},'un',0); currFeatures_finished = cellfun(@(x) str2num(x{2}),currFeatures_finished);
+                    currFeatures_finished = cellfun(@(x) strsplit(x,{'.'}),{currFeatures_dir.name},'un',0); currFeatures_finished = cellfun(@(x) str2num(x{1}{1}(end)),currFeatures_finished);
                     epochs_to_process = setdiff(1:size(EEG.data,3),currFeatures_finished);
                     if ~isempty(epochs_to_process)
                         %if isempty(dir([curr_dir filesep 'EEG_Features' filesep 'Rev_*Epoch*.mat']))
@@ -94,12 +95,12 @@ for kk = 1:length(general_param.sub_dir)
                         fprintf(['\n ***************************** Features Computed for All Epochs ***************************** \n']);
                     end
 
-                    % Curate features:
+                    % CURATE FEATURES
                     fprintf(['\n ***************************** Curating Computed Features ***************************** \n']);
                     Featurefiles_directory = [curr_dir filesep 'EEG_Features'];
                     Featurefiles_basename = ['Rev_' curr_dataset_name];
                     % [compute_feat, Features, final_FeatureIDX] = curate_features_deploy(feature_names, featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
-                    [compute_feat] = curate_features_deploy(feature_names, featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
+                    [compute_feat] = curate_features_deploy(feature_param.feature_names, feature_param.featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
 
                 else
                     fprintf(['\n ********** CDT FILE MISSING :: Processing Subject: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' curr_condition ' ********** \n']);
