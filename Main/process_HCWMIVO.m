@@ -75,6 +75,11 @@ for kk = 1:length(general_param.sub_dir)
                     end
                     end_idx = ceil(start_idx + window_length)-1;
 
+                    % avoid out of bounds errors + maintain max samples
+                    while end_idx(end) > size(EEG.data,2)
+                        end_idx = end_idx - 1;
+                    end
+
                     % save epoch definitions
                     save([curr_dir filesep EEG.setname '_FeatureEpochDefinitions' ],'start_idx','end_idx');
 
@@ -83,7 +88,7 @@ for kk = 1:length(general_param.sub_dir)
                     EEG.data = cat(3,temp_data{:}); EEG.times = cat(3,temp_time{:});
 
                     % COMPUTE FEATURES
-                    currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' curr_dataset_name '_Epoch*.mat']);
+                    currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' EEG.setname '_Epoch*.mat']);
                     % currFeatures_finished = cellfun(@(x) strsplit(x,{'Epoch','.mat'}),{currFeatures_dir.name},'un',0); currFeatures_finished = cellfun(@(x) str2num(x{2}),currFeatures_finished);
                     currFeatures_finished = cellfun(@(x) strsplit(x,{'.'}),{currFeatures_dir.name},'un',0);
                     currFeatures_finished = cellfun(@(x) strsplit(x{1},{'Epoch'}),currFeatures_finished,'un',0);
@@ -92,7 +97,7 @@ for kk = 1:length(general_param.sub_dir)
                     if ~isempty(epochs_to_process)
                         %if isempty(dir([curr_dir filesep 'EEG_Features' filesep 'Rev_*Epoch*.mat']))
                         fprintf(['\n ***************************** Starting Feature Computation ***************************** \n']);
-                        tic; compute_features_compiled(EEG,curr_dir,curr_dataset_name,feature_param.feature_names,general_param.base_path); toc
+                        tic; compute_features_compiled(EEG,curr_dir,EEG.setname,feature_param.feature_names,general_param.base_path); toc
                     else
                         fprintf(['\n ***************************** Features Computed for All Epochs ***************************** \n']);
                     end
@@ -100,7 +105,7 @@ for kk = 1:length(general_param.sub_dir)
                     % CURATE FEATURES
                     fprintf(['\n ***************************** Curating Computed Features ***************************** \n']);
                     Featurefiles_directory = [curr_dir filesep 'EEG_Features'];
-                    Featurefiles_basename = ['Rev_' curr_dataset_name];
+                    Featurefiles_basename = ['Rev_' EEG.setname];
                     % [compute_feat, Features, final_FeatureIDX] = curate_features_deploy(feature_names, featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
                     [compute_feat] = curate_features_deploy(feature_param.feature_names, feature_param.featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
 
