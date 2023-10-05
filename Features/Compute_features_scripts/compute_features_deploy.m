@@ -182,7 +182,7 @@ if any(runFeatureComputation)
             EEGdata_filt = cellfun(@(x) permute(x,[2, 1]),EEGdata_filt,'UniformOutput',0);
             EEGdata_filt_hilbert = cellfun(@(x) permute(x,[2, 1]),EEGdata_filt_hilbert,'UniformOutput',0);
         end
-        % save prefiltered data + precomputed hilbert transform
+        % save data: prefiltered + precomputed hilbert transform
         save([curr_dir filesep 'EEG_Features' filesep 'data_prefiltered_precomputedHT.mat'],"EEGdata_filt_hilbert","EEGdata_filt");
     else
         load([curr_dir filesep 'EEG_Features' filesep 'data_prefiltered_precomputedHT.mat'],"EEGdata_filt_hilbert","EEGdata_filt");
