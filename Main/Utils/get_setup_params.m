@@ -4,7 +4,7 @@ function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_
 % set file naming params
 general_param.study_name = 'HCWMIVO';
 general_param.modality = 'EEGfMRI';
-data_subset_folder = 'all_data';
+data_subset_folder = 'repaired_data';
 
 % setting base paths
 general_param.base_path_src = fileparts(matlab.desktop.editor.getActiveFilename); cd(general_param.base_path_src); cd ..;
