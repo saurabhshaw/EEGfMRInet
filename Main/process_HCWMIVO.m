@@ -89,10 +89,9 @@ for kk = 1:length(general_param.sub_dir)
 
                     % COMPUTE FEATURES
                     currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' EEG.setname '_Epoch*.mat']);
-                    % currFeatures_finished = cellfun(@(x) strsplit(x,{'Epoch','.mat'}),{currFeatures_dir.name},'un',0); currFeatures_finished = cellfun(@(x) str2num(x{2}),currFeatures_finished);
-                    currFeatures_finished = cellfun(@(x) strsplit(x,{'.'}),{currFeatures_dir.name},'un',0);
-                    currFeatures_finished = cellfun(@(x) strsplit(x{1},{'Epoch'}),currFeatures_finished,'un',0);
-                    currFeatures_finished = cellfun(@(x) str2num(x{2}),currFeatures_finished);
+                    currFeatures_finished = cellfun(@(x) strsplit(x,{'Epoch'}),{currFeatures_dir.name},'un',0);
+                    currFeatures_finished = cellfun(@(x) strsplit(x{2},{'.mat'}),currFeatures_finished,'un',0);
+                    currFeatures_finished = cellfun(@(x) str2num(x{1}),currFeatures_finished);
                     epochs_to_process = setdiff(1:size(EEG.data,3),currFeatures_finished);
                     if ~isempty(epochs_to_process)
                         %if isempty(dir([curr_dir filesep 'EEG_Features' filesep 'Rev_*Epoch*.mat']))

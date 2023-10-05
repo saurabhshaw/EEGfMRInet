@@ -81,7 +81,12 @@ end
 
 % Identify which epochs and features are already computed:
 currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' dataset_name '_Epoch*.mat']);
-currEpochs_finished = cellfun(@(x) strsplit(x,{'Epoch','.mat'}),{currFeatures_dir.name},'un',0); currEpochs_finished = cellfun(@(x) str2num(x{2}),currEpochs_finished);
+% currEpochs_finished = cellfun(@(x) strsplit(x,{'Epoch','.mat'}),{currFeatures_dir.name},'un',0); currEpochs_finished = cellfun(@(x) str2num(x{2}),currEpochs_finished);
+
+currEpochs_finished = cellfun(@(x) strsplit(x,{'Epoch'}),{currFeatures_dir.name},'un',0); 
+currEpochs_finished = cellfun(@(x) strsplit(x{2},{'.mat'}),currEpochs_finished,'un',0);
+currEpochs_finished = cellfun(@(x) str2num(x{1}),currEpochs_finished);
+
 for i = 1:num_epochs already_computed_feats{i} = []; already_computed_feats{i}.name = ''; end
 for i = 1:length(currFeatures_dir) 
     try 
@@ -177,6 +182,10 @@ if any(runFeatureComputation)
             EEGdata_filt = cellfun(@(x) permute(x,[2, 1]),EEGdata_filt,'UniformOutput',0);
             EEGdata_filt_hilbert = cellfun(@(x) permute(x,[2, 1]),EEGdata_filt_hilbert,'UniformOutput',0);
         end
+        % save prefiltered data + precomputed hilbert transform
+        save([curr_dir filesep 'EEG_Features' filesep 'data_prefiltered_precomputedHT.mat'],"EEGdata_filt_hilbert","EEGdata_filt");
+    else
+        load([curr_dir filesep 'EEG_Features' filesep 'data_prefiltered_precomputedHT.mat'],"EEGdata_filt_hilbert","EEGdata_filt");
     end
 	
     %% Compute Features:
@@ -203,7 +212,7 @@ if any(runFeatureComputation)
         numFeatures = length(feature_names);
         % Features = cell(1,num_epochs);
         for j = 1:num_epochs
-            if runFeatureComputation(j)
+            if runFeatureComputation(j)%%
                 disp(['Started processing Epoch ', num2str(j)]);
                 if length(size(EEG.data)) > 2
                     dataEpoch = cellfun(@(x)squeeze(x(:,:,j)),EEGdata_filt,'UniformOutput',0);
