@@ -55,9 +55,9 @@ for kk = 1:length(general_param.sub_dir)
 
                     % sanity check slice marker injection success
                     if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) == num_volumes
-                    tic
-                    [EEG] = EEGfMRI_preprocess_full(EEG,condition_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
-                    toc
+                        tic
+                        [EEG] = EEGfMRI_preprocess_full(EEG,condition_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
+                        toc
                     end
                     
                     % BEGIN FEATURE COMPUTATION
