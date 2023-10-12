@@ -7,11 +7,15 @@ general_param.modality = 'EEGfMRI';
 data_subset_folder = 'repaired_data';
 
 % setting base paths
-general_param.base_path_src = fileparts(matlab.desktop.editor.getActiveFilename); cd(general_param.base_path_src); cd ..;
+general_param.base_path_src = fileparts(matlab.desktop.editor.getActiveFilename);
+cd ..;
 general_param.base_path = pwd;
 
 % add paths to wd 
-addpath(genpath(general_param.base_path));
+toolboxes_path = [general_param.base_path filesep 'Toolboxes'];
+eeglab_directory = [toolboxes_path filesep 'EEGLAB'];
+addpath(genpath(general_param.base_path)); rmpath(genpath(toolboxes_path));
+addpath(genpath(eeglab_directory));
 
 % set research code/research data paths
 [~,host_name] = system('hostname'); host_name = strtrim(host_name);

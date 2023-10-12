@@ -63,7 +63,7 @@ for kk = 1:length(general_param.sub_dir)
                     % BEGIN FEATURE COMPUTATION
 
                     % define epochs
-                    slice_latencies = ceil([EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency]);
+                    slice_latencies = floor([EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency]);
                     start_idx = min(slice_latencies);
                     max_idx = max(slice_latencies);
                     append_idx = start_idx;
@@ -73,7 +73,7 @@ for kk = 1:length(general_param.sub_dir)
                         start_idx = [start_idx, append_idx+window_step];
                         append_idx = start_idx(end);
                     end
-                    end_idx = ceil(start_idx + window_length)-1;
+                    end_idx = floor(start_idx + window_length)-1;
 
                     % avoid out of bounds errors + maintain max samples
                     while end_idx(end) > size(EEG.data,2)
