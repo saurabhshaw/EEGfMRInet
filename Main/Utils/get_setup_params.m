@@ -4,16 +4,16 @@ function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_
 % set file naming params
 general_param.study_name = 'HCWMIVO';
 general_param.modality = 'EEGfMRI';
-data_subset_folder = 'repaired_data';
+data_subset_folder = 'dataset_1';
+repo_filepath = 'C:\Users\DaniWorkstation\Documents_local\neuroscience_phd\research_code\EEGfMRInet';
 
 % setting base paths
-general_param.base_path_src = fileparts(matlab.desktop.editor.getActiveFilename);
-cd ..;
-general_param.base_path = pwd;
-
-% add paths to wd 
+general_param.base_path = repo_filepath;
+general_param.base_path_src = [repo_filepath filesep 'Main'];
 toolboxes_path = [general_param.base_path filesep 'Toolboxes'];
 eeglab_directory = [toolboxes_path filesep 'EEGLAB'];
+
+% add paths to wd 
 addpath(genpath(general_param.base_path)); rmpath(genpath(toolboxes_path));
 addpath(genpath(eeglab_directory));
 
