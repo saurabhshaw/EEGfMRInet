@@ -1,15 +1,25 @@
 function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_example_setup_params()
 
-%% GENERAL PARAMS (ie filepaths)
-% set file naming params
-general_param.study_name = 'HCWMIVO';
-general_param.modality = 'EEGfMRI';
-data_subset_folder = 'dataset_1';
-repo_filepath = 'C:\Users\DaniWorkstation\Documents_local\neuroscience_phd\research_code\EEGfMRInet';
+%% GENERAL PARAMS
 
-% setting base paths
+%%%%%&&%%%%%%%%%%% for the purposes of this example, only edit line 6 %%%%%%%%%%%%%%%%%%
+repo_filepath = 'C:\Users\danme\Documents_local\neuroscience_phd\research_code\EEGfMRInet';
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% set general file naming params
+general_param.study_name = 'ExampleData';
+general_param.modality = 'EEG';
+general_param.curr_condition = 'EyesClosed';
+data_subset_folder = 'ExampleData';
+
+% set participant specifics
+general_param.participant_id = 1054;
+
+% setting paths
+
 general_param.base_path = repo_filepath;
-general_param.base_path_src = [repo_filepath filesep 'Main'];
+general_param.base_path_data = [repo_filepath filesep 'ExampleRun' filesep data_subset_folder];
+% general_param.base_path_src = [repo_filepath filesep 'Main'];
 toolboxes_path = [general_param.base_path filesep 'Toolboxes'];
 eeglab_directory = [toolboxes_path filesep 'EEGLAB'];
 
@@ -17,32 +27,32 @@ eeglab_directory = [toolboxes_path filesep 'EEGLAB'];
 addpath(genpath(general_param.base_path)); rmpath(genpath(toolboxes_path));
 addpath(genpath(eeglab_directory));
 
-% set research code/research data paths
-[~,host_name] = system('hostname'); host_name = strtrim(host_name);
-switch host_name        
-    case 'DESKTOP-8S2HATP' % Dan home PC
-        % general_param.base_path_rc = ['C:\Users\DaniWorkstation\OneDrive\Documents_personal\Neuroscience PhD\research_code'];
-        % base_path_rd = 'D:\research_data';
-        general_param.base_path_rd = 'E:\research_data';
+% % set research code/research data paths
+% [~,host_name] = system('hostname'); host_name = strtrim(host_name);
+% switch host_name        
+%     case 'DESKTOP-8S2HATP' % Dan home PC
+%         % general_param.base_path_rc = ['C:\Users\DaniWorkstation\OneDrive\Documents_personal\Neuroscience PhD\research_code'];
+%         % base_path_rd = 'D:\research_data';
+%         general_param.base_path_rd = 'E:\research_data';
+% 
+%     case 'MSI' % Dan laptop
+%         % general_param.base_path_rc = ['idk'];
+%         general_param.base_path_rd = 'D:\research_data';
+%         % base_path_rd = 'E:\research_data';
+% end
+% 
+% % define runs and conditions
+% general_param.dict_runs_w_conditions = dictionary('task',{['MInjury','-','Neutral']},'rest',{['rsEEG_Post','-','rsEEG_Pre']}); %sep with '-' when adding new conditions
+% general_param.runs = keys(general_param.dict_runs_w_conditions);
+% runs_to_include = {};
+% for i = 1:length(general_param.runs)
+%     runs_to_include = [runs_to_include general_param.runs(i)];
+% end
 
-    case 'MSI' % Dan laptop
-        % general_param.base_path_rc = ['idk'];
-        general_param.base_path_rd = 'D:\research_data';
-        % base_path_rd = 'E:\research_data';
-end
-
-% define runs and conditions
-general_param.dict_runs_w_conditions = dictionary('task',{['MInjury','-','Neutral']},'rest',{['rsEEG_Post','-','rsEEG_Pre']}); %sep with '-' when adding new conditions
-general_param.runs = keys(general_param.dict_runs_w_conditions);
-runs_to_include = {};
-for i = 1:length(general_param.runs)
-    runs_to_include = [runs_to_include general_param.runs(i)];
-end
-
-% get base paths
-general_param.base_path_data = [general_param.base_path_rd filesep general_param.study_name];
-general_param.base_path_data = [general_param.base_path_data filesep data_subset_folder];
-[general_param.sub_dir,general_param.sub_dir_mod] = update_subject_list(general_param.study_name,general_param.modality,general_param.base_path_data,runs_to_include);
+% get base data paths
+% general_param.base_path_data = [general_param.base_path_rd filesep general_param.study_name];
+% general_param.base_path_data = [repo_filepath filesep data_subset_folder];
+% [general_param.sub_dir,general_param.sub_dir_mod] = update_subject_list(general_param.study_name,general_param.modality,general_param.base_path_data,runs_to_include);
 
 % parfor configs -- distcomp, distributed computing
 distcomp.feature( 'LocalUseMpiexec', false );

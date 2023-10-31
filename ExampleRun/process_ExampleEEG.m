@@ -1,16 +1,15 @@
 
 % Set participant specifics:
-participant_id = 1054;
-base_path = 'C:\Saurabh_files\Research_code\EEGfMRInet'; % Base path of the package
-curr_condition = 'EyesClosed';
+% base_path = 'C:\Users\danme\Documents_local\neuroscience_phd\research_code\EEGfMRInet'; % Base path of the package (your repository path)
+% curr_condition = 'EyesClosed';
 
 %% get req'd parameters
-addPaths
-[general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_setup_params();
+% addPaths
+[general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_example_setup_params();
 
 % PREP DATA FOR PRE-PROCESSING
 % get participant data location & data
-curr_dir = [base_path filesep 'ExampleData'];
+curr_dir = general_param.base_path_data;
 curry_file_dir = dir([curr_dir filesep '*.cdt']);
 
 %% read and save raw participant data, if exists
@@ -22,7 +21,7 @@ if ~skip_analysis
     [EEG] = loadcurry(curry_file);
     
     % check EEG field consistencies
-    EEG.setname = [curr_run '_' participant_id '_' curr_condition]; EEG = eeg_checkset(EEG);
+    EEG.setname = [curr_run '_' general_param.participant_id '_' general_param.curr_condition]; EEG = eeg_checkset(EEG);
     
     % save to file
     % create folder if dne
@@ -102,5 +101,5 @@ if ~skip_analysis
     [compute_feat] = curate_features_deploy(feature_param.feature_names, feature_param.featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
     
 else
-    fprintf(['\n ********** CDT FILE MISSING :: Processing Subject: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' curr_condition ' ********** \n']);
+    fprintf(['\n ********** CDT FILE MISSING :: Processing Subject: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' general_param.curr_condition ' ********** \n']);
 end
