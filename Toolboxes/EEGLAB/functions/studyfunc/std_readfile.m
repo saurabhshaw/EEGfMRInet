@@ -1,4 +1,4 @@
-% std_readfile() - Read data file containing STUDY measures.
+% STD_READFILE - Read data file containing STUDY measures.
 %
 % Usage:
 %   >>  [data param range1 range2] = std_readfile(filename, 'key', val);
@@ -42,7 +42,7 @@
 %   params              - structure containing parameters saved with the data file.
 %   range1              - time points (ERP, ERSP) or frequency points (spectrum)
 %   range2              - frequency points (ERSP, ITCs)
-%   events              - Event readed from the data structure
+%   events              - Event read from the data structure
 %
 % Examples:
 %   % the examples below read all data channels for the selected files
@@ -91,7 +91,7 @@ if nargin < 1
 end
 
 if iscell(fileBaseName)
-    % this is when the data of a subject is split accross sessions
+    % this is when the data of a subject is split across sessions
     % then we need to call std_readfile several times and combine
     % the results
     % ------------------------------------------------------------
@@ -99,18 +99,44 @@ if iscell(fileBaseName)
         for iFile = 1:length(fileBaseName)
             [measureDataTmp{iFile}, parameters, measureRange1, measureRange2, eventsTmp{iFile}] = std_readfile(fileBaseName{iFile}, varargin{:});
         end
-        % combine arrays
-        measureData = measureDataTmp{1};
-        events = eventsTmp{1};
-        for iData = 2:length(measureDataTmp)
-            for iCell = 1:length(measureDataTmp{iData}(:))
-                if ~isempty(measureDataTmp{iData}{iCell})
-                    if ndims(measureDataTmp{iData}{iCell}) == 2, measureData{iCell} = [ measureData{iCell} measureDataTmp{iData}{iCell} ];
-                    elseif ndims(measureDataTmp{iData}{iCell}) == 2, measureData{iCell}(:, :, end+1:end+size(measureDataTmp{iData}{iCell},3)) = measureDataTmp{iData}{iCell};
+    
+        % get the size of each session cond x group and sum 3rd dim (trials) for each cond and group
+        % ignore empty cells; these are always trials, even when processing subjects
+        measureData = cell(size(measureDataTmp{1})); % cond x group
+        sz          = cell(size(measureDataTmp{1})); % cond x group
+        for iSess = 1:length(measureDataTmp) % scan session
+            szTmp = cellfun(@size, measureDataTmp{iSess}, 'uniformoutput', false); 
+            for iCond = 1:length(sz(:))
+                if szTmp{iCond}(1) ~= 0
+                    if isempty(sz{iCond})
+                        sz{iCond} = szTmp{iCond};
+                    else
+                        sz{iCond}(2) = sz{iCond}(2)+szTmp{iCond}(2);
                     end
                 end
             end
         end
+        for iCond = 1:length(sz(:))
+            if isempty(sz{iCond})
+                measureData{iCond} = [];
+            else
+                measureData{iCond} = zeros(sz{iCond});
+            end
+        end
+
+        % combine arrays
+        events = eventsTmp{1};
+        for iCond = 1:length(measureDataTmp{1}(:))
+            pointer = 1; 
+            for iSess = 1:length(measureDataTmp)
+                if ~isempty(measureDataTmp{iSess}{iCond})
+                    % when trials concatenate them
+                    measureData{iCond}(:, pointer:pointer+size(measureDataTmp{iSess}{iCond},2)-1,:,:) = measureDataTmp{iSess}{iCond};
+                    pointer = pointer + size(measureDataTmp{iSess}{iCond},2);
+                end
+            end
+        end
+        
         return
     else
         fileBaseName = fileBaseName{1};
@@ -135,7 +161,7 @@ opt = finputcheck(varargin, { 'components'       'integer'  []    [];
     'timelimits'       'real'     []    []; % ERPimage, ERP, ERSP, ITC
     'triallimits'      'real'     []    []; % ERPimage only
     'freqlimits'       'real'     []    []; % SPEC, ERSP, ITC
-    'dataindices'      'integer'  []    [] }, 'std_readdatafile');
+    'dataindices'      'integer'  []    [] }, 'std_readfile');
 if ischar(opt), error(opt); end
 
 if ~isempty(opt.triallimits), opt.freqlimits = opt.triallimits; end
@@ -166,6 +192,7 @@ end
 % get fields to read
 % ------------------
 v6Flag = testv6([ fileBaseName fileExt ]);
+v6Flag = 1;
 if v6Flag || strcmpi(opt.measure, 'topo')
     if ~isempty(opt.channels)
         fileData = load('-mat', [ fileBaseName fileExt ], 'labels');
@@ -226,7 +253,8 @@ if ~isempty( strmatch('parameters', fileFields) )
 end
 if ~isempty(strmatch('times', fileFields, 'exact')),  measureRange1 = fileData.times; end
 if ~isempty(strmatch('freqs', fileFields, 'exact')),  measureRange2 = fileData.freqs; end
-
+if isempty(measureRange1) && isfield(fileData, 'chan1'), measureRange1 = 1:size(fileData.chan1,1); end
+    
 % if the function is only called to get parameters
 % ------------------------------------------------
 if strcmpi(opt.measure, 'spec'), measureRange1 = measureRange2; opt.timelimits = opt.freqlimits; end
@@ -249,11 +277,11 @@ end
 
 options = { opt.dataindices, opt.function, dataType, indBegin1, indEnd1, indBegin2, indEnd2 };
 if isempty(opt.designvar)
-    [ measureData, events ] = getfiledata(fileData, NaN, options{:}); % read all data
+    [ measureData, events ] = getfiledata(fileData, NaN, v6Flag, options{:}); % read all data
     measureData = { measureData };
     events      = { events };
 else
-    [ measureData, events ] = globalgetfiledata(fileData, opt.designvar, options, {});
+    [ measureData, events ] = globalgetfiledata(fileData, opt.designvar, options, {}, v6Flag);
 end
 
 % remove duplicates in the list of parameters
@@ -267,7 +295,7 @@ cella = cella(sort(union(indices*2-1, indices*2)));
 
 % find indices for selection of measure
 % -------------------------------------
-function [measureRange, indBegin, indEnd] = indicesselect(measureRange, measureLimits);
+function [measureRange, indBegin, indEnd] = indicesselect(measureRange, measureLimits)
 indBegin = 1;
 indEnd   = length(measureRange);
 if ~isempty(measureRange) && ~isempty(measureLimits) && (measureLimits(1) > measureRange(1) || measureLimits(end) < measureRange(end))
@@ -278,10 +306,10 @@ end
 
 % recursive function to load data
 % -------------------------------
-function [ measureData, eventVals ] = globalgetfiledata(fileData, designvar, options, trialselect);
+function [ measureData, eventVals ] = globalgetfiledata(fileData, designvar, options, trialselect, v6Flag)
 
 if length(designvar) == 0
-    [ measureData, eventVals ] = getfiledata(fileData, trialselect, options{:});
+    [ measureData, eventVals ] = getfiledata(fileData, trialselect, v6Flag, options{:});
     measureData = { measureData };
     eventVals   = { eventVals   };
 else
@@ -289,13 +317,14 @@ else
     if isfield(designvar(1), 'vartype') && strcmpi('continuous', designvar(1).vartype)
         if ~ischar(designvar(1).value), designvar(1).value = ''; end
         trialselect = { trialselect{:} designvar(1).label designvar(1).value };
-        [ tmpMeasureData tmpEvents ] = globalgetfiledata(fileData, designvar(2:end), options, trialselect);
+        [ tmpMeasureData tmpEvents ] = globalgetfiledata(fileData, designvar(2:end), options, trialselect, v6Flag);
         measureData(1,:,:,:) = reshape(tmpMeasureData, [ 1 size(tmpMeasureData) ]);
         eventVals(  1,:,:,:) = reshape(tmpEvents     , [ 1 size(tmpEvents     ) ]);
     else
+        trialselectOri = trialselect;
         for iField = 1:length(designvar(1).value)
-            trialselect = { trialselect{:} designvar(1).label designvar(1).value{iField} };
-            [ tmpMeasureData, tmpEvents ] = globalgetfiledata(fileData, designvar(2:end), options, trialselect);
+            trialselect = { trialselectOri{:} designvar(1).label designvar(1).value{iField} };
+            [ tmpMeasureData, tmpEvents ] = globalgetfiledata(fileData, designvar(2:end), options, trialselect, v6Flag);
             measureData(iField,:,:,:) = reshape(tmpMeasureData, [ 1 size(tmpMeasureData) ]);
             eventVals(  iField,:,:,:) = reshape(tmpEvents     , [ 1 size(tmpEvents     ) ]);
         end
@@ -304,7 +333,7 @@ end
 
 % load data from structure or file
 % --------------------------------
-function [ fieldData, events ] = getfiledata(fileData, trialselect, chan, func, dataType, indBegin1, indEnd1, indBegin2, indEnd2)
+function [ fieldData, events ] = getfiledata(fileData, trialselect, v6Flag, chan, func, dataType, indBegin1, indEnd1, indBegin2, indEnd2)
 
 persistent tmpcache;
 persistent hashcode;
@@ -323,14 +352,16 @@ if ~isempty(trialselect)
         trials = [1:length(fileData.trialinfo)]; % read all trials if NaN
     else
         [trials, events] = std_gettrialsind(fileData.trialinfo, trialselect{:});
-        if length(unique(diff(trials))) > 1
+        if length(unique(diff(trials))) > 1 && ~v6Flag
             temptrials = [trials(1):trials(end)];
             subTrials  = trials-trials(1)+1;
             trials     = temptrials;
         end
     end
 end
-
+% if ~isempty(subTrials)
+%     trials = subTrials(trials(
+    
 for index = 1:length(chan)
     allfields   = fieldnames(fileData);
     topoFlag    = ~isempty(findstr(allfields{1}, '_grid'));
@@ -346,7 +377,7 @@ for index = 1:length(chan)
     warning('off', 'MATLAB:MatFile:OlderFormat');
     if ischar(fileData.(fieldToRead)) % special ERP-image
         try
-            fileData.chanlocsforinterp; % isfield does not work becauce fileData is a MatFile
+            fileData.chanlocsforinterp; % isfield does not work because fileData is a MatFile
         catch, error('Missing field in ERPimage STUDY file, try recomputing them');
         end
         chanlocsforinterp = fileData.chanlocsforinterp;
@@ -368,7 +399,8 @@ for index = 1:length(chan)
         elseif ndims(fileData.(fieldToRead)) == 2
             tmpFieldData = fileData.(fieldToRead)(indBegin1:indEnd1,trials);
             if ~isempty(subTrials), tmpFieldData = tmpFieldData(:, subTrials); end
-        else tmpFieldData = fileData.(fieldToRead)(indBegin2:indEnd2,indBegin1:indEnd1,trials); % frequencies first here
+        else
+            tmpFieldData = fileData.(fieldToRead)(indBegin2:indEnd2,indBegin1:indEnd1,trials); % frequencies first here
             if ~isempty(subTrials), tmpFieldData = tmpFieldData(:, :, subTrials); end
         end
     end
@@ -402,11 +434,12 @@ end
 function v6 = testv6(x)
 
 fid=fopen(x);
-txt=char(fread(fid,[1,140],'*char'));
+if fid == -1
+    error('File %s not found - this could be because your STUDY contains data files with relative path, try changing your MATLAB path to the STUDY folder', x);
+end
+txt=char(fread(fid,20,'uchar')');
 tmp = fclose(fid);
 txt=[txt,char(0)];
 txt=txt(1:find(txt==0,1,'first')-1);
 if ~isempty(strfind(txt, 'MATLAB 5.0')), v6 = true; else v6 = false; end
-
-
 

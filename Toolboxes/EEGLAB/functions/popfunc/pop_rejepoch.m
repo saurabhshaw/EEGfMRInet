@@ -1,4 +1,4 @@
-% pop_rejepoch() - Reject pre-labeled trials in a EEG dataset. 
+% POP_REJEPOCH - Reject pre-labeled trials in a EEG dataset. 
 %                   Ask for confirmation and accept the rejection
 %
 % Usage:
@@ -19,7 +19,7 @@
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 2001
 %
-% See also: eeglab(), eegplot()
+% See also: EEGLAB, EEGPLOT
 
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -90,8 +90,8 @@ end
 
 % create a new set if set_out is non nul 
 % --------------------------------------
-if format0_1
-    tmprej = find(tmprej > 0);
+if format0_1 || length(tmprej) == EEG.trials
+    tmprej = find(tmprej);
 end
 EEG = pop_select( EEG, 'notrial', tmprej);
 

@@ -36,7 +36,9 @@ end
 features_curated = false;
 Featurefiles_dir = dir([Featurefiles_directory filesep Featurefiles_basename '_Epoch*.mat']);
 Featurefiles_curated_dir = dir([Featurefiles_directory filesep Featurefiles_basename '_AllEpochs_*.mat']);
-currFeatures_curated = cellfun(@(x) strsplit(x,{'AllEpochs_','.mat'}),{Featurefiles_curated_dir.name},'un',0); currFeatures_curated = cellfun(@(x) x{2},currFeatures_curated,'un',0);
+currFeatures_curated = cellfun(@(x) strsplit(x,{'AllEpochs_'}),{Featurefiles_curated_dir.name},'un',0); 
+currFeatures_curated = cellfun(@(x) strsplit(x{2},{'.mat'}),currFeatures_curated,'un',0);
+currFeatures_curated = cellfun(@(x) x{1},currFeatures_curated,'un',0);
 Features_to_process = setdiff(Features_to_process,currFeatures_curated);
 % if ~isempty(Featurefiles_dir) && isempty(Featurefiles_curated_dir)
 if ~isempty(Featurefiles_dir) && ~isempty(Features_to_process)

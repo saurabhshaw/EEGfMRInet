@@ -1,4 +1,4 @@
-% pop_selectevent() - Find events in an EEG dataset. If the dataset
+% POP_SELECTEVENT - Find events in an EEG dataset. If the dataset
 %                     is the only input, a window pops up to
 %                     ask for the relevant parameter values.
 %
@@ -54,7 +54,7 @@
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 27 Jan 2002-
 %
-% See also: eeg_eventformat(), pop_importevent()
+% See also: EEG_EVENTFORMAT, POP_IMPORTEVENT
 
 % Copyright (C) Arnaud Delorme, CNL / Salk Institute, 27 Jan 2002, arno@salk.edu
 %
@@ -159,11 +159,12 @@ if nargin<2
                            { 'Style', 'text', 'string', 'max' } { 'Style', 'edit', 'string', '' 'tag' [ 'max' allfields{index} ] } };
             middlegeom = [ 0.3 0.35 0.3 0.35 ];
         elseif strcmp(textfield, 'type')
-            commandtype = [ 'if ~isfield(EEG.event, ''type'')' ...
+            commandtype = [ 'tmpEEG = get(gcbf, ''userdata'');' ...
+                           'if ~isfield(tmpEEG.event, ''type'')' ...
                            '   errordlg2(''No type field'');' ...
                            'else' ...
-                           '   tmpevent = EEG.event;' ...
-                           '   if isnumeric(EEG.event(1).type),' ...
+                           '   tmpevent = tmpEEG.event;' ...
+                           '   if isnumeric(tmpEEG.event(1).type),' ...
                            '        [tmps,tmpstr] = pop_chansel(unique([ tmpevent.type ]));' ...
                            '   else,' ...
                            '        [tmps,tmpstr] = pop_chansel(unique({ tmpevent.type }));' ...
@@ -172,7 +173,7 @@ if nargin<2
                            '       set(findobj(''parent'', gcbf, ''tag'', ''type''), ''string'', tmpstr);' ...
                            '   end;' ...
                            'end;' ...
-                           'clear tmps tmpv tmpevent tmpstr tmpfieldnames;' ];
+                           'clear tmps tmpv tmpEEG tmpevent tmpstr tmpfieldnames;' ];
             middletxt  = { { 'Style', 'edit', 'string', '' 'tag' 'type' } { 'Style', 'pushbutton', 'string', '...' 'callback' commandtype } };
             middlegeom = [ 0.95 0.35 ];
         else
@@ -221,7 +222,7 @@ if nargin<2
                        'value', 0 'tag' 'invertepoch' } { } { } };
     end
     
-	[results tmp2 tmp3 res] = inputgui( geometry, uilist, 'pophelp(''pop_selectevent'')', 'Select events -- pop_selectevent()');
+	[results tmp2 tmp3 res] = inputgui( 'geometry', geometry, 'uilist', uilist, 'helpcom', 'pophelp(''pop_selectevent'')', 'title', 'Select events -- pop_selectevent()', 'userdata', EEG);
     if length(results) == 0, return; end
    
     % decode inputs
@@ -463,19 +464,22 @@ if strcmp(g.select, 'inverse')
 end
 
 % checking if trying to remove boundary events (in continuous data)
-if isfield(EEG.event, 'type')
+eeglab_options;
+if ~isempty(EEG.event) && isfield(EEG.event, 'type')
     if ischar(EEG.event(1).type) && EEG.trials == 1 
         Ieventrem = setdiff_bc([1:length(EEG.event)], Ievent );
         tmpevent  = EEG.event;
-        boundaryindex = strmatch('boundary', { tmpevent(Ieventrem).type });
+        boundaryindex = eeg_findboundaries(tmpevent(Ieventrem));
         if ~isempty(boundaryindex)
             boundaryindex = Ieventrem(boundaryindex);
             Ievent = [ Ievent boundaryindex ];
         end
         Ievent = sort(Ievent);
-    else boundaryindex = [];
+    else 
+        boundaryindex = [];
     end
-else boundaryindex = [];
+else 
+    boundaryindex = [];
 end
 
 % rename events if necessary
@@ -511,8 +515,8 @@ if strcmp( lower(g.deleteepochs), 'on') && EEG.trials > 1
 		error('Empty dataset: all epochs have been removed');
 	end
 	if nargin < 2 
-		ButtonName=questdlg2(strvcat([ 'Warning: delete ' num2str(EEG.trials-length(Iepoch)) ...
-                            ' (out of ' int2str(EEG.trials) ') un-referenced epochs ?' ]), ...
+		ButtonName=questdlg2(strvcat([ 'Warning: keep ' num2str(length(Iepoch)) ' epochs (delete ' num2str(EEG.trials-length(Iepoch)) ...
+                            ' unreferenced epochs)' ]), ...
 							'Confirmation', ...
 							 'Cancel', 'Ok','Ok');
 	else ButtonName = 'ok'; end

@@ -1,4 +1,4 @@
-function [EEG,HP,BUR] = clean_artifacts(EEG,varargin)
+function [EEG,HP,BUR,removed_channels] = clean_artifacts(EEG,varargin)
 % All-in-one function for artifact removal, including ASR.
 % [EEG,HP,BUR] = clean_artifacts(EEG, Options...)
 %
@@ -43,8 +43,8 @@ function [EEG,HP,BUR] = clean_artifacts(EEG,varargin)
 %                    considered missing data and will be removed. The most aggressive value that can
 %                    be used without losing much EEG is 3. For new users it is recommended to at
 %                    first visually inspect the difference between the original and cleaned data to
-%                    get a sense of the removed content at various levels. A quite conservative
-%                    value is 5. Default: 5.
+%                    get a sense of the removed content at various levels. An agressive value is 5 
+%                    and a quite conservative value is 20. Default: 5 (from the GUI, default is 20).
 %
 %   WindowCriterion : Criterion for removing time windows that were not repaired completely. This may
 %                     happen if the artifact in a window was composed of too many simultaneous
@@ -131,7 +131,7 @@ function [EEG,HP,BUR] = clean_artifacts(EEG,varargin)
 %                                    removed channels. Default: 0.1.
 %
 %   MaxMem : The maximum amount of memory in MB used by the algorithm when processing. 
-%            See function asr_processf for more information. Default is 64.
+%            See function asr_process for more information. Default is 64.
 %
 % Out:
 %   EEG : Final cleaned EEG recording.
@@ -181,26 +181,58 @@ hlp_varargin2struct(varargin,...
     {'chancorr_crit','ChannelCorrelationCriterion','ChannelCriterion'}, 0.8, ...
     {'line_crit','LineNoiseCriterion'}, 4, ...
     {'burst_crit','BurstCriterion'}, 5, ...
+    {'fusechanrej','Fusechanrej'}, [], ... % unused in this function
+    {'channels','Channels'}, [], ...
+    {'channels_ignore','Channels_ignore'}, [], ...
     {'window_crit','WindowCriterion'}, 0.25, ...
+    {'num_samples','NumSamples'}, 50, ...
     {'highpass_band','Highpass'}, [0.25 0.75], ...
     {'channel_crit_maxbad_time','ChannelCriterionMaxBadTime'}, 0.5, ...
     {'burst_crit_refmaxbadchns','BurstCriterionRefMaxBadChns'}, 0.075, ...
     {'burst_crit_reftolerances','BurstCriterionRefTolerances'}, [-inf 5.5], ...
-    {'distance','Distance'}, 'euclidian', ...
+    {'distance2','Distance'}, 'euclidian', ...
     {'window_crit_tolerances','WindowCriterionTolerances'},[-inf 7], ...
     {'burst_rejection','BurstRejection'},'off', ...
     {'nolocs_channel_crit','NoLocsChannelCriterion'}, 0.45, ...
     {'nolocs_channel_crit_excluded','NoLocsChannelCriterionExcluded'}, 0.1, ...
     {'max_mem','MaxMem'}, 64, ...
+    {'availableRAM_GB','availableRAM_GB'}, NaN, ...
     {'flatline_crit','FlatlineCriterion'}, 5);
+
+if ~isnan(availableRAM_GB)
+    max_mem = availableRAM_GB*1000;
+end
+
+% ignore some channels
+if ~isempty(channels)
+    if ~isempty(channels_ignore)
+        error('Can include or ignore channel but not both at the same time')
+    end
+    if ~iscell(channels)
+        error('Cannot exclude channels without channel labels')
+    end
+    oriEEG = EEG;
+    EEG = pop_select(EEG, 'channel', channels);
+    EEG.event = []; % will be added back later
+end
+if ~isempty(channels_ignore)
+    if ~iscell(channels_ignore)
+        error('Cannot exclude channels without channel labels')
+    end
+    oriEEG = EEG;
+    EEG = pop_select(EEG, 'nochannel', channels_ignore);
+    EEG.event = []; % will be added back later
+end
 
 % remove flat-line channels
 if ~strcmp(flatline_crit,'off')
+    disp('Detecting flat line...')
     EEG = clean_flatlines(EEG,flatline_crit); 
 end
 
 % high-pass filter the data
 if ~strcmp(highpass_band,'off')
+    disp('Applying highpass filter...')
     EEG = clean_drifts(EEG,highpass_band); 
 end
 if nargout > 1
@@ -214,11 +246,11 @@ if ~strcmp(chancorr_crit,'off') || ~strcmp(line_crit,'off') %#ok<NODEF>
     if strcmp(line_crit,'off')
         line_crit = 100; end    
     try 
-        EEG = clean_channels(EEG,chancorr_crit,line_crit,[],channel_crit_maxbad_time); 
+        [EEG,removed_channels] = clean_channels(EEG,chancorr_crit,line_crit,[],channel_crit_maxbad_time, num_samples); 
     catch e
 %         if strcmp(e.identifier,'clean_channels:bad_chanlocs')
             disp('Your dataset appears to lack correct channel locations; using a location-free channel cleaning method.');
-            EEG = clean_channels_nolocs(EEG,nolocs_channel_crit,nolocs_channel_crit_excluded,[],channel_crit_maxbad_time); 
+            [EEG,removed_channels] = clean_channels_nolocs(EEG,nolocs_channel_crit,nolocs_channel_crit_excluded,[],channel_crit_maxbad_time); 
 %         else
 %             rethrow(e);
 %         end
@@ -227,7 +259,7 @@ end
 
 % repair bursts by ASR
 if ~strcmp(burst_crit,'off')
-    if ~strcmpi(distance, 'euclidian')    
+    if ~strcmpi(distance2, 'euclidian')    
         BUR = clean_asr(EEG,burst_crit,[],[],[],burst_crit_refmaxbadchns,burst_crit_reftolerances,[], [], true, max_mem); 
     else
         BUR = clean_asr(EEG,burst_crit,[],[],[],burst_crit_refmaxbadchns,burst_crit_reftolerances,[], [], false, max_mem); 
@@ -235,11 +267,16 @@ if ~strcmp(burst_crit,'off')
 
     if strcmp(burst_rejection,'on')
         % portion of data which have changed
-        sample_mask = sum(abs(EEG.data-BUR.data),1) < 1e-10;
+        sample_mask = sum(abs(EEG.data-BUR.data),1) < 1e-8;
 
         % find latency of regions
         retain_data_intervals = reshape(find(diff([false sample_mask false])),2,[])';
         retain_data_intervals(:,2) = retain_data_intervals(:,2)-1;
+
+        if ~isempty(retain_data_intervals)
+            smallIntervals = diff(retain_data_intervals')' < 5;
+            retain_data_intervals(smallIntervals,:) = [];
+        end
 
         % reject regions
         EEG = pop_select(EEG, 'point', retain_data_intervals);
@@ -250,7 +287,8 @@ if ~strcmp(burst_crit,'off')
 end
 
 if nargout > 2
-    BUR = EEG; end
+    BUR = EEG; 
+end
 
 % remove irrecoverable time windows based on power
 if ~strcmp(window_crit,'off') && ~strcmp(window_crit_tolerances,'off')
@@ -258,3 +296,38 @@ if ~strcmp(window_crit,'off') && ~strcmp(window_crit_tolerances,'off')
     EEG = clean_windows(EEG,window_crit,window_crit_tolerances); 
 end
 disp('Use vis_artifacts to compare the cleaned data to the original.');
+
+% add back original channels
+if ~isempty(channels) || ~isempty(channels_ignore)
+   
+    % Apply same transformation to the data before removal of channels and data
+    EEG = eeg_checkset(EEG, 'eventconsistency');
+    if ~isempty(EEG.event) && isfield(EEG.event, 'type') && isstr(EEG.event(1).type)
+        disp('Adding back removed channels');
+
+        boundaryEvents = eeg_findboundaries(EEG);
+        
+        % remove again data portions
+        if ~isempty(boundaryEvents)
+            boundloc = [ EEG.event(boundaryEvents).latency ];
+            dur      = [ EEG.event(boundaryEvents).duration ];
+            cumdur   = cumsum(dur);
+            boundloc = boundloc + [0 cumdur(1:end-1) ];
+            boundloc = [ boundloc; boundloc+dur-1]';
+            oriEEG = eeg_eegrej(oriEEG, ceil(boundloc));
+        end
+
+        % copy clean data to oriEEG (in case data was corrected
+        [~,chanInds1, chanInds2] = intersect({ oriEEG.chanlocs.labels }, { EEG.chanlocs.labels });
+        if size(oriEEG.data,2) ~= size(EEG.data,2)
+            error('Issue with adding back removed channels. Remove channels, then remove bad portions of data.');
+        end
+        oriEEG.data(chanInds1,:) = EEG.data(chanInds2,:);
+        oriEEG.pnts = EEG.pnts;
+
+        EEG = oriEEG;
+    end
+    
+end
+
+

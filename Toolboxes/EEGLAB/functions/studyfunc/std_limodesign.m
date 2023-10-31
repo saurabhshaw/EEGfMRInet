@@ -1,4 +1,4 @@
-% std_limodesign() - create LIMO design matrices for categorical and 
+% STD_LIMODESIGN - create LIMO design matrices for categorical and 
 %                    continuous variables.
 %
 % Usage:
@@ -9,9 +9,9 @@
 %   factors      - [struct] list of factors (structure containing fields
 %                  'label' [string], 'value' [string or int] and 'vartype'
 %                  ('categorical' or 'continuous'). Structure returned by
-%                  function pop_listfactors().
+%                  function POP_LISTFACTORS.
 %   trialinfo    - [struct] trial information structure as returned by
-%                  std_combtrialinfo().
+%                  STD_COMBTRIALINFO.
 %
 % Optional inputs:
 %   filepath     - [string] file path. If not empty, categorical_variables.txt
@@ -31,7 +31,7 @@
 %
 % Author: Arnaud Delorme, SCCN, UCSD, 2018-
 %
-% See also: std_limo()
+% See also: STD_LIMO
 
 % Copyright (C) Arnaud Delorme
 %
@@ -80,65 +80,77 @@ if ischar(opt), error(opt); end
 % ----------------------------------------
 catMat  = [];
 contMat = [];
-catVar  = sort(find(cellfun(@(x)strcmpi(x, 'categorical' ), { factors.vartype })));
-contVar = find(cellfun(@(x)strcmpi(x, 'continuous' ), { factors.vartype }));
-catVarLabel = unique({ factors(catVar).label });
+if ~isempty(factors)
+    catVar      = sort(find(cellfun(@(x)strcmpi(x, 'categorical' ), { factors.vartype })));
+    contVar     = find(cellfun(@(x)strcmpi(x, 'continuous' ), { factors.vartype }));
+    catVarLabel = unique({ factors(catVar).label });
+else
+    catVar      = [];
+    contVar     = [];
+    catVarLabel = [];
+end
 
 % find all values for each cat. indep. var.
 % -----------------------------------------
 alloptions = {};
-for iVar = 1:length(catVarLabel)
-    indVals = find(cellfun(@(x)strcmpi(x, catVarLabel{iVar} ), { factors.label }));
-    values = { factors(indVals).value };
-    alloptions{iVar} = cellfun(@(x){catVarLabel{iVar} x}, values, 'uniformoutput', false);
-end
-
-% compute all interactions if necessary
-% ---------------------------------
-if length(alloptions) > 1
-    alloptionsinter = inter(alloptions);
-    alloptionsinter = { alloptionsinter }; % 1 condition only
-else
-    alloptionsinter = alloptions;
-end
-limodesign.continuous = {};
-if strcmpi(opt.interaction, 'on')
-    limodesign.categorical = alloptionsinter;
-else
-    limodesign.categorical = alloptions;
-end
-
-% build design matrix for categorical var.
-% ----------------------------------------
-if strcmpi(opt.desconly, 'off')
-    col = 1;
-    catMat = zeros(length(trialinfo),1);
-    for iVar = 1:length(limodesign.categorical)
-        for iVal = 1:length(limodesign.categorical{iVar})
-            trialindsx = std_gettrialsind(trialinfo, limodesign.categorical{iVar}{iVal}{:});
-            catMat(trialindsx, iVar) = iVal;
-        end
+limodesign.categorical = {};
+alloptionsinter = {};
+if ~isempty(catVar)
+    for iVar = 1:length(catVarLabel)
+        indVals = find(cellfun(@(x)strcmpi(x, catVarLabel{iVar} ), { factors.label }));
+        values = { factors(indVals).value };
+        alloptions{iVar} = cellfun(@(x){catVarLabel{iVar} x}, values, 'uniformoutput', false);
     end
-    catMat(catMat == 0) = NaN;
-    if ~isempty(opt.filepath)
-        save(fullfile(opt.filepath, 'categorical_variables.txt'),'catMat','-ascii');
+    
+    % compute all interactions if necessary
+    % ---------------------------------
+    if length(alloptions) > 1
+        alloptionsinter = inter(alloptions);
+        alloptionsinter = { alloptionsinter }; % 1 condition only
+    else
+        alloptionsinter = alloptions;
+    end
+    if strcmpi(opt.interaction, 'on')
+        limodesign.categorical = alloptionsinter;
+    else
+        limodesign.categorical = alloptions;
+    end
+    
+    % build design matrix for categorical var.
+    % ----------------------------------------
+    if strcmpi(opt.desconly, 'off')
+        col = 1;
+        catMat = zeros(length(trialinfo),1);
+        for iVar = 1:length(limodesign.categorical)
+            for iVal = 1:length(limodesign.categorical{iVar})
+                trialindsx = std_gettrialsind(trialinfo, limodesign.categorical{iVar}{iVal}{:});
+                catMat(trialindsx, iVar) = iVal;
+            end
+        end
+        catMat(catMat == 0) = NaN;
+        if ~isempty(opt.filepath)
+            save(fullfile(opt.filepath, 'categorical_variables.txt'),'catMat','-ascii');
+        end
     end
 end
 
 % continuous file/matrix
 % ----------------------
+limodesign.continuous = {};
 if ~isempty(contVar)
     contMat = zeros(length(trialinfo),1);
     
     for iVar = 1:length(contVar)
-        limodesign.continuous{iVar} = { factors(contVar(iVar)).label '' };
+        limodesign.continuous{iVar} = {factors(contVar(iVar)).label '' };
     end
     
     % split variables if necessary
     if strcmpi(opt.splitreg, 'on')
         limodesign.continuous = inter( { limodesign.continuous, alloptionsinter{:} } );
         for iOpt = 1:length(limodesign.continuous)
-            limodesign.continuous{iOpt} = [ limodesign.continuous{iOpt}{:} ];
+            if isnumeric(limodesign.continuous{iOpt}{1})
+                limodesign.continuous{iOpt} = [ limodesign.continuous{iOpt}{:} ];
+            end
         end
     end
     

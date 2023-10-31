@@ -81,13 +81,13 @@ function M = complexcirclefactory(n, m, gpuflag)
     
     M.typicaldist = @() pi*sqrt(n*m);
     
-    M.proj = @(z, u) u - real( conj(u) .* z ) .* z;	
+    M.proj = @(z, u) u - real( conj(u) .* z ) .* z;
     
     M.tangent = M.proj;
     
     % For Riemannian submanifolds, converting a Euclidean gradient into a
     % Riemannian gradient amounts to an orthogonal projection.
-	M.egrad2rgrad = M.proj;
+    M.egrad2rgrad = M.proj;
     
     M.ehess2rhess = @ehess2rhess;
     function rhess = ehess2rhess(z, egrad, ehess, zdot)
@@ -139,7 +139,7 @@ function M = complexcirclefactory(n, m, gpuflag)
         nv = abs(v);
         factors = di ./ nv;
         factors(di <= 1e-10) = 1;
-		v = v .* factors;
+        v = v .* factors;
     end
     
     M.hash = @(z) ['z' hashmd5( [real(z(:)) ; imag(z(:))] ) ];

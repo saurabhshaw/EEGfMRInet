@@ -1,4 +1,4 @@
-% std_plotcurve() - plot ERP or spectral traces for a STUDY component 
+% STD_PLOTCURVE - plot ERP or spectral traces for a STUDY component 
 %                   or channel cluster 
 % Usage:
 %          >> std_plotcurve( axvals, data, 'key', 'val', ...)
@@ -57,7 +57,7 @@
 %                  above). 'nocurve' does not plot the mean. This functionality
 %                  does not work for all data configuration {default: 'off'}
 %  'figure'      - ['on'|'off'] creates a new figure ('on'). The 'off' mode
-%                  plots all of the groups and conditions on the same pannel.
+%                  plots all of the groups and conditions on the same panel.
 % 'plotsubjects' - ['on'|'off'] overplot traces for individual components
 %                  or channels {default: 'off'}
 % 'singlesubject' - ['on'|'off'] set to 'on' to plot single subject.
@@ -70,7 +70,7 @@
 %
 % Author: Arnaud Delorme, CERCO, CNRS, 2006-
 %
-% See also: pop_erspparams(), pop_erpparams(), pop_specparams(), statcond()
+% See also: POP_ERSPPARAMS, POP_ERPPARAMS, POP_SPECPARAMS, STATCOND
 
 % Copyright (C) 2006 Arnaud Delorme
 %
@@ -111,7 +111,7 @@ end
 opt = finputcheck( varargin, { 'ylim'          'real'   []              [];
                                'filter'        'real'   []              [];
                                'threshold'     'real'   []              NaN;
-                               'unitx'         'string' []              'ms';
+                               'unitx'         'string' { 'ms','hz','rmsms','rmshz','hzpsd','rmshzpsd' }   'ms';
                                'chanlocs'      'struct' []              struct('labels', {});
                                'plotsubjects'  'string' { 'on','off' }  'off';
                                'condnames'     'cell'   []              {}; % just for legends
@@ -240,7 +240,7 @@ if isempty(opt.groupnames)
     if ng == 1, opt.groupnames = { '' }; end
 end
 
-% plotting paramters
+% plotting parameters
 % ------------------
 if ng > 1 && ~isempty(opt.groupstats), addc = 1; else addc = 0; end
 if nc > 1 && ~isempty(opt.condstats ), addr = 1; else addr = 0; end
@@ -282,13 +282,13 @@ if strcmpi(opt.effect, 'marginal') || ng == 1 || nc == 1
     end
 elseif strcmpi(opt.effect, 'main') && ~isempty(opt.interstats)
     if ~isnan(opt.threshold) && ( ~isempty(opt.groupstats) || ~isempty(opt.condstats) )    
-        pcondplot  = { opt.interstats{1} };
-        pgroupplot = { opt.interstats{2} };
+        pcondplot  = { opt.interstats{2} };
+        pgroupplot = { opt.interstats{1} };
         pinterplot = opt.interstats{3};
         maxplot = 1;
     else
-        if ~isempty(opt.interstats{1}), pcondplot  = { -log10(opt.interstats{1}) }; end
-        if ~isempty(opt.interstats{2}), pgroupplot = { -log10(opt.interstats{2}) }; end
+        if ~isempty(opt.interstats{2}), pcondplot  = { -log10(opt.interstats{2}) }; end
+        if ~isempty(opt.interstats{1}), pgroupplot = { -log10(opt.interstats{1}) }; end
         if ~isempty(opt.interstats{3}), pinterplot = -log10(opt.interstats{3}); end
         maxplot = 3;
     end
@@ -301,8 +301,12 @@ end
 
 % labels
 % ------
-if strcmpi(opt.unitx, 'ms'), xlab = 'Time (ms)';      ylab = 'Potential (\muV)';
-else                         xlab = 'Frequency (Hz)'; ylab = 'Log Power Spectral Density 10*log_{10}(\muV^{2}/Hz)'; % ylab = 'Power (10*log_{10}(\muV^{2}))'; 
+if strcmpi(opt.unitx, 'ms'),        xlab = 'Time (ms)';      ylab = 'Potential (\muV)';
+elseif strcmpi(opt.unitx, 'rmsms'), xlab = 'Time (ms)';      ylab = 'Potential (RMS \muV)';
+elseif strcmpi(opt.unitx, 'hz'),    xlab = 'Frequency (Hz)'; ylab = 'Log Power 10*log_{10}(\muV^{2})'; % ylab = 'Power (10*log_{10}(\muV^{2}))'; 
+elseif strcmpi(opt.unitx, 'rmshz'), xlab = 'Frequency (Hz)'; ylab = 'Log Power 10*log_{10}(RMS \muV^{2})'; % ylab = 'Power (10*log_{10}(\muV^{2}))'; 
+elseif strcmpi(opt.unitx, 'hzpsd'),    xlab = 'Frequency (Hz)'; ylab = 'Log Power Spectral Density 10*log_{10}(\muV^{2}/Hz)'; % ylab = 'Power (10*log_{10}(\muV^{2}))'; 
+elseif strcmpi(opt.unitx, 'rmshzpsd'), xlab = 'Frequency (Hz)'; ylab = 'Log Power Spectral Density 10*log_{10}(RMS \muV^{2}/Hz)'; % ylab = 'Power (10*log_{10}(\muV^{2}))'; 
 end
 if ~isnan(opt.threshold), statopt = {  'xlabel' xlab };
 else                      statopt = { 'logpval' 'on' 'xlabel' xlab 'ylabel' '-log10(p)' 'ylim' [0 maxplot] };
@@ -330,9 +334,9 @@ end
 
 if isempty(opt.ylim)
     if strcmpi(opt.plotsubjects, 'off')
-        opt.ylim = [min(cellfun(@(x)min(min(mean(x,3))), data(:))) max(cellfun(@(x)max(max(mean(x,3))), data(:)))];
+        opt.ylim = [min(cellfun(@(x)single(min(min(mean(x,3)))), data(:))) max(cellfun(@(x)single(max(max(mean(x,3)))), data(:)))];
     else
-        opt.ylim = [min(cellfun(@(x)min(x(:)), data(:))) max(cellfun(@(x)max(x(:)), data(:)))];
+        opt.ylim = [min(cellfun(@(x)single(min(x(:))), data(:))) max(cellfun(@(x)single(max(x(:))), data(:)))];
     end
 end
 
@@ -426,7 +430,7 @@ for c = 1:ncplot
             % tmpdata is of size "points x channels x subject x conditions"
             % or                 "points x   1   x components x conditions"
             % -------------------------------------------------------------
-            if ~dimreduced_sizediffers && strcmpi(opt.plotsubjects, 'off') % average accross subjects
+            if ~dimreduced_sizediffers && strcmpi(opt.plotsubjects, 'off') % average across subjects
                 tmpstd = squeeze(real(std(tmpdata,[],3)))/sqrt(size(tmpdata,3)); tmpstd = squeeze(permute(tmpstd, [2 1 3])); tmpdata = squeeze(real(nan_mean(tmpdata,3)));
             end
             tmpdata = squeeze(permute(tmpdata, [2 1 3 4]));
@@ -487,7 +491,7 @@ for c = 1:ncplot
             end
         end
 
-        % statistics accross groups
+        % statistics across groups
         % -------------------------
         if g == ngplot && ng > 1 && ~isempty(opt.groupstats)            
             if ~strcmpi(opt.plotgroups, 'together') || ~isempty(opt.condstats) || isnan(opt.threshold)
@@ -517,7 +521,7 @@ for c = 1:ncplot
     end
 end
 
-% statistics accross conditions
+% statistics across conditions
 % -----------------------------
 if ~isempty(opt.condstats) && nc > 1 && (~strcmpi(opt.plotconditions, 'together') || ~isempty(opt.groupstats) || isnan(opt.threshold))
     for g = 1:ng
@@ -546,7 +550,7 @@ if ~isempty(opt.condstats) && nc > 1 && (~strcmpi(opt.plotconditions, 'together'
 end
     
     
-% statistics accross group and conditions
+% statistics across group and conditions
 % ---------------------------------------
 if ~isempty(opt.groupstats) && ~isempty(opt.condstats) && ng > 1 && nc > 1 
     mysubplot(ncplot+addr, ngplot+addc, ncplot+addr, ngplot + 1, opt.subplot);
@@ -608,7 +612,7 @@ function hdl = mysubplot(nr,nc,r,c,subplottype)
 
 % rapid filtering for ERP
 % -----------------------
-function tmpdata2 = myfilt(tmpdata, srate, lowpass, highpass); 
+function tmpdata2 = myfilt(tmpdata, srate, lowpass, highpass)
     bscorrect = 1;
     if bscorrect
         % Getting initial baseline

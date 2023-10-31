@@ -38,7 +38,7 @@ function [outdata,outstate, Y] = asr_process(data,srate,state,windowlen,lookahea
 %                   may be used (the maximum fraction is 1.0). Default 0.66
 %
 %   MaxMemory : The maximum amount of memory used by the algorithm when processing a long chunk with
-%               many channels, in MB. The recommended value is at least 256. To run on the GPU, use
+%               many channels, in MB. The recommended value is at least 64. To run on the GPU, use
 %               the amount of memory available to your GPU here (needs the parallel computing toolbox).
 %               default: min(5000,1/2 * free memory in MB). Using smaller amounts of memory leads to
 %               longer running times.
@@ -130,6 +130,9 @@ data = [state.carry data];
 data(~isfinite(data(:))) = 0;
 
 % split up the total sample range into k chunks that will fit in memory
+if maxmem*1024*1024 - C*C*P*8*3 < 0
+    error('Not enough memory');
+end
 splits = ceil((C*C*S*8*8 + C*C*8*S/stepsize + C*S*8*2 + S*8*5) / (maxmem*1024*1024 - C*C*P*8*3));
 if splits > 1
     fprintf('Now cleaning data in %i blocks',splits); end

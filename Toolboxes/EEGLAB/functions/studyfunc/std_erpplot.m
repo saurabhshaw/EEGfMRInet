@@ -1,4 +1,4 @@
-% std_erpplot() - Command line function to plot STUDY cluster component ERPs. Either 
+% STD_ERPPLOT - Command line function to plot STUDY cluster component ERPs. Either 
 %                 displays grand mean ERPs for all requested clusters in the same figure, 
 %                 with ERPs for different conditions (if any) plotted in different colors. 
 %                 Else, displays ERP for each specified cluster in separate figures 
@@ -7,9 +7,9 @@
 %                 component ERPs were computed and saved in the STUDY EEG
 %                 datasets. 
 %                 These can be computed during pre-clustering using the gui-based 
-%                 function pop_preclust() or the equivalent command line functions 
-%                 eeg_createdata() and eeg_preclust(). Called by pop_clustedit().
-%                 and std_propplot().
+%                 function POP_PRECLUST or the equivalent command line functions 
+%                 EEG_CREATEDATA and EEG_PRECLUST. Called by POP_CLUSTEDIT.
+%                 and STD_PROPPLOT.
 % Usage:    
 %   >> [STUDY] = std_erpplot(STUDY, ALLEEG, key1, val1, key2, val2);  
 %   >> [STUDY erpdata erptimes pgroup pcond pinter] = std_erpplot(STUDY, ALLEEG, ...);  
@@ -17,7 +17,7 @@
 % Inputs:
 %   STUDY      - EEGLAB STUDY set comprising some or all of the EEG datasets in ALLEEG.
 %   ALLEEG     - global EEGLAB vector of EEG structures for the datasets included 
-%                in the STUDY. A STUDY set ALLEEG is typically created by load_ALLEEG().  
+%                in the STUDY. A STUDY set ALLEEG is typically created by LOAD_ALLEEG.  
 % Optional inputs for channel plotting:
 %   'channels' - [numeric vector]  specific channel group to plot. By
 %                default, the grand mean channel ERP is plotted (using the 
@@ -45,9 +45,9 @@
 %                Note that 'comps', 'all' is equivalent to 'plotsubjects', 'on'.
 %
 % Other optional inputs:
-%   'key','val' - All optional inputs to pop_erpparams() are also accepted here
+%   'key','val' - All optional inputs to POP_ERPPARAMS are also accepted here
 %                 to plot subset of time, statistics etc. The values used by default
-%                 are the ones set using pop_erpparams() and stored in the
+%                 are the ones set using POP_ERPPARAMS and stored in the
 %                 STUDY structure.
 %
 % Outputs:
@@ -57,21 +57,21 @@
 %                size of cell array is [nconds x ngroups]. Size of each element
 %                is [times x subjects] for data channels or [times x components]
 %                for component clusters. This array may be gicen as input 
-%                directly to the statcond() function or std_stats function
+%                directly to the STATCOND function or std_stats function
 %                to compute statistics.
 %   erptimes   - [array] ERP time point latencies.
 %   pgroup     - [array or cell] p-values group statistics. Output of the 
-%                statcond() function.
-%   pcond      - [array or cell] condition statistics. Output of the statcond() 
+%                STATCOND function.
+%   pcond      - [array or cell] condition statistics. Output of the STATCOND 
 %                function.
 %   pinter     - [array or cell] groups x conditions statistics. Output of
-%                statcond() function.
+%                STATCOND function.
 %
 %   Example:
 %            >> [STUDY] = std_erpplot(STUDY,ALLEEG, 'clusters', 2, 'comps', 'all');
 %               % Plot cluster-2 component ERPs plus the mean ERP in bold. 
 %
-%  See also  pop_clustedit(), pop_preclust(), eeg_createdata(), eeg_preclust(). std_propplot()
+%  See also  POP_CLUSTEDIT, POP_PRECLUST, EEG_CREATEDATA, EEG_PRECLUST. STD_PROPPLOT
 %
 % Authors: Arnaud Delorme, CERCO, August, 2006-
 
@@ -176,7 +176,7 @@ if ~isempty(params.topofreq) && strcmpi(opt.datatype, 'spec'),  params.topotime 
 if ~isempty(params.freqrange), params.timerange = params.freqrange; end
 datatypestr = upper(opt.datatype);
 if strcmpi(datatypestr, 'spec'), datatypestr = 'Spectrum'; end
-
+    
 % =======================================================================
 % below this line, all the code should be non-specific to ERP or spectrum
 % =======================================================================
@@ -190,7 +190,7 @@ if length(STUDY.design(opt.design).variable) > 1, allgroups     = STUDY.design(o
 % for backward compatibility
 % --------------------------
 stats = statstruct.etc.statistics;
-stats.fieldtrip.channelneighbor = struct([]); % asumes one channel or 1 component
+stats.fieldtrip.channelneighbor = struct([]); % assumes one channel or 1 component
 if isempty(STUDY.design(opt.design).variable)
     stats.paired = { };
 else
@@ -248,19 +248,24 @@ if ~isempty(opt.channels)
     chaninds = 1:length(opt.channels);
 
     if strcmpi(opt.datatype, 'erp')
-        [STUDY, erpdata, alltimes] = std_readdata(STUDY, ALLEEG, 'channels', opt.channels(chaninds), 'timerange', params.timerange, ...
+        [STUDY, erpdata, alltimes, ~, ~, fileparams] = std_readdata(STUDY, ALLEEG, 'channels', opt.channels(chaninds), 'timerange', params.timerange, ...
                 'subject', opt.subject, 'singletrials', stats.singletrials, 'design', opt.design, 'datatype', [dtype dsubtype]);
     else
-        [STUDY, erpdata, alltimes] = std_readdata(STUDY, ALLEEG, 'channels', opt.channels(chaninds), 'freqrange', params.freqrange, ...
+        [STUDY, erpdata, alltimes, ~, ~, fileparams] = std_readdata(STUDY, ALLEEG, 'channels', opt.channels(chaninds), 'freqrange', params.freqrange, ...
                 'subject', opt.subject, 'singletrials', stats.singletrials, 'design', opt.design, 'datatype', [dtype dsubtype], 'rmsubjmean', params.subtractsubjectmean);
     end
+    if isfield(fileparams, 'specmode') && ~strcmpi(fileparams.specmode, 'fft'), opt.unitx = [ opt.unitx 'psd' ]; end
     if ~strcmpi(params.averagechan, 'off') && length(chaninds) > 1
         for index = 1:length(erpdata(:))
             if strcmpi(params.averagechan, 'on')
                 erpdata{index} = squeeze(mean(erpdata{index},2));
             else
                 erpdata{index} = squeeze(sqrt(mean(erpdata{index}.^2,2)));
+                opt.unitx = 'rmsms';
             end
+        end
+        if strcmpi(params.averagechan, 'rms')
+            opt.unitx = [ 'rms' opt.unitx ];
         end
     end
     if isempty(erpdata), return; end
@@ -307,7 +312,7 @@ if ~isempty(opt.channels)
     end
     [pcond, pgroup, pinter] = std_stat(erpdata, stats);
     if (~isempty(pcond) && length(pcond{1}) == 1) || (~isempty(pgroup) && length(pgroup{1}) == 1), pcond = {}; pgroup = {}; pinter = {}; end % single subject STUDY                                
-    if length(opt.channels) > 5 && ndims(erpdata{1}) < 3, pcond = {}; pgroup = {}; pinter = {}; end % topo plotting for single subject
+    if ~isempty(params.topotime) && length(opt.channels) > 5 && ndims(erpdata{1}) < 3, pcond = {}; pgroup = {}; pinter = {}; end % topo plotting for single subject
     if strcmpi(opt.noplot, 'on') return; end
     
     % get titles (not included in std_erspplot because it is not possible
@@ -366,17 +371,13 @@ else
 
         if length(opt.clusters) > 1, subplot(nr,nc,index); end
         if strcmpi(opt.datatype, 'erp')
-            [STUDY, erpdata, alltimes] = std_readdata(STUDY, ALLEEG, 'clusters', opt.clusters(index), 'timerange', params.timerange, ...
+            [STUDY, erpdata, alltimes, ~, ~, fileparams] = std_readdata(STUDY, ALLEEG, 'clusters', opt.clusters(index), 'timerange', params.timerange, ...
                     'component', opt.comps, 'singletrials', stats.singletrials, 'design', opt.design, 'datatype', [dtype dsubtype]);
         else
-            [STUDY, erpdata, alltimes] = std_readdata(STUDY, ALLEEG, 'clusters', opt.clusters(index), 'freqrange', params.freqrange, ...
+            [STUDY, erpdata, alltimes, ~, ~, fileparams] = std_readdata(STUDY, ALLEEG, 'clusters', opt.clusters(index), 'freqrange', params.freqrange, ...
                     'component', opt.comps, 'singletrials', stats.singletrials, 'design', opt.design, 'datatype', [dtype dsubtype], 'rmsubjmean', params.subtractsubjectmean);
-%             [STUDY erpdata alltimes] = std_readerp(STUDY, ALLEEG, 'clusters', opt.clusters(index), 'timerange', params.timerange, ...
-%                         'component', opt.comps, 'singletrials', stats.singletrials, 'design', opt.design, 'datatype', [dtype dsubtype]);
-%         else
-%             [STUDY erpdata alltimes] = std_readerp(STUDY, ALLEEG, 'clusters', opt.clusters(index), 'freqrange', params.freqrange, ...
-%                         'rmsubjmean', params.subtractsubjectmean, 'component', opt.comps, 'singletrials', stats.singletrials, 'design', opt.design, 'datatype', [dtype dsubtype]);
         end
+        if isfield(fileparams, 'specmode') && ~strcmpi(fileparams.specmode, 'fft'), opt.unitx = [ opt.unitx 'psd' ]; end
         if isempty(erpdata), return; end
 
         % plot specific component
@@ -384,7 +385,6 @@ else
         if ~isempty(opt.comps)
             comp_names = { STUDY.cluster(opt.clusters(index)).comps(opt.comps) };
             opt.subject = STUDY.datasetinfo(STUDY.cluster(opt.clusters(index)).sets(1,opt.comps)).subject;
-            for iDat = 1:length(erpdata(:)), erpdata{iDat} = erpdata{iDat}(:,opt.comps); end
         end
         
         % remove NaNs and generate labels

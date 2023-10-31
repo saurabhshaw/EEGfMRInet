@@ -83,7 +83,7 @@ function M = stiefelcomplexfactory(n, p, k)
     
     % For Riemannian submanifolds, converting a Euclidean gradient into a
     % Riemannian gradient amounts to an orthogonal projection.
-	M.egrad2rgrad = M.proj;
+    M.egrad2rgrad = M.proj;
     
     M.ehess2rhess = @ehess2rhess;
     function rhess = ehess2rhess(X, egrad, ehess, H)
@@ -97,6 +97,7 @@ function M = stiefelcomplexfactory(n, p, k)
     function Y = retraction(X, U, t)
         % It is necessary to call qr_unique rather than simply qr to ensure
         % this is a retraction, to avoid spurious column sign flips.
+        % This is only a first-order retraction.
         if nargin < 3
             Y = qr_unique(X + U);
         else

@@ -45,7 +45,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 % THE POSSIBILITY OF SUCH DAMAGE.
 
-function [ factor factorvals subjects paired ] = std_getindvar(STUDY, mode, scandesign)
+function [ factor, factorvals, subjects, paired ] = std_getindvar(STUDY, mode, scandesign)
 
 if nargin < 1
     help std_getindvar;
@@ -66,8 +66,16 @@ if strcmpi(mode, 'datinfo') || strcmpi(mode, 'both')
     ff = fieldnames(setinfo);
     ff = setdiff_bc(ff, { 'filepath' 'filename' 'subject' 'index' 'ncomps' 'comps' 'trialinfo' });
     for index = 1:length(ff)
-        if ischar(getfield(setinfo(1), ff{index}))
-            eval( [ 'tmpvals = unique_bc({ setinfo.' ff{index} '});' ] );
+        % check we have the same data type
+        allSetinfoVals = { setinfo.(ff{index}) };
+        if any(cellfun(@ischar, allSetinfoVals))
+            if ~all(cellfun(@ischar, allSetinfoVals))
+                allSetinfoVals = cellfun(@num2str, allSetinfoVals, 'uniformoutput', false);
+            end
+        end
+
+        if ischar(allSetinfoVals{1})
+            tmpvals = unique_bc(allSetinfoVals);
             if length(tmpvals) > 1
                 factor{    countfact} = ff{index};
                 factorvals{countfact} = tmpvals;
@@ -75,7 +83,7 @@ if strcmpi(mode, 'datinfo') || strcmpi(mode, 'both')
                 % get subject for each factor value
                 intersectSubject = { setinfo(:).subject };
                 for c = 1:length(tmpvals)
-                    eval( [ 'datind = strmatch(tmpvals{c}, { setinfo.' ff{index} '}, ''exact'');' ] );
+                    datind = strmatch(tmpvals{c}, allSetinfoVals, 'exact');
                     subjects{  countfact}{c} = unique_bc( { setinfo(datind).subject } );
                     intersectSubject = intersect(intersectSubject, subjects{  countfact}{c});
                 end
@@ -89,7 +97,7 @@ if strcmpi(mode, 'datinfo') || strcmpi(mode, 'both')
                 countfact = countfact + 1;
             end
         else
-            eval( [ 'tmpvals = unique_bc([ setinfo.' ff{index} ']);' ] );
+            tmpvals = unique_bc([ allSetinfoVals{:} ] );
             if length(tmpvals) > 1
                 factor{    countfact} = ff{index};
                 factorvals{countfact} = mattocell(tmpvals);

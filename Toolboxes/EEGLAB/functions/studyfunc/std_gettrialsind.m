@@ -1,4 +1,4 @@
-% std_gettrialsind() - return the index of the trials that comply with the 
+% STD_GETTRIALSIND - return the index of the trials that comply with the 
 %                      defined values from trialinfo
 %
 % Usage:
@@ -65,7 +65,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 % THE POSSIBILITY OF SUCH DAMAGE.
 
-function [trialindsx eventvals] = std_gettrialsind(filename,varargin)
+function [trialindsx, eventvals] = std_gettrialsind(filename,varargin)
 
 trialindsx = [];
 eventvals = [];
@@ -80,7 +80,7 @@ try
         varargin = varargin{:}; % Call from std_readfile or other func
     end
     varsin = varargin;
-    if ~isempty( varargin ),
+    if ~isempty( varargin )
         for i = 1:2:numel(varsin)
             queryvars.(varsin{i}) = varsin{i+1};
         end
@@ -89,7 +89,7 @@ catch
     disp('std_gettrialsind() error: calling convention {''key'', value, ... } error'); return;
 end
 
-% Checking if fisrt entry is string or struct
+% Checking if first entry is string or struct
 if isstruct(filename)
     if isfield(filename,'trialinfo')
         trialinfo = filename.trialinfo;
@@ -156,7 +156,7 @@ for iVar = 1 :  length(varnames)
     end
 end
 
-% Retreiving overlapped values
+% Retrieving overlapped values
 hits = sum(hits,2);
 trialindsx = find(hits == length(varnames));
 if ~isempty(eventvals)

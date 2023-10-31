@@ -1,4 +1,4 @@
-% pop_timtopo() - call the timtopo() function for epoched EEG datasets. 
+% POP_TIMTOPO - call the TIMTOPO function for epoched EEG datasets. 
 %                 Plots the epoch mean for each channel on a single axis,
 %                 plus scalp maps of the data at specified latencies.
 % Usage:
@@ -8,15 +8,15 @@
 %   EEG         - input dataset
 %   timerange   - [min max] epoch time range (in ms) to plot 
 %   topotimes   - array of times to plot scalp maps {Default: NaN 
-%                 = display scalp map at frame of max var()}
+%                 = display scalp map at frame of max VAR}
 %
 % Optional inputs:
 %   title       - optional plot title
-%   'key','val' - optional topoplot() arguments (see >> help topoplot)
+%   'key','val' - optional TOPOPLOT arguments (see >> help topoplot)
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 2001
 %
-% See also: timtopo()
+% See also: TIMTOPO
 
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -59,15 +59,42 @@ if nargin < 1
 end;	
 
 if nargin < 3
-	promptstr    = { 'Plotting time range (ms):', ...
-			         ['Scalp map latencies (ms, NaN -> max-RMS)'], ...
-					 'Plot title:' ...
-			         'Scalp map options (see >> help topoplot):' };
-	inistr       = { [num2str( EEG.xmin*1000) ' ' num2str(EEG.xmax*1000)], ...
-			         'NaN', ...
-	                 ['ERP data and scalp maps' fastif(~isempty(EEG.setname), [' of ' EEG.setname ], '') ], ...
-			         ''  };
-	result       = inputdlg2( promptstr, 'ERP data and scalp maps -- pop_timtopo()', 1, inistr, 'pop_timtopo');
+    uilist = { { 'style' 'text' 'string' 'Plotting time range (ms):' } ...
+               { 'style' 'edit' 'string' '' 'tag' 'timerange' } ...
+               { 'style' 'text' 'string' 'Scalp map latencies (ms, NaN -> max-RMS)' } ...
+               { 'style' 'edit' 'string' 'NaN' 'tag' 'topotime' } ...
+               { 'style' 'text' 'string' 'Plot title:' } ...
+               { 'style' 'edit' 'string' '' 'tag' 'title'  } ...
+               { 'style' 'text' 'string' 'Scalp map options (see >> help topoplot):' } ...
+               { 'style' 'edit' 'string' '' 'tag' 'options' } };
+    uigeom = { [2 1] [2 1] [2 1] [2 1] };
+    evalstr = [ 'set(findobj(gcf, ''tag'', ''timerange''), ''string'', ''' [num2str( EEG.xmin*1000) ' ' num2str(EEG.xmax*1000)] ''');' ...
+                'set(findobj(gcf, ''tag'', ''title''), ''string'', ''' ['ERP data and scalp maps' fastif(~isempty(EEG.setname), [' of ' EEG.setname ], '') ] ''');' ...
+                ];
+    args = { 'uilist', uilist, 'geometry', uigeom, 'helpcom', 'pophelp(''pop_timtopo'')', 'eval', evalstr };
+%     arguments = args;
+%     for iCell = 2:2:length(arguments)
+%         if iscell(arguments{iCell})
+%             arguments{iCell} = { arguments{iCell} };
+%         end
+%     end
+%     jsonencode(struct(arguments{:}));
+%     geom = { {2,6,[0 0] ,[1.3333 1] }, ...
+%            {2,6,[1.3333 0] ,[0.66667 1] },...
+%            {2,6,[0 1] ,[1.3333 1] },...
+%            {2,6,[1.3333 1] ,[0.66667 1] },...
+%            {2,6,[0 2] ,[1.3333 1] },...
+%            {2,6,[1.3333 2] ,[0.66667 1] },...
+%            {2,6,[0 3] ,[1.3333 1] },...
+%            {2,6,[1.3333 3] ,[0.66667 1] },...
+%            {1,6,[0 4] ,[1 1] },...
+%            {4,6,[0 5] ,[1 1] },...
+%            {4,6,[1 5] ,[1 1] },...
+%            {4,6,[2 5] ,[1 1] },...
+%            {4,6,[3 5] ,[1 1] };
+    
+	result       = inputgui( args{:} );
+    
 	if size(result,1) == 0 return; end
 	timerange    = eval( [ '[' result{1} ']' ] );
 	topotime     = eval( [ '[' result{2} ']' ] );
@@ -82,7 +109,7 @@ else
 		else
 			options = [ options ', [' num2str(varargin{i}) ']' ];
 		end
-	end;	
+    end
 end
 try, icadefs; set(gcf, 'color', BACKCOLOR, 'Name', ' timtopo()'); catch, end
 
@@ -97,12 +124,14 @@ if ~isempty(EEG.chanlocs)
 	posf = round( (timerange(2)/1000-EEG.xmin)/(EEG.xmax-EEG.xmin) * (EEG.pnts-1))+1;
 	if length( options ) < 2
     	timtopo( mean(SIGTMP(:,posi:posf,:),3), EEG.chanlocs, 'limits', [timerange(1) timerange(2) 0 0], 'plottimes', topotime, 'chaninfo', EEG.chaninfo);
+        textsc('title', plottitle)
         com = sprintf('figure; pop_timtopo(EEG, [%s], [%s], ''%s'');', num2str(timerange), num2str(topotime), plottitle);
 	else
 		com = sprintf('timtopo( mean(SIGTMP(:,posi:posf,:),3), EEG.chanlocs, ''limits'', [timerange(1) timerange(2) 0 0], ''plottimes'', topotime, ''chaninfo'', EEG.chaninfo %s);', options);
 		eval(com)
+        textsc('title', plottitle)
 	    com = sprintf('figure; pop_timtopo(EEG, [%s], [%s], ''%s'' %s);', num2str(timerange), num2str(topotime), plottitle, options);
-	end;		
+    end	
 else
 	fprintf('Cannot make plot without channel locations\n');
 	return;

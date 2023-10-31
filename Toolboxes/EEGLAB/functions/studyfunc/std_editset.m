@@ -1,4 +1,4 @@
-% std_editset() - modify a STUDY set structure.
+% STD_EDITSET - modify a STUDY set structure.
 %
 % Usage: 
 %             >> [STUDY, ALLEEG] = std_editset(STUDY, ALLEEG, key1, val1, ...);  
@@ -23,7 +23,7 @@
 %   'notes'    - [string] notes about the experiment, the datasets, the STUDY, 
 %                or anything else to store with the STUDY itself {default: ''}. 
 %   'updatedat' - ['on'|'off'] update 'subject' 'session' 'condition' and/or
-%                'group' fields of STUDY dataset(s).
+%                'group' fields of STUDY dataset(s). Default is 'on'.
 %   'savedat'   - ['on'|'off'] re-save datasets
 %   'inbrain'   - ['on'|'off'] select components for clustering from all STUDY 
 %                 datasets with equivalent dipoles located inside the brain volume. 
@@ -43,11 +43,13 @@
 %   'condition' - [string] dataset condition. 
 %   'session '  - [integer] dataset session number.
 %   'group'     - [string] dataset group.
-%   'load'      - [filename] load dataset from specified filename 
+%   'load'      - [filename] load dataset from specified filename. Can be 
+%                 an EEGLAB dataset or any file supported by File-IO (if 
+%                 it is installed from the plugin manager).
 %   'dipselect' - [float<1] select components for clustering from all STUDY 
 %                 datasets with dipole model residual var. below this value. 
 %   'inbrain'   - ['on'|'off'] same as above. This option may also be
-%                 placed in the command list (preceeding the 'dipselect'
+%                 placed in the command list (preceding the 'dipselect'
 %                 option).
 %
 % Outputs:
@@ -55,8 +57,8 @@
 %                plus additional information from the optional inputs above. 
 %   ALLEEG     - a vector of EEG datasets included in the STUDY structure 
 %
-%  See also:  pop_createstudy(), std_loadalleeg(), pop_clust(), pop_preclust(), 
-%             eeg_preclust(), eeg_createdata()
+%  See also:  POP_CREATESTUDY, STD_LOADALLEEG, POP_CLUST, POP_PRECLUST, 
+%             EEG_PRECLUST, EEG_CREATEDATA
 %
 % Authors: Arnaud Delorme, Hilit Serby, SCCN/INC/UCSD, October , 2004-
 
@@ -96,7 +98,7 @@ end
 
 % decode input parameters
 % -----------------------
-g = finputcheck(varargin, { 'updatedat' 'string'  { 'on','off' }  'off';
+g = finputcheck(varargin, { 'updatedat' 'string'  { 'on','off' }  'on';
                             'name'      'string'  { }             '';
                             'task'      'string'  { }             '';
                             'notes'     'string'  { }             '';
@@ -124,7 +126,7 @@ if ~isempty(ALLEEG)
     else
         if any(cellfun( @isempty, allchanlocs))
             error( [ 'Some datasets have channel locations and some other don''t' 10 ...
-                     'the STUDY is not homogenous and cannot be created.' ]);
+                     'the STUDY is not homogeneous and cannot be created.' ]);
         end
     end
 end
@@ -174,7 +176,10 @@ if ~isfield(STUDY, 'datasetinfo')
             STUDY.datasetinfo(realindex).session   = ALLEEG(realindex).session;
             STUDY.datasetinfo(realindex).run       = ALLEEG(realindex).run;
             STUDY.datasetinfo(realindex).condition = ALLEEG(realindex).condition;
-            STUDY.datasetinfo(realindex).group     = ALLEEG(realindex).group;                    
+            STUDY.datasetinfo(realindex).group     = ALLEEG(realindex).group;       
+            if isfield(ALLEEG(realindex), 'task')   
+                STUDY.datasetinfo(realindex).task      = ALLEEG(realindex).task;                 
+            end
         end
     end
 end
@@ -183,6 +188,7 @@ end
 % ----------------
 currentind = 1;
 rmlist = [];
+fullFileNames = {};
 for k = 1:2:length(g.commands)
     
     switch g.commands{k}
@@ -261,13 +267,19 @@ for k = 1:2:length(g.commands)
             STUDY = std_checkset(STUDY, ALLEEG); % recreate parent dataset           
            
         case 'load'
+            if ~isempty(strmatch(g.commands{k+1}, fullFileNames))
+                error(['Duplicate dataset %s in STUDY.' 10 ...
+                    'Copy and rename the dataset if you absolutely want to use it twice'], g.commands{k+1})
+            end
+            fullFileNames{end+1} = g.commands{k+1};
+
             TMPEEG = std_loadalleeg( { g.commands{k+1} } );
             ALLEEG = eeg_store(ALLEEG, eeg_checkset(TMPEEG), currentind);
             ALLEEG(currentind).saved = 'yes';
             
             % update datasetinfo structure
             % ----------------------------
-            [tmppath tmpfile tmpext] = fileparts( fullfile(ALLEEG(currentind).filepath, ...
+            [tmppath, tmpfile, tmpext] = fileparts( fullfile(ALLEEG(currentind).filepath, ...
                                                            ALLEEG(currentind).filename) );
             STUDY.datasetinfo(currentind).filepath  = tmppath;   
             STUDY.datasetinfo(currentind).filename  = [ tmpfile tmpext ];   
@@ -277,9 +289,13 @@ for k = 1:2:length(g.commands)
             STUDY.datasetinfo(currentind).condition = ALLEEG(currentind).condition;
             STUDY.datasetinfo(currentind).group     = ALLEEG(currentind).group;                    
             STUDY.datasetinfo(currentind).index     = currentind;    
+            if isfield(ALLEEG(realindex), 'task')   
+                STUDY.datasetinfo(currentind).task      = ALLEEG(currentind).task;                 
+            end
         otherwise
             % running custom command
-            STUDY.datasetinfo(currentind).(g.commands{k}) = g.commands{k+1};
+            cleanname = cleanvarname(g.commands{k});
+            STUDY.datasetinfo(currentind).(cleanname) = g.commands{k+1};
     end
 end
 
@@ -370,19 +386,16 @@ end
 if ~isempty(g.commands)
     STUDY.changrp = [];
     STUDY.cluster = [];
-%    if ~isempty(STUDY.design)
-%        [STUDY] = std_createclust(STUDY, ALLEEG, 'parentcluster', 'on');
-%    end
 end
-[STUDY ALLEEG] = std_checkset(STUDY, ALLEEG);
-if ~isempty(g.filename),
-    [STUDY.filepath STUDY.filename ext] = fileparts(fullfile( g.filepath, g.filename ));
+[STUDY, ALLEEG] = std_checkset(STUDY, ALLEEG);
+if ~isempty(g.filename)
+    [STUDY.filepath, STUDY.filename, ext] = fileparts(fullfile( g.filepath, g.filename ));
     STUDY.filename = [ STUDY.filename ext ];
     g.resave = 'on';
 end
 if strcmpi(g.resave, 'on')
     STUDY = pop_savestudy(STUDY, ALLEEG, 'savemode', 'resave');
-end;    
+end
 
 % ---------------------
 % remove empty elements

@@ -1,8 +1,8 @@
-% pop_rmbase() - remove channel baseline means from an epoched or 
-%                continuous EEG dataset. Calls rmbase().
+% POP_RMBASE - remove channel baseline means from an epoched or 
+%                continuous EEG dataset. Calls RMBASE.
 % Usage:
 %   >> OUTEEG = pop_rmbase( EEG ); % pop up an interactive arg entry window
-%   >> OUTEEG = pop_rmbase( EEG, timerange, pointrange, chanlist); % call rmbase()
+%   >> OUTEEG = pop_rmbase( EEG, timerange, pointrange, chanlist); % call RMBASE
 %
 % Graphic interface:
 %    "Baseline latency range" - [edit box] Latency range for the baseline in ms.
@@ -28,7 +28,7 @@
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 2001
 %
-% See also: rmbase(), eeglab()
+% See also: RMBASE, EEGLAB
 
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -76,6 +76,8 @@ end
 if nargin < 4 || isempty(chanlist)
     chanlist = 1:EEG(1).nbchan;
 end
+if nargin < 2, timerange = [];  end
+if nargin < 3, pointrange = []; end
 if nargin < 2 
     % popup window parameters
     % -----------------------
@@ -133,9 +135,6 @@ if nargin < 2
             timerange  = eval( [ '[' result{1} ']' ] );
             pointrange = eval( [ '[' result{2} ']' ] );
         end
-    else
-        timerange = [];
-        pointrange = [];
     end
     if ~isempty(sres.chantypes)
         chanlist = eeg_decodechan(EEG.chanlocs, parsetxt(sres.chantype), 'type');
@@ -178,7 +177,7 @@ if EEG.trials == 1 && ~isempty(EEG.event) ...
                      && isfield(EEG.event, 'type') ...
                         && ischar(EEG.event(1).type)
     tmpevent = EEG.event;
-	boundaries = strmatch('boundary', {tmpevent.type});
+    boundaries = eeg_findboundaries(tmpevent);
 	if ~isempty(boundaries) % this is crashing
         fprintf('Pop_rmbase(): finding continuous data discontinuities\n');
         boundaries = round([ tmpevent(boundaries).latency ] -0.5-pointrange(1)+1);

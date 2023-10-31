@@ -200,7 +200,7 @@ case 'obs'
             eegchan=filtfilt(fwts,1,double(EEG.data(ch,:)));
             pcamat=zeros(pa-1,2*PArange+1);
             dpcamat=pcamat;
-            for p=2:pa
+            for p=2:pa-1
                 pcamat(p-1,:)=eegchan(peakI(p)-PArange:peakI(p)+PArange);
             end
             pcamat=detrend(pcamat','constant')';

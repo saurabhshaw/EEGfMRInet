@@ -1,4 +1,4 @@
-function signal = clean_channels(signal,corr_threshold,noise_threshold,window_len,max_broken_time,num_samples,subset_size)
+function [signal,removed_channels] = clean_channels(signal,corr_threshold,noise_threshold,window_len,max_broken_time,num_samples,subset_size)
 % Remove channels with abnormal data from a continuous data set.
 % Signal = clean_channels(Signal,CorrelationThreshold,WindowLength,MaxBrokenTime,NumSamples,SubsetSize,UseGPU)
 %
@@ -65,6 +65,7 @@ if ~exist('window_len','var') || isempty(window_len) window_len = 5; end
 if ~exist('max_broken_time','var') || isempty(max_broken_time) max_broken_time = 0.4; end
 if ~exist('num_samples','var') || isempty(num_samples) num_samples = 50; end
 if ~exist('subset_size','var') || isempty(subset_size) subset_size = 0.25; end
+if ~exist('reset_rng','var') || isempty(reset_rng) reset_rng = true; end
 
 subset_size = round(subset_size*size(signal.data,1)); 
 
@@ -109,6 +110,9 @@ locs = [cell2mat(x(usable_channels));cell2mat(y(usable_channels));cell2mat(z(usa
 X = X(:,usable_channels);
   
 % caculate all-channel reconstruction matrices from random channel subsets   
+if reset_rng
+    rng('default')
+end
 if exist('OCTAVE_VERSION', 'builtin') == 0
     P = hlp_microcache('cleanchans',@calc_projector,locs,num_samples,subset_size);
 else

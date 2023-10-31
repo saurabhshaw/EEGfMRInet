@@ -1,18 +1,19 @@
-% pop_readlocs() - load a EGI-format EEG file (pop up an interactive window if no arguments).
+% POP_READLOCS - load channel location file (pop up an interactive window 
+%                  if no arguments).
 %
 % Usage:
-%   >> EEG = pop_readlocs;                             % a window pops up
-%   >> EEG = pop_readlocs( filename, 'key', val, ...); % no window
+%   >> chanlocs = pop_readlocs;                             % a window pops up
+%   >> chanlocs = pop_readlocs( filename, 'key', val, ...); % no window
 %
 % Inputs:
 %   filename       - Electrode location file name
-%   'key',val      - Same options as readlocs() (see >> help readlocs)
+%   'key',val      - Same options as READLOCS (see >> help readlocs)
 % 
-% Outputs: same as readlocs()
+% Outputs: same as READLOCS
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 17 Dec 2002
 %
-% See also: readlocs()
+% See also: READLOCS
 
 % Copyright (C) 17 Dec 2002 Arnaud Delorme, Salk Institute, arno@salk.edu
 %

@@ -1,4 +1,4 @@
-% pop_rejtrend() - Measure linear trends in EEG data; reject data epochs 
+% POP_REJTREND - Measure linear trends in EEG data; reject data epochs 
 %                  containing strong trends.
 % Usage:
 %   >> pop_rejtrend( INEEG, typerej); % pop up an interactive window
@@ -32,7 +32,7 @@
 %   elec_comp  - [e1 e2 ...] electrode|component number(s) to take into 
 %                consideration during rejection
 %   winsize    - (integer) number of consecutive points
-%                to use in detecing linear trends
+%                to use in detecting linear trends
 %   maxslope   - maximal absolute slope of the linear trend to allow in the data
 %   minR       - minimal linear regression R-square value to allow in the data
 %                (= coefficient of determination, between 0 and 1)
@@ -46,13 +46,13 @@
 %
 % Outputs:
 %   OUTEEG     - output dataset with rejected trials marked for rejection
-%     Note: When eegplot() is called, modifications are applied to the current 
-%     dataset at the end of the call to eegplot() (e.g., when the user presses 
+%     Note: When EEGPLOT is called, modifications are applied to the current 
+%     dataset at the end of the call to EEGPLOT (e.g., when the user presses 
 %     the 'Reject' button).
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 2001
 %
-% See also: rejtrend(), eeglab(), eegplot(), pop_rejepoch() 
+% See also: REJTREND, EEGLAB, EEGPLOT, POP_REJEPOCH 
 
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -92,20 +92,20 @@ com = '';
 if nargin < 1
    help pop_rejtrend
    return;
-end;  
+end
 if nargin < 2
    icacomp = 1;
-end;  
+end
 if icacomp == 0
 	if isempty( EEG.icasphere )
 	    ButtonName=questdlg( 'Do you want to run ICA now ?', ...
                          'Confirmation', 'NO', 'YES', 'YES');
-    	switch ButtonName,
+    	switch ButtonName
         	case 'NO', disp('Operation cancelled'); return;   
-        	case 'YES', [ EEG com ] = pop_runica(EEG);
+        	case 'YES', [ EEG, com ] = pop_runica(EEG);
     	end % switch
 	end
-end;	
+end
 if exist('reject') ~= 1
     reject = 1;
 end
@@ -153,11 +153,12 @@ if nargin < 3
     calldisp     = 1;
 end
 
+calldisp = 0;
 if ~exist('superpose','var'), superpose = 0; end
 if ~exist('reject','var'),    reject    = 0; end
 if ~exist('calldisp','var'),  calldisp  = 1; end
 
-if nargin < 9
+if nargin < 8
     calldisp = 1;
 end
 
@@ -203,22 +204,23 @@ if calldisp
 	else
 		eegplot( icaacttmp, 'srate', ...
 		      EEG.srate, 'limits', [EEG.xmin EEG.xmax]*1000 , 'command', command, eegplotoptions{:}); 
-	end;	
-end
-if ~isempty(rej)
-	if icacomp	== 1
-		EEG.reject.rejconst = rej;
-		EEG.reject.rejconstE = rejE;
-	else
-		EEG.reject.icarejconst = rej;
-		EEG.reject.icarejconstE = rejE;
-	end
-    if reject
-        EEG = pop_rejepoch(EEG, rej, 0);
+    end
+else
+    if ~isempty(rej)
+        if icacomp	== 1
+            EEG.reject.rejconst = rej;
+            EEG.reject.rejconstE = rejE;
+        else
+            EEG.reject.icarejconst = rej;
+            EEG.reject.icarejconstE = rejE;
+        end
+        if reject
+            EEG = pop_rejepoch(EEG, rej, 0);
+        end
     end
 end
 
 com = [ com sprintf('EEG = pop_rejtrend(EEG,%s);', ...
-		vararg2str({icacomp,elecrange,winsize,minslope,minstd,superpose,reject})) ]; 
+		vararg2str({icacomp,elecrange,winsize,minslope,minstd,superpose, ~calldisp & reject })) ]; 
 
 return;

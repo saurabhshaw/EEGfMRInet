@@ -1,6 +1,6 @@
-function signal = clean_channels(signal,min_corr,ignored_quantile,window_len,max_broken_time,linenoise_aware)
+function [signal,removed_channels] = clean_channels_nolocs(signal,min_corr,ignored_quantile,window_len,max_broken_time,linenoise_aware)
 % Remove channels with abnormal data from a continuous data set.
-% Signal = clean_channels(Signal,MinCorrelation,IgnoredQuantile,WindowLength,MaxBrokenTime,LineNoiseAware)
+% Signal = clean_channels_nolocs(Signal,MinCorrelation,IgnoredQuantile,WindowLength,MaxBrokenTime,LineNoiseAware)
 %
 % This is an automated artifact rejection function which ensures that the data contains no channels
 % that record only noise for extended periods of time. If channels with control signals are
@@ -91,7 +91,9 @@ retained = 1:(C-ceil(C*ignored_quantile));
 % optionally ignore both 50 and 60 Hz spectral components...
 if linenoise_aware
     Bwnd = design_kaiser(2*45/signal.srate,2*50/signal.srate,60,true);
-    if signal.srate <= 130
+    if signal.srate <= 110
+        error('Sampling rate must be above 110 Hz');
+    elseif signal.srate <= 130
         B = design_fir(length(Bwnd)-1,[2*[0 45 50 55]/signal.srate 1],[1 1 0 1 1],[],Bwnd);
     else
         B = design_fir(length(Bwnd)-1,[2*[0 45 50 55 60 65]/signal.srate 1],[1 1 0 1 0 1 1],[],Bwnd);

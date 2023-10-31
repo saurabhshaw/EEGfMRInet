@@ -1,4 +1,4 @@
-% eeg_urlatency() - find the original (ur) latency of a time point in 
+% EEG_URLATENCY - find the original (ur) latency of a time point in 
 %                   the original continuous data.
 %
 % Usage:
@@ -14,11 +14,11 @@
 %   lat_out     - output latency
 %
 % Note: the function that finds the latency in the current dataset using (ur)
-%       original latencies as input is eeg_latencyur()
+%       original latencies as input is EEG_LATENCYUR
 % 
 % Author: Arnaud Delorme, SCCN, INC, UCSD, April, 15, 2004
 %
-% See also: eeg_latencyur()
+% See also: EEG_LATENCYUR
 
 % Copyright (C) 2004 Arnaud Delorme, SCCN, INC, UCSD, arno@salk.edu
 %
@@ -47,7 +47,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 % THE POSSIBILITY OF SUCH DAMAGE.
 
-function latout = eeg_urlatency( events, latin );
+function latout = eeg_urlatency( events, latin )
     
     if nargin < 2
         help eeg_urlatency;
@@ -57,7 +57,12 @@ function latout = eeg_urlatency( events, latin );
     boundevents = { events.type };
     latout      = latin;
     if ~isempty(boundevents) && ischar(boundevents{1})
-        indbound = strmatch('boundary', boundevents);
+        try
+            indbound = strmatch('boundary', boundevents);
+        catch
+            % crash in the unlikely case of numerical events
+            return
+        end
         
         if isfield(events, 'duration') && ~isempty(indbound)
             for index = indbound'

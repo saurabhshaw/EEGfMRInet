@@ -22,27 +22,27 @@ function M = obliquefactory(n, m, transposed)
 % Contributors: 
 % Change log: 
 %
-%	July 16, 2013 (NB)
+%   July 16, 2013 (NB)
 %       Added 'transposed' option, mainly for ease of comparison with the
 %       elliptope geometry.
 %
-%	Nov. 29, 2013 (NB)
+%   Nov. 29, 2013 (NB)
 %       Added normalize_columns function to make it easier to exploit the
 %       bsxfun formulation of column normalization, which avoids using for
 %       loops and provides performance gains. The exponential still uses a
 %       for loop.
 %
-%	April 4, 2015 (NB)
+%   April 4, 2015 (NB)
 %       Log function modified to avoid NaN's appearing for close by points.
 %
-%	April 13, 2015 (NB)
+%   April 13, 2015 (NB)
 %       Exponential now without for-loops.
 %
 %   Oct. 8, 2016 (NB)
 %       Code for exponential was simplified to only treat the zero vector
 %       as a particular case.
 %
-%  Oct. 21, 2016 (NB)
+%   Oct. 21, 2016 (NB)
 %       Bug caught in M.log: the function called v = M.proj(x1, x2 - x1),
 %       which internally applies transp to inputs and outputs. But since
 %       M.log had already taken care of transposing things, this introduced
@@ -84,7 +84,7 @@ function M = obliquefactory(n, m, transposed)
     
     % For Riemannian submanifolds, converting a Euclidean gradient into a
     % Riemannian gradient amounts to an orthogonal projection.
-	M.egrad2rgrad = M.proj;
+    M.egrad2rgrad = M.proj;
     
     M.ehess2rhess = @ehess2rhess;
     function rhess = ehess2rhess(X, egrad, ehess, U)
@@ -133,12 +133,12 @@ function M = obliquefactory(n, m, transposed)
         v = projection(x1, x2 - x1);
         dists = real(2*asin(.5*sqrt(sum((x1 - x2).^2, 1))));
         norms = real(sqrt(sum(v.^2, 1)));
-		factors = dists./norms;
+        factors = dists./norms;
         % For very close points, dists is almost equal to norms, but
         % because they are both almost zero, the division above can return
         % NaN's. To avoid that, we force those ratios to 1.
-		factors(dists <= 1e-10) = 1;
-		v = bsxfun(@times, v, factors);
+        factors(dists <= 1e-10) = 1;
+        v = bsxfun(@times, v, factors);
         
         v = trnsp(v);
     end
@@ -210,9 +210,9 @@ end
 % Given a matrix X, returns the same matrix but with each column scaled so
 % that they have unit 2-norm.
 function X = normalize_columns(X)
-	% This is faster than norms(X, 2, 1) for small X, and as fast for large X.
-	nrms = sqrt(sum(X.^2, 1));
-	X = bsxfun(@times, X, 1./nrms);
+    % This is faster than norms(X, 2, 1) for small X, and as fast for large X.
+    nrms = sqrt(sum(X.^2, 1));
+    X = bsxfun(@times, X, 1./nrms);
 end
 
 % Orthogonal projection of the ambient vector H onto the tangent space at X

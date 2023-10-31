@@ -1,4 +1,4 @@
-% clean_rawdata(): a wrapper for EEGLAB to call Christian's clean_artifacts.
+% clean_rawdata(): a wrapper for EEGLAB to call clean_artifacts function
 %
 % Usage:
 %   >>  EEG = clean_rawdata(EEG, arg_flatline, arg_highpass, arg_channel, arg_noisy, arg_burst, arg_window)
@@ -35,9 +35,8 @@
 %                    considered missing data and will be removed. The most aggressive value that can
 %                    be used without losing much EEG is 3. For new users it is recommended to at
 %                    first visually inspect the difference between the original and cleaned data to
-%                    get a sense of the removed content at various levels. A quite conservative
-%                    value is 5. Default: 5.
-%
+%                    get a sense of the removed content at various levels. An agressive value is 5 
+%                    and a quite conservative value is 20. Default: 5 (from the GUI, default is 20).
 %
 %   WindowCriterion :  Criterion for removing time windows that were not repaired completely. This may
 %                      happen if the artifact in a window was composed of too many simultaneous

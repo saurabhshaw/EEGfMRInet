@@ -25,8 +25,8 @@ function [h_old,h_new] = vis_artifacts(new,old,varargin)
 %                'NewColor' : color of the new (i.e., cleaned) data
 %                'OldColor' : color of the old (i.e., uncleaned) data
 %                'HighpassOldData' : whether to high-pass the old data if not already done
-%                'ScaleBy' : the data set according to which the display should be scaled, can be 
-%                            'old' or 'new' (default: 'new')
+%                'ScaleBy' : the data set according to which the display should be scaled, can be
+%                            'old', 'new' or 'noscale' (default: 'new')
 %                'ChannelSubset' : optionally a channel subset to display
 %                'TimeSubet' : optionally a time subrange to display
 %                'DisplayMode' : what should be displayed: 'both', 'new', 'old', 'diff'
@@ -36,7 +36,7 @@ function [h_old,h_new] = vis_artifacts(new,old,varargin)
 %
 % Notes:
 %   This function is primarily meant for testing purposes and is not a particularly high-quality
-%   implementation. If you are a MATLAB expert and have an interest in this function we would 
+%   implementation. If you are a MATLAB expert and have an interest in this function we would
 %   appreciate it if you chose to do a clean rewrite. :)
 %
 % Examples:
@@ -71,7 +71,7 @@ have_signallegend = false;
 have_eventlegend = false;
 
 if nargin < 2
-    old = new; 
+    old = new;
 elseif ischar(old)
     varargin = [{old} varargin];
     old = new;
@@ -88,7 +88,7 @@ opts = hlp_varargin2struct(varargin, ...
     {'show_removed_portions','ShowRemovedPortions'},true, ...% whether to show removed data portions (if only one set is passed in)
     {'show_events','ShowEvents'},true, ...      % whether to show events
     {'show_eventlegend','ShowEventLegend'},false, ...  % whether to show a legend for the currently visible events
-    {'scale_by','ScaleBy'},'allnew',...         % the data set according to which the display should be scaled (can be allold, allnew, wndold, or wndnew)
+    {'scale_by','ScaleBy'},'allnew',...         % the data set according to which the display should be scaled (can be allold, allnew, wndold, wndnew or noscale)
     {'channel_subset','ChannelSubset'},[], ...  % optionally a channel subset to display
     {'time_subset','TimeSubset'},[],...         % optionally a time subrange to display
     {'display_mode','DisplayMode'},'both',...   % what should be displayed: 'both', 'new', 'old', 'diff'
@@ -133,7 +133,7 @@ if ~isempty(opts.time_subset)
     new = pop_select(new,'time',opts.time_subset);
 end
 
-if opts.equalize_channel_scaling    
+if opts.equalize_channel_scaling
     rescale = 1./mad(old.data,[],2);
     new.data = bsxfun(@times,new.data,rescale);
     old.data = bsxfun(@times,old.data,rescale);
@@ -150,9 +150,9 @@ if ~isempty(old.event)
 end
 
 % calculate whole-data scale
-old_iqr = 2*mad(old.data',1)';
+old_iqr = 2*mad(quantile(old.data',1000),1)';
 old_iqr(isnan(old_iqr)) = deal(mean(old_iqr(~isnan(old_iqr))));
-new_iqr = 2*mad(new.data',1)';
+new_iqr = 2*mad(quantile(new.data',1000),1)';
 new_iqr(isnan(new_iqr)) = deal(mean(new_iqr(~isnan(new_iqr))));
 
 % create figure & slider
@@ -165,15 +165,15 @@ set(hSlider, 'callback', @on_update);
 % jSlider = findjobj(hSlider);
 % jSlider.AdjustmentValueChangedCallback = @on_update;
 
-annotation(gcf,'textbox', [0 0.07 1 0],...
+annotation(hFig,'textbox', [0 0.07 1 0],...
     'String', {'Keyboard shortcuts: [n] new data, [o] old data, [b] both data, [d] difference, [+] increase amp scale, [-] decrease amp scale, [*] shrink time scale, [/] expand time scale, [h] show/hide slider.'},...
-    'HorizontalAlignment','center', 'FontSize',14, 'FitBoxToText','off', 'LineStyle','none');   
+    'HorizontalAlignment','center', 'FontSize',14, 'FitBoxToText','off', 'LineStyle','none');
 
 % Implementing a delay fuse (07/27/2017 Makoto).
 set(hFig, 'ResizeFcn', @on_window_resized);
 
 % do the initial update
-on_update();
+%on_update();
 
 
     function repaint(relPos,moved)
@@ -184,7 +184,8 @@ on_update();
             return; end
         
         % axes
-        cla;
+        cla(hAxis);
+        gca = hAxis;
         
         % compute pixel range from axis properties
         xl = get(hAxis,'XLim');
@@ -195,16 +196,23 @@ on_update();
         ylr = yl(1) + opts.yrange*(yl(2)-yl(1));
         channel_y = (ylr(2):(ylr(1)-ylr(2))/(size(new.data,1)-1):ylr(1))';
         
+        % Add channel labels to y axis
+        if isfield(old.chanlocs,'labels')
+            set(hAxis,'ytick',flipud(channel_y));
+            set(hAxis,'yticklabel',fliplr({old.chanlocs.labels}));
+        end
+        
         % compute sample range
         wndsamples = opts.wndlen * new.srate;
         pos = floor((size(new.data,2)-wndsamples)*relPos);
         wndindices = 1 + floor(0:wndsamples/pixels:(wndsamples-1));
         wndrange = pos+wndindices;
+        wndrange(wndrange > length(old.data)) = length(old.data);
         
         oldwnd = old.data(:,wndrange);
         newwnd = new.data(:,wndrange);
         switch opts.scale_by
-            case 'allnew'                
+            case 'allnew'
                 iqrange = new_iqr;
             case 'allold'
                 iqrange = old_iqr;
@@ -213,13 +221,16 @@ on_update();
                 iqrange(isnan(iqrange)) = mad(oldwnd(isnan(iqrange),:)',1)';
             case {'wndold','old'}
                 iqrange = mad(oldwnd',1)';
+            case 'noscale'
+                iqrange = ones(size(new.data,1),1);
             otherwise
                 error('Unsupported scale_by option.');
         end
         scale = ((ylr(2)-ylr(1))/size(new.data,1)) ./ (opts.yscaling*iqrange); scale(~isfinite(scale)) = 0;
         scale(scale>median(scale)*3) = median(scale);
+        scale = scale(:);
         scale = repmat(scale,1,length(wndindices));
-                
+        
         % draw
         if opts.show_setname
             tit = sprintf('%s - ',[old.filepath filesep old.filename]);
@@ -228,13 +239,13 @@ on_update();
         end
         
         if ~isempty(wndrange)
-            tit = [tit sprintf('[%.1f - %.1f]',new.xmin + (wndrange(1)-1)/new.srate, new.xmin + (wndrange(end)-1)/new.srate)];        
+            tit = [tit sprintf('[%.1f - %.1f]',new.xmin + (wndrange(1)-1)/new.srate, new.xmin + (wndrange(end)-1)/new.srate)];
         end
         
         xrange = xl(1):(xl(2)-xl(1))/(length(wndindices)-1):xl(2);
         yoffset = repmat(channel_y,1,length(wndindices));
-        switch opts.display_mode            
-            case 'both'                
+        switch opts.display_mode
+            case 'both'
                 title([tit '; superposition'],'Interpreter','none');
                 h_old = plot(xrange, (yoffset + scale.*oldwnd)','Color',opts.oldcol,'LineWidth',opts.line_width(1));
                 h_new = plot(xrange, (yoffset + scale.*newwnd)','Color',opts.newcol,'LineWidth',opts.line_width(2));
@@ -254,7 +265,7 @@ on_update();
             evtlats = [old.event.latency];
             evtindices = find(evtlats>wndrange(1) & evtlats<wndrange(end));
             if ~isempty(evtindices)
-                evtpos = xl(1) + (evtlats(evtindices)-wndrange(1))/wndsamples*(xl(2)-xl(1));                
+                evtpos = xl(1) + (evtlats(evtindices)-wndrange(1))/wndsamples*(xl(2)-xl(1));
                 evttypes = {old.event(evtindices).type};
                 % for each visible type
                 visible_types = unique(evttypes);
@@ -275,14 +286,14 @@ on_update();
                     labels{end+1} = curtype;
                 end
                 if opts.show_eventlegend
-                    legend(handles,labels,'Location','NorthWest'); 
+                    legend(handles,labels,'Location','NorthWest');
                     have_eventlegend = true;
                 elseif have_eventlegend
                     legend off;
                     have_eventlegend = false;
                 end
             end
-        end        
+        end
         axis([0 1 0 1]);
         
         if opts.add_legend && ~have_signallegend
@@ -290,8 +301,7 @@ on_update();
             have_signallegend = 1;
         end
         drawnow;
-
-
+        
         lastPos = relPos;
     end
 
@@ -348,13 +358,13 @@ on_update();
                 opts.yscaling = opts.yscaling*1.1;
             case {'multiply','*'}
                 % increase timerange
-                opts.wndlen = opts.wndlen*1.1;                
+                opts.wndlen = opts.wndlen*1.1;
             case {'divide','/'}
                 % decrease timerange
-                opts.wndlen = opts.wndlen*0.9;                
+                opts.wndlen = opts.wndlen*0.9;
             case 'pagedown'
                 % shift display page offset down
-                opts.pageoffset = opts.pageoffset+1;                
+                opts.pageoffset = opts.pageoffset+1;
             case 'pageup'
                 % shift display page offset up
                 opts.pageoffset = opts.pageoffset-1;
@@ -376,7 +386,7 @@ on_update();
                 else
                     set(hSlider,'Visible','on')
                 end
-        end        
+        end
         on_update();
     end
 end
