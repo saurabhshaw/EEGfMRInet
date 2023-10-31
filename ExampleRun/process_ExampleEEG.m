@@ -21,7 +21,7 @@ if ~skip_analysis
     [EEG] = loadcurry(curry_file);
     
     % check EEG field consistencies
-    EEG.setname = [curr_run '_' general_param.participant_id '_' general_param.curr_condition]; EEG = eeg_checkset(EEG);
+    EEG.setname = [general_param.study_name '_' general_param.participant_id '_' general_param.curr_condition]; EEG = eeg_checkset(EEG);
     
     % save to file
     % create folder if dne
@@ -33,24 +33,26 @@ if ~skip_analysis
     
     % START PRE-PROCESSING
     fprintf(['\n ***************************** Starting Pre-Processing Task ***************************** \n']);
+
+    [EEG] = EEGfMRI_preprocess_full(EEG,curr_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
     
-    if strcmp(curr_run,'task')
-        num_volumes = scan_param.tfunc_num_volumes;
-    elseif strcmp(curr_run,'rest')
-        num_volumes = scan_param.rsfunc_num_volumes;
-    end
-    
-    % check if slice marker injection is needed
-    if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) < num_volumes
-        [EEG] = inject_missing_markers(EEG,EEG.srate,scan_param.slice_marker,num_volumes,scan_param.TR);
-    end
-    
-    % sanity check slice marker injection success
-    if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) == num_volumes
-        tic
-        [EEG] = EEGfMRI_preprocess_full(EEG,curr_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
-        toc
-    end
+    % if strcmp(curr_run,'task')
+    %     num_volumes = scan_param.tfunc_num_volumes;
+    % elseif strcmp(curr_run,'rest')
+    %     num_volumes = scan_param.rsfunc_num_volumes;
+    % end
+    % 
+    % % check if slice marker injection is needed
+    % if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) < num_volumes
+    %     [EEG] = inject_missing_markers(EEG,EEG.srate,scan_param.slice_marker,num_volumes,scan_param.TR);
+    % end
+    % 
+    % % sanity check slice marker injection success
+    % if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) == num_volumes
+    %     tic
+    %     [EEG] = EEGfMRI_preprocess_full(EEG,curr_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
+    %     toc
+    % end
     
     % BEGIN FEATURE COMPUTATION
     
@@ -101,5 +103,5 @@ if ~skip_analysis
     [compute_feat] = curate_features_deploy(feature_param.feature_names, feature_param.featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
     
 else
-    fprintf(['\n ********** CDT FILE MISSING :: Processing Subject: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' general_param.curr_condition ' ********** \n']);
+    fprintf(['\n ********** CDT FILE MISSING ********** \n']);
 end

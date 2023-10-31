@@ -7,13 +7,13 @@ repo_filepath = 'C:\Users\danme\Documents_local\neuroscience_phd\research_code\E
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % set general file naming params
-general_param.study_name = 'ExampleData';
+general_param.study_name = 'ExampleEEGProcessing';
 general_param.modality = 'EEG';
 general_param.curr_condition = 'EyesClosed';
 data_subset_folder = 'ExampleData';
 
 % set participant specifics
-general_param.participant_id = 1054;
+general_param.participant_id = '1054';
 
 % setting paths
 
