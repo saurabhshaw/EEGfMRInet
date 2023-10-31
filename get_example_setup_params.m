@@ -1,4 +1,4 @@
-function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_setup_params()
+function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_example_setup_params()
 
 %% GENERAL PARAMS (ie filepaths)
 % set file naming params
