@@ -1,0 +1,253 @@
+﻿DATA_PARAMETERS START
+   DataGuid             = {0B86B22B-1A49-411A-9657-4A4BDA3D3ED8}
+   CurrentSessionLabel  = 
+   DataByteOrder        = INTEL
+   DataSampOrder        = SAMP
+   AmplifierInfo        = Room 3 191676 (Grael V2) (Configuration: CNX-Quik-Cap Net 32)
+   Comments             = 
+   FileHistory          = 
+   FileVersion          =  900
+   NumSessions          =  1
+   CurrentSession       =  0
+   DataFormat           =  6
+   FrequencyDomain      =  0
+   NumSamples           =  2977536
+   NumTrials            =  1
+   NumChannels          =  35
+   NumGroups            =  2
+   NumMagGroups         =  0
+   NumElGroups          =  1
+   NumLinesSkip         =  0
+   NumColumnsSkip       =  0
+   DecimalSymbol        =  0
+   StartYear            =  2023
+   StartMonth           =  6
+   StartDay             =  26
+   StartHour            =  11
+   StartMin             =  3
+   StartSec             =  24
+   StartMillisec        =  386
+   StartOffsetUTCMin    =  9999
+   SampleTimeUsec       =  488.2812
+   SampleFreqHz         =  2048
+   TriggerOffsetUsec    =  0
+   TriggerOffsetHz      =  0
+DATA_PARAMETERS END
+
+DEVICE_PARAMETERS START
+   DataUnit             = uV
+   NumChanThisGroup     =  32
+   NumSensorsThisGroup  =  32
+   CommonOffset         =  0
+   NumRefChannels       =  0
+   EegType              =  1
+   CommonScale          =  1
+DEVICE_PARAMETERS END
+
+DEVICE_PARAMETERS_OTHERS START
+   DataUnit             = uV
+   NumChanThisGroup     =  3
+   NumSensorsThisGroup  =  3
+   CommonOffset         =  0
+   NumRefChannels       =  0
+   EegType              =  0
+   CommonScale          =  1
+DEVICE_PARAMETERS_OTHERS END
+
+IMPEDANCE_TIMES START
+   ListDescription      = impedance timestamps
+   ListUnits            = 
+   ListNrColumns        =  7
+   ListNrRows           =  10
+   ListNrTimepts        =  1
+   ListNrBlocks         =  1
+   ListBinary           =  0
+   ListType             =  0
+   ListTrafoType        =  0
+   ListGridType         =  2
+   ListFirstColumn      =  1
+   ListIndexMin         = -1
+   ListIndexMax         = -1
+   ListIndexAbsMax      = -1
+IMPEDANCE_TIMES END
+
+IMPEDANCE_TIMES START_LIST	# Do not edit!
+  2023	 6	 26	 10	 56	 21	 692
+  2023	 6	 26	 10	 57	 55	 14
+  2023	 6	 26	 11	 51	 42	 576
+  2023	 6	 26	 13	 15	 36	 991
+  0	 0	 0	-1	 0	 0	 0
+  0	 0	 0	-1	 0	 0	 0
+  0	 0	 0	-1	 0	 0	 0
+  0	 0	 0	-1	 0	 0	 0
+  0	 0	 0	-1	 0	 0	 0
+  0	 0	 0	-1	 0	 0	 0
+IMPEDANCE_TIMES END_LIST
+
+IMPEDANCE_VALUES START
+   ListDescription      = impedance values
+   ListUnits            = 
+   ListNrColumns        =  35
+   ListNrRows           =  10
+   ListNrTimepts        =  1
+   ListNrBlocks         =  1
+   ListBinary           =  0
+   ListType             =  3
+   ListTrafoType        =  0
+   ListGridType         =  2
+   ListFirstColumn      =  1
+   ListIndexMin         = -1
+   ListIndexMax         = -1
+   ListIndexAbsMax      = -1
+IMPEDANCE_VALUES END
+
+IMPEDANCE_VALUES START_LIST	# Do not edit!
+  250000	 250000	 23202.6	 54532.9	 1396.21	 32056.8	 6273.56	 65706.8	 26137.1	 29400.8	 19110.8	 69205.2	 5701.83	 28902	 7953.37	 34222.5	 260.494	 76570.1	 4321.07	 73859.5	 6439.89	 69800.4	 35472.5	 81736.8	 17195.7	 28629.6	 25413.7	 36696.7	 15497.3	 28691	 9683.09	 29670.8	 250000	 250000	-1
+  250000	 250000	 5022.94	 35614.6	 18092.4	 14066	 10154.3	 43709	 7954.84	 11082.3	 34451.5	 45587.8	 20705.6	 10575.9	 25070.9	 16108.2	 221.533	 54684.7	 12360.1	 50800.8	 23280.6	 47482.8	 51590.4	 56717.3	 1305.24	 10467.6	 7203.65	 18335.2	 3114.66	 10509.2	 26369.1	 11515.2	 250000	 250000	-1
+  250000	 250000	 3021.13	 19759.3	 583.547	 13723.9	 38299.4	 10736.4	 2022.32	 9726.66	 1811.14	 28230.3	 31514.2	 16650	 1289.47	 2990.16	 57881.6	 6698.17	 27304.8	 9215.21	 37349.9	 11339.4	 1655.24	 54388.2	 4214.8	 28392	 36299.2	 12492.7	 235.087	 27737.1	 7004.69	 5310.87	 250000	 250000	-1
+  250000	 250000	 3317.37	 12619.7	 59659.2	 72789.6	 441.304	 69233.2	 29815.2	 4755.46	 309.481	 89818	 51484.9	 33110.4	 31787	 5428.05	 130905	 44085.8	 1916.38	 3755	 22815.7	 1258.7	 32041.5	 61058.4	 2895.33	 3320.98	 6337.77	 10752.2	 29335.2	 4529.97	 18575.8	 1416.24	 250000	 250000	-1
+ -1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1
+ -1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1
+ -1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1
+ -1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1
+ -1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1
+ -1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1	-1
+IMPEDANCE_VALUES END_LIST
+
+LABELS START
+   ListDescription      = SensorLabels
+   ListUnits            = 
+   ListNrColumns        =  260
+   ListNrRows           =  32
+   ListNrTimepts        =  1
+   ListNrBlocks         =  1
+   ListBinary           =  0
+   ListType             =  5
+   ListTrafoType        =  0
+   ListGridType         =  2
+   ListFirstColumn      =  1
+   ListIndexMin         = -1
+   ListIndexMax         = -1
+   ListIndexAbsMax      = -1
+LABELS END
+
+LABELS START_LIST	# Do not edit!
+Fp1
+Fp2
+F11
+F7
+F3
+Fz
+F4
+F8
+F12
+FT11
+FC3
+FCz
+FC4
+FT12
+T7
+C3
+Cz
+C4
+T8
+CP3
+Pz
+CP4
+M1
+M2
+P7
+PO3
+POz
+PO4
+P8
+O1
+Oz
+O2
+LABELS END_LIST
+
+GEOMETRY START
+   HelmetSystem         =  0
+   PlanarSensors        =  0
+   SensorShape          = -1
+   SensorOrder          =  0
+   SensorStatus         =  1
+   SensorDiameterXMm    =  10
+   SensorDiameterYMm    =  10
+GEOMETRY END
+
+SENSORS START
+   ListDescription      = Sensors
+   ListUnits            = mm
+   ListNrColumns        =  3
+   ListNrRows           =  32
+   ListNrTimepts        =  1
+   ListNrBlocks         =  1
+   ListBinary           =  0
+   ListType             =  1
+   ListTrafoType        =  0
+   ListGridType         =  2
+   ListFirstColumn      =  1
+   ListIndexMin         = -1
+   ListIndexMax         = -1
+   ListIndexAbsMax      = -1
+SENSORS END
+
+SENSORS START_LIST	# Do not edit!
+  29	-106.5	 32.9
+ -29	-107.5	 32.8
+  67	-59	-26.3
+  70	-65.1	 31.7
+  51	-81.5	 86.1
+ -0	-92.6	 112
+ -53	-82.3	 84
+ -70	-64.1	 31.8
+ -70	-59.2	-25.4
+  78	-31.1	-28.2
+  63	-53.1	 101.5
+ -0	-61.4	 137.8
+ -65	-54.1	 101.4
+ -79	-31.2	-27.8
+  85	-6.5	 38.5
+  71	-17.6	 116.7
+ -0	-23.3	 156.4
+ -71	-18.4	 114.6
+ -84	-8.5	 38.3
+  69	 21	 122.3
+ -0	 55	 141.3
+ -70	 19.4	 119
+  78	 39.3	 8.6
+ -79	 39.3	 8.6
+  74	 51.6	 49.3
+  39	 79.7	 93.9
+ -0	 80.9	 109.1
+ -39	 78.8	 92.7
+ -73	 50.6	 49.2
+  31	 92.2	 64.1
+ -0	 94.5	 70.4
+ -31	 91.2	 64
+SENSORS END_LIST
+
+LABELS_OTHERS START
+   ListDescription      = SensorLabels
+   ListUnits            = 
+   ListNrColumns        =  260
+   ListNrRows           =  3
+   ListNrTimepts        =  1
+   ListNrBlocks         =  1
+   ListBinary           =  0
+   ListType             =  5
+   ListTrafoType        =  0
+   ListGridType         =  2
+   ListFirstColumn      =  1
+   ListIndexMin         = -1
+   ListIndexMax         = -1
+   ListIndexAbsMax      = -1
+LABELS_OTHERS END
+
+LABELS_OTHERS START_LIST	# Do not edit!
+VEOG
+HEOG
+Trigger
+LABELS_OTHERS END_LIST
+
