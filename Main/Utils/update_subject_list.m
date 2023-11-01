@@ -8,8 +8,10 @@ sub_dir_mod = rmfield(sub_dir,{'folder','date','bytes','isdir','datenum'});
 
 % Get processing information:
 sub_dir_cell = {sub_dir.name};
-temp_PID = cellfun(@(x) strsplit(x,{'-','_'}),sub_dir_cell,'un',0); temp_PID = cellfun(@(x) x{4},temp_PID,'un',0); [sub_dir_mod.PID] = temp_PID{:};
-temp_SID = cellfun(@(x) strsplit(x,{'_','.mat'}),sub_dir_cell,'un',0); 
+temp_PID = cellfun(@(x) strsplit(x,{'-'}),sub_dir_cell,'un',0); 
+temp_PID = cellfun(@(x) x{2},temp_PID,'un',0);
+[sub_dir_mod.PID] = temp_PID{:};
+temp_SID = cellfun(@(x) strsplit(x,{'_'}),sub_dir_cell,'un',0); 
 if length(temp_SID{1}) >= 4 % When they are multiple session studies
     temp_SID = cellfun(@(x) x{4},temp_SID,'un',0); 
 else % When they are single session studies

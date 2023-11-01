@@ -64,25 +64,25 @@
 % along with this program; if not, write to the Free Software
 % Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-function [com] = pop_dipplot( EEG, comps, varargin);
+function [com] = pop_dipplot( EEG, comps, varargin)
 
 com ='';
 if nargin < 1
     help pop_dipplot;
     return;
-end;
+end
 
 % check input structure
 % ---------------------
 if ~isfield(EEG, 'dipfit') & ~isfield(EEG, 'sources')
     if ~isfield(EEG.dipfit.hdmfile) & ~isfield(EEG, 'sources')
         error('No dipole information in dataset'); 
-    end;
+    end
     error('No dipole information in dataset'); 
-end;
+end
 if ~isfield(EEG.dipfit, 'model')
     error('No dipole information in dataset'); 
-end;
+end
     
 typedip = 'nonbesa';
 if nargin < 2
@@ -91,18 +91,25 @@ if nargin < 2
     commandload = [ '[filename, filepath] = uigetfile(''*'', ''Select a text file'');' ...
                     'if filename ~=0,' ...
                     '   set(findobj(''parent'', gcbf, ''tag'', ''mrifile''), ''string'', [ filepath filename ]);' ...
-                    'end;' ...
+                    'end' ...
                     'clear filename filepath tagtest;' ];
     
     geometry = { [2 1] [2 1] [0.8 0.3 1.5] [2.05 0.26 .75] [2.05 0.26 .75] [2.05 0.26 .75] ...
                  [2.05 0.26 .75] [2.05 0.26 .75] [2.05 0.26 .75] [2.05 0.26 .75] [2 1] };
+    if isstruct(EEG.dipfit.mrifile)
+        mristring = 'set in DIPFIT settings';
+        mrienable = 'off';
+    else
+        mristring = EEG.dipfit.mrifile;
+        mrienable = 'on';
+    end
     uilist = { { 'style' 'text' 'string' 'Components indices ([]=all avaliable)' } ...
                { 'style' 'edit' 'string' '' } ...
                { 'style' 'text' 'string' 'Plot dipoles within RV (%) range ([min max])' } ...
                { 'style' 'edit' 'string' '' } ...
                { 'style' 'text' 'string' 'Background image' } ...
-               { 'style' 'pushbutton' 'string' '...' 'callback' commandload } ...
-               { 'style' 'edit' 'string' EEG.dipfit.mrifile 'tag' 'mrifile' } ...
+               { 'style' 'pushbutton' 'string' '...' 'enable' mrienable 'callback' commandload } ...
+               { 'style' 'edit' 'string' mristring 'enable' mrienable 'tag' 'mrifile' } ...
                { 'style' 'text' 'string' 'Plot summary mode' } ...
                { 'style' 'checkbox' 'string' '' } {} ...
                { 'style' 'text' 'string' 'Plot edges' } ...
@@ -121,22 +128,24 @@ if nargin < 2
                { 'style' 'edit' 'string' '' } };
      
 	result = inputgui( geometry, uilist, 'pophelp(''pop_dipplot'')', 'Plot dipoles - pop_dipplot');
-	if length(result) == 0 return; end;
+	if length(result) == 0 return; end
 
 	% decode parameters
 	% -----------------
     options = {};
-    if ~isempty(result{1}), comps = eval( [ '[' result{1} ']' ] ); else comps = []; end;
-    if ~isempty(result{2}), options = { options{:} 'rvrange' eval(  [ '[' result{2} ']' ] ) }; end;
-    options = { options{:} 'mri' result{3} };
-    if result{4} == 1, options = { options{:} 'summary'   'on' 'num' 'on' }; end;
-    if result{5} == 1, options = { options{:} 'drawedges' 'on' }; end;
-    if result{6} == 1, options = { options{:} 'cornermri' 'on' 'axistight' 'on' }; end;
-    if result{7} == 1, options = { options{:} 'projimg'   'on' }; end;
-    if result{8} == 1, options = { options{:} 'projlines' 'on' }; end;
-    if result{9} == 1, options = { options{:} 'pointout'  'on' }; end; 
-    if result{10} == 1, options = { options{:} 'normlen'   'on' }; end;
-    if ~isempty( result{11} ), tmpopt = eval( [ '{' result{11} '}' ] ); options = { options{:} tmpopt{:} }; end;
+    if ~isempty(result{1}), comps = eval( [ '[' result{1} ']' ] ); else comps = []; end
+    if ~isempty(result{2}), options = { options{:} 'rvrange' eval(  [ '[' result{2} ']' ] ) }; end
+    if strcmpi(mrienable, 'on')
+        options = { options{:} 'mri' result{3} };
+    end
+    if result{4} == 1, options = { options{:} 'summary'   'on' 'num' 'on' }; end
+    if result{5} == 1, options = { options{:} 'drawedges' 'on' }; end
+    if result{6} == 1, options = { options{:} 'cornermri' 'on' 'axistight' 'on' }; end
+    if result{7} == 1, options = { options{:} 'projimg'   'on' }; end
+    if result{8} == 1, options = { options{:} 'projlines' 'on' }; end
+    if result{9} == 1, options = { options{:} 'pointout'  'on' }; end 
+    if result{10} == 1, options = { options{:} 'normlen'   'on' }; end
+    if ~isempty( result{11} ), tmpopt = eval( [ '{' result{11} '}' ] ); options = { options{:} tmpopt{:} }; end
 else 
     if isstr(comps)
         typedip = comps;
@@ -144,20 +153,25 @@ else
         comps = varargin{1};
     else
         options = varargin;
-    end;
-end;
+    end
+end
+if ~ismember('mri', lower(options(1:2:end)))
+    optionsmri = { 'mri' EEG.dipfit.mrifile };
+else
+    optionsmri = {};
+end
 
 if strcmpi(typedip, 'besa')
-    if ~isfield(EEG, 'sources'), error('No BESA dipole information in dataset');end;
+    if ~isfield(EEG, 'sources'), error('No BESA dipole information in dataset');end
     if ~isempty(comps)
-        [tmp1 int] = intersect( [ EEG.sources.component ], comps);
-        if isempty(int), error ('Localization not found for selected components'); end;
-        dipplot(EEG.sources(int), 'sphere', 1, options{:});
+        [~, int] = intersect( [ EEG.sources.component ], comps);
+        if isempty(int), error ('Localization not found for selected components'); end
+        dipplot(EEG.sources(int), 'sphere', 1, options{:}, optionsmri{:});
     else
-        dipplot(EEG.sources, options{:});
-    end;      
+        dipplot(EEG.sources, options{:}, optionsmri{:});
+    end      
 else 
-    if ~isfield(EEG, 'dipfit'), error('No DIPFIT dipole information in dataset');end;
+    if ~isfield(EEG, 'dipfit'), error('No DIPFIT dipole information in dataset');end
 
     % components to plot
     % ------------------
@@ -165,8 +179,8 @@ else
         if ~isfield(EEG.dipfit.model, 'component')
             for index = double(comps(:)')
                 EEG.dipfit.model(index).component = index;
-            end;
-        end;
+            end
+        end
     else
         % find localized dipoles
         comps = [];
@@ -174,23 +188,25 @@ else
             if ~isempty(EEG.dipfit.model(index2).posxyz) ~= 0
                 comps = [ comps index2 ];
                 EEG.dipfit.model(index2).component = index2;
-            end;
-        end;        
-    end;
+            end
+        end        
+    end
     
     % plotting
     % --------
     tmpoptions = { options{:} 'coordformat', EEG.dipfit.coordformat };
     if strcmpi(EEG.dipfit.coordformat, 'spherical')
-        dipplot(EEG.dipfit.model(comps), tmpoptions{:});
+        dipplot(EEG.dipfit.model(comps), tmpoptions{:}, optionsmri{:});
     elseif strcmpi(EEG.dipfit.coordformat, 'CTF')
-        dipplot(EEG.dipfit.model(comps), tmpoptions{:});
+        dipplot(EEG.dipfit.model(comps), tmpoptions{:}, optionsmri{:});
     else
-        dipplot(EEG.dipfit.model(comps), 'meshdata', EEG.dipfit.hdmfile, tmpoptions{:});
-    end;
-end;
+        if ischar(EEG.dipfit.hdmfile) && isempty(strfind(EEG.dipfit.hdmfile, 'seg'))
+            tmpoptions = [ tmpoptions { 'meshdata', EEG.dipfit.hdmfile }];
+        end
+        dipplot(EEG.dipfit.model(comps), tmpoptions{:}, optionsmri{:});
+    end
+end
     
-if nargin < 3
+if nargout > 0
     com = sprintf('pop_dipplot( EEG, %s);', vararg2str({ comps options{:}}));
-end;
-return;
+end

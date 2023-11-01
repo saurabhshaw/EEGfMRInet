@@ -1,4 +1,4 @@
-% pop_selectcomps() - Display components with button to vizualize their
+% POP_SELECTCOMPS - Display components with button to visualize their
 %                  properties and label them for rejection.
 % Usage:
 %       >> OUTEEG = pop_selectcomps( INEEG, compnum );
@@ -17,7 +17,7 @@
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 2001
 %
-% See also: pop_prop(), eeglab()
+% See also: POP_PROP, EEGLAB
 
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -66,7 +66,7 @@ if nargin < 2
                {} ...
                { 'style' 'text' 'string' [ 'Note: in the next interface, click on buttons to see' char(10) ... 
                                            'component properties and label them for rejection.' char(10) ...
-                                           'To actually reject labeld components use menu item' char(10) ...
+                                           'To actually reject labelled components use menu item' char(10) ...
                                            '"Tools > Remove components" or use STUDY menus.' ] } };
                                        
     result = inputgui('uilist', uilist, 'geometry', { [1 1] 1 1 }, 'geomvert', [1 0.3 3], 'title', 'Reject comp. by map -- pop_selectcomps');
@@ -110,7 +110,7 @@ if ~exist('fig','var')
 		   'numbertitle', 'off', 'color', BACKCOLOR);
 	set(gcf,'MenuBar', 'none');
 	pos = get(gcf,'Position');
-	set(gcf,'Position', [pos(1) 20 800/7*column 600/5*rows]);
+	set(gcf,'Position', [pos(1) 20 800/7*column 600/5*rows*1.2]);
     incx = 120;
     incy = 110;
     sizewx = 100/column;
@@ -149,21 +149,47 @@ for ri = compnum
 		% compute coordinates
 		% -------------------
 		X = mod(count-1, column)/column * incx-10;  
-        Y = (rows-floor((count-1)/column))/rows * incy - sizewy*1.3;  
+        	Y = (rows-floor((count-1)/column))/rows * incy - sizewy*1.3;  
 
 		% plot the head
 		% -------------
-        if ~strcmp(get(gcf, 'tag'), currentfigtag);
-            figure(findobj('tag', currentfigtag));
-        end
+		if ~strcmp(get(gcf, 'tag'), currentfigtag);
+		    figure(findobj('tag', currentfigtag));
+		end
 		ha = axes('Units','Normalized', 'Position',[X Y sizewx sizewy].*s+q);
-        if plotelec
-            topoplot( EEG.icawinv(:,ri), EEG.chanlocs, 'verbose', ...
-                      'off', 'chaninfo', EEG.chaninfo, 'numcontour', 8);
-        else
-            topoplot( EEG.icawinv(:,ri), EEG.chanlocs, 'verbose', ...
-                      'off', 'electrodes','off', 'chaninfo', EEG.chaninfo, 'numcontour', 8);
-        end
+		if plotelec
+		    topoplot( EEG.icawinv(:,ri), EEG.chanlocs, 'verbose', ...
+			      'off', 'chaninfo', EEG.chaninfo, 'numcontour', 8);
+		else
+		    topoplot( EEG.icawinv(:,ri), EEG.chanlocs, 'verbose', ...
+			      'off', 'electrodes','off', 'chaninfo', EEG.chaninfo, 'numcontour', 8);
+		end
+		
+		% labels
+		% -------------
+		if isfield(EEG.etc, 'ic_classification')
+			classifiers = fieldnames(EEG.etc.ic_classification);
+			if ~isempty(classifiers)
+				if ~exist('classifier_name', 'var') || isempty(classifier_name)
+					if any(strcmpi(classifiers, 'ICLabel'));
+						classifier_name = 'ICLabel';
+					else
+						classifier_name = classifiers{1};
+					end
+				else
+					classifier_name = classifiers{strcmpi(classifiers, classifier_name)};
+				end
+				if ri == compnum(1) && size(EEG.icawinv, 2) ...
+						~= size(EEG.etc.ic_classification.(classifier_name).classifications, 1)
+					warning(['The number of ICs do not match the number of IC classifications. This will result in incorrectly plotted labels. Please rerun ' classifier_name])
+				end
+				[prob, classind] = max(EEG.etc.ic_classification.(classifier_name).classifications(ri, :));
+				t = title(sprintf('%s : %.1f%%', ...
+					EEG.etc.ic_classification.(classifier_name).classes{classind}, ...
+					prob*100));
+				set(t, 'Position', get(t, 'Position') .* [1 -1.2 1])
+			end
+		end
 		axis square;
 
 		% plot the button
@@ -172,7 +198,7 @@ for ri = compnum
              figure(findobj('tag', currentfigtag));
          end
 		button = uicontrol(gcf, 'Style', 'pushbutton', 'Units','Normalized', 'Position',...
-                           [X Y+sizewy sizewx sizewy*0.25].*s+q, 'tag', ['comp' num2str(ri)]);
+                           [X Y+sizewy sizewx sizewy*0.18].*s+q, 'tag', ['comp' num2str(ri)]);
         command = sprintf('pop_prop( EEG, 0, %d, gcbo, { ''freqrange'', [1 50] });', ri);
 		set( button, 'callback', command );
 	end

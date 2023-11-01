@@ -1,4 +1,4 @@
-% pop_headplot() - plot one or more spherically-splined EEG field maps 
+% POP_HEADPLOT - plot one or more spherically-splined EEG field maps 
 %                  using a semi-realistic 3-D head model. Requires a
 %                  spline file, which is created first if not found.
 %                  This may take some time, but does not need to be 
@@ -43,7 +43,7 @@
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 20 March 2002
 %
-% See also: headplot(), eegplot(), traditional()
+% See also: HEADPLOT, EEGPLOT, TRADITIONAL
 
 % Copyright (C) 20 March 2002 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -103,7 +103,7 @@ if nargin < 3 % Open GUI input window
     compute_file = 0;
     if typeplot == 1 % ********** data plot
         fieldname    = 'splinefile';        
-        if isempty(EEG.splinefile) && exist(EEG.splinefile, 'file')          
+        if isempty(EEG.splinefile) && exist(char(EEG.splinefile), 'file')          
             if length(EEG.icachansind) == EEG.nbchan && ~isempty(EEG.icasplinefile)
                 EEG.splinefile = EEG.icasplinefile;
             else
@@ -114,7 +114,7 @@ if nargin < 3 % Open GUI input window
         end
     else % ************* Component plot       
         fieldname    = 'icasplinefile';
-        if isempty(EEG.icasplinefile) && exist(EEG.icasplinefile, 'file')
+        if isempty(EEG.icasplinefile) && exist(char(EEG.icasplinefile), 'file')
             if length(EEG.icachansind) == EEG.nbchan && ~isempty(EEG.splinefile)
                 EEG.icasplinefile = EEG.splinefile;
             else
@@ -231,7 +231,7 @@ if nargin < 3 % Open GUI input window
     end
 	txt = { { 'style' 'text'        'string' 'Co-register channel locations with head mesh and compute a mesh spline file (each scalp montage needs a headplot() spline file)' 'fontweight' 'bold' } ...
             { 'style' 'checkbox'    'string' 'Use the following spline file or structure' 'userdata' 'loadfile' 'tag' 'loadcb' 'callback' cb_load 'value' ~compute_file } ...
-            { 'style' 'edit'        'string' fastif(typeplot, EEG.splinefile, EEG.icasplinefile)  'userdata' 'load' 'tag' 'load' 'enable' enableload } ...
+            { 'style' 'edit'        'string' char(fastif(typeplot, EEG.splinefile, EEG.icasplinefile))  'userdata' 'load' 'tag' 'load' 'enable' enableload } ...
             { 'style' 'pushbutton'  'string' 'Browse'        'callback' cb_browseload                               'tag' 'load' 'enable' enableload } ... 
             { 'style' 'pushbutton'  'string' 'Help'          'callback' cb_helpload } ...
             { 'style' 'checkbox'    'string' 'Or (re)compute a new spline file named:' 'tag' 'compcb' 'callback' cb_comp 'value' compute_file } ...
@@ -253,7 +253,7 @@ if nargin < 3 % Open GUI input window
             { } ...
             { 'style' 'text'        'string' 'Plot interpolated activity onto 3-D head' 'fontweight' 'bold' } ...
             { 'style' 'text' 'string' txt } ...
-	        { 'style' 'edit' 'string' fastif( typeplot, '', ['1:' int2str(size(EEG.data,1))] ) } { } ...
+	        { 'style' 'edit' 'string' fastif( typeplot, '0', ['1:' int2str(size(EEG.icaweights,1))] ) } { } ...
 	        { 'style' 'text' 'string' 'Plot title:' } ...
 	        { 'style' 'edit' 'string' [ fastif( typeplot, 'ERP scalp maps of dataset:', 'Components of dataset: ') ...
                                         fastif(~isempty(EEG.setname), EEG.setname, '') ] } { }  ...
@@ -334,6 +334,11 @@ if ~isempty(loc)
     end
     options(loc:loc+1) = [];
 end
+loc = strmatch('maplimits', options(1:2:end));
+maplimits = [];
+if ~isempty(loc)
+    maplimits =  options{2*loc};
+end
 loc = strmatch('setup', options(1:2:end)); loc = loc*2-1;
 if ~isempty(loc)
     if typeplot
@@ -400,23 +405,28 @@ fprintf('Plotting...\n');
 
 % determine the scale for plot of different times (same scales)
 % -------------------------------------------------------------
-if typeplot
-	SIGTMP = reshape(EEG.data, EEG.nbchan, EEG.pnts, EEG.trials);
-	pos = round( (arg2/1000-EEG.xmin)/(EEG.xmax-EEG.xmin) * (EEG.pnts-1))+1;
-	indexnan = find(isnan(pos));
-	nanpos = find(isnan(pos));
-	pos(nanpos) = 1;
-	SIGTMPAVG = mean(SIGTMP(:,pos,:),3);
-	SIGTMPAVG(:, nanpos) = NaN;
-	maxlim = max(SIGTMPAVG(:));
-	minlim = min(SIGTMPAVG(:));
-	maplimits = max(maxlim, -minlim);
-    maplimits = maplimits*1.1;
-    maplimits = [ -maplimits maplimits ];
+if isempty(maplimits)
+    if typeplot
+	    SIGTMP = reshape(EEG.data, EEG.nbchan, EEG.pnts, EEG.trials);
+	    pos = round( (arg2/1000-EEG.xmin)/(EEG.xmax-EEG.xmin) * (EEG.pnts-1))+1;
+	    indexnan = find(isnan(pos));
+	    nanpos = find(isnan(pos));
+	    pos(nanpos) = 1;
+	    SIGTMPAVG = mean(SIGTMP(:,pos,:),3);
+	    SIGTMPAVG(:, nanpos) = NaN;
+	    maxlim = max(SIGTMPAVG(:));
+	    minlim = min(SIGTMPAVG(:));
+	    maplimits = max(maxlim, -minlim);
+        maplimits = maplimits*1.1;
+        maplimits = [ -maplimits maplimits ];
+    else
+        maplimits = [-1 1];
+    end
 else
-    maplimits = [-1 1];
+    SIGTMP = reshape(EEG.data, EEG.nbchan, EEG.pnts, EEG.trials);
+    SIGTMPAVG = mean(SIGTMP,3);
 end
-	
+
 % plot the graphs
 % ---------------
 counter = 1;
@@ -482,7 +492,7 @@ if nbgraph> 1,
     a = textsc(0.5, 0.05, topotitle); 
     set(a, 'fontweight', 'bold');
     axcopy(gcf, [ 'set(gcf, ''''units'''', ''''pixels''''); postmp = get(gcf, ''''position'''');' ...
-                  'set(gcf, ''''position'''', [postmp(1) postmp(2) 560 420]); rotate3d(gcf); clear postmp;' ]);
+                  'set(gcf, ''''position'''', [postmp(1) postmp(2) 560 420]); rotate3d; clear postmp;' ]);
 end
 
 % generate output command

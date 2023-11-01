@@ -72,7 +72,7 @@ function M = hyperbolicfactory(n, m, transposed)
 % Ported primarily from the McTorch toolbox at
 % https://github.com/mctorch/mctorch.
 %
-% See also: spherefactory obliquefactory obliquecomplexfactory
+% See also: poincareballfactory spherefactory obliquefactory obliquecomplexfactory
 
 
 % This file is part of Manopt: www.manopt.org.
@@ -80,6 +80,10 @@ function M = hyperbolicfactory(n, m, transposed)
 % Pratik Jawanpuria, Anoop Kunchukuttan, and Hiroyuki Kasai Oct 28, 2018.
 % Contributors: Nicolas Boumal
 % Change log:
+%   May 14, 2020 (NB):
+%       Clarified comments about distance computation.
+%   July 13, 2020 (NB):
+%       Added pairmean function.
 
     % Design note: all functions that are defined here but not exposed
     % outside work for non-transposed representations. Only the wrappers
@@ -105,6 +109,8 @@ function M = hyperbolicfactory(n, m, transposed)
     M.name = @() sprintf('Hyperbolic manifold H(%d, %d)%s', n, m, trnspstr);
     
     M.dim = @() n*m;
+    
+    M.typicaldist = @() sqrt(n*m);
 
     % Returns a row vector q such that q(k) is the Minkowski inner product
     % of columns U(:, k) and V(:, k). This is defined in all of Minkowski
@@ -134,11 +140,13 @@ function M = hyperbolicfactory(n, m, transposed)
         % Minkowski norm. To avoid potentially imaginary results due to
         % round-off errors, we take the max against 0.
         U = X-Y;
-        mink_inners = inner_minkowski_columns(U, U);
-        mink_norms = sqrt(max(0, mink_inners));
-        % The formula below is equivalent to acosh(-mink_inners) but is
-        % numerically more accurate when distances are small.
+        mink_sqnorms = max(0, inner_minkowski_columns(U, U));
+        mink_norms = sqrt(mink_sqnorms);
         d = 2*asinh(.5*mink_norms);
+        % The formula above is equivalent to
+        % d = max(0, real(acosh(-inner_minkowski_columns(X, Y))));
+        % but is numerically more accurate when distances are small.
+        % When distances are large, it is better to use the acosh formula.
     end
     
     M.proj = @(X, U) trnsp(projection(trnsp(X), trnsp(U)));
@@ -212,9 +220,9 @@ function M = hyperbolicfactory(n, m, transposed)
     
     M.rand = @() trnsp(myrand());
     function X = myrand()
-    	X1 = randn(n, m);
-    	x0 = sqrt(1 + sum(X1.^2, 1)); % selects positive branch
-    	X = [x0; X1];
+        X1 = randn(n, m);
+        x0 = sqrt(1 + sum(X1.^2, 1)); % selects positive branch
+        X = [x0; X1];
     end
     
     M.normalize = @(X, U) U / M.norm(X, U);
@@ -226,6 +234,7 @@ function M = hyperbolicfactory(n, m, transposed)
     
     M.transp = @(X1, X2, U) M.proj(X2, U);
     
+    M.pairmean = @(x1, x2) M.exp(x1, M.log(x1, x2), .5);
    
     % vec returns a vector representation of an input tangent vector which
     % is represented as a matrix; mat returns the original matrix

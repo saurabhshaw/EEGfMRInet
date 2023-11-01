@@ -142,7 +142,7 @@ function m = serialize_struct(v)
     m = [uint8(128); typecast(uint32(fnLengths(:)).','uint8').'; uint8(fnChars(:)); typecast(uint32(dims), 'uint8').'];
     % Content.
     if numel(v) > length(fieldNames)
-        % more records than field names; serialize each field as a cell array to expose homogenous content
+        % more records than field names; serialize each field as a cell array to expose homogeneous content
         tmp = cellfun(@(f)serialize_cell({v.(f)}),fieldNames,'UniformOutput',false);
         m = [m; 0; vertcat(tmp{:})];
     else
@@ -151,7 +151,7 @@ function m = serialize_struct(v)
     end
 end
 
-% Cell array of heterogenous contents
+% Cell array of heterogeneous contents
 function m = serialize_cell_heterogenous(v)
     contents = cellfun(@std_serialize,v,'UniformOutput',false);
     m = [uint8(33); ndims(v); typecast(uint32(size(v)),'uint8').'; vertcat(contents{:})];
@@ -211,7 +211,7 @@ function m = serialize_cell(v)
         if all(cellfun('isclass',v(:),'char')) && all(all(all(size1 <= 1))) % #ok<AND2>
             % all horizontal strings or proper empty strings            
             m = [uint8(36); serialize_string([v{:}]); serialize_numeric_simple(uint32(size2)); serialize_logical(size1(:)==0)];
-        elseif all(all(all(size1+size2 == 0))) && (dims == 2) % #ok<AND2>
+        elseif all(all(all(size1+size2 == 0))) && all(dims == 2) % #ok<AND2>
             % all empty and non-degenerate elements
             if all(cellfun('isclass',v(:),'double')) || all(cellfun('isclass',v(:),'cell')) || all(cellfun('isclass',v(:),'struct'))
                 % of standard data types: Tag, Type Tag, #Dims, Dims

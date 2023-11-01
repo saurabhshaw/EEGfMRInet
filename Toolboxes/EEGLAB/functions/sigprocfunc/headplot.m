@@ -1,4 +1,4 @@
-% headplot() - plot a spherically-splined EEG field map on a semi-realistic 
+% HEADPLOT - plot a spherically-splined EEG field map on a semi-realistic 
 %              3-D head model. Can 3-D rotate the head image using the left 
 %              mouse button.
 % Example:
@@ -14,9 +14,9 @@
 %
 % Required Setup-mode Inputs: 
 %
-%   elocs         - file of electrode locations (compatible with readlocs()),
+%   elocs         - file of electrode locations (compatible with READLOCS),
 %                   or EEG.chanlocs channel location structure. If the channel 
-%                   file extension is not standard, use readlocs() to load the 
+%                   file extension is not standard, use READLOCS to load the 
 %                   data file, e.g.
 %                      >> headplot('setup', ...
 %                            readlocs('myfile.xxx', 'filetype', 'besa'),...
@@ -46,7 +46,7 @@
 %                    [shiftX shiftY shiftZ pitch roll yaw scaleX scaleY scaleZ]
 %                   The transform is applied in the order shift(rotate(scale(elocs)))
 %                   by the dipfit2.* plugin function traditionaldipfit.m
-%                   This array is returned by coregister().
+%                   This array is returned by COREGISTER.
 %  'plotmeshonly' - [string] plot only mesh and electrode positions. Options are
 %                   'head' to plot the standard head mesh; 'sphere' to plot the
 %                   texture of the head on a sphere; 'off' not to plot anything.
@@ -100,7 +100,7 @@
 %   'transform'  - [real array] homogeneous transformation matrix to apply
 %                  to the original locations ('orilocs') before plotting them.
 %
-% Note: if an error is generated, headplot() may close the current figure
+% Note: if an error is generated, HEADPLOT may close the current figure
 %
 % Authors: Arnaud Delorme, Colin Humphries, Scott Makeig, SCCN/INC/UCSD, 
 %          La Jolla, 1998-
@@ -141,7 +141,7 @@
 % 12-13-98 implemented colorbar option using enhanced cbar -sm 
 % 12-13-98 implemented 'setup' comment option -sm 
 % 03-20-00 added cartesian electrode locations option -sm
-% 07-14-00 fixed line in calgx() -sm from -ch
+% 07-14-00 fixed line in CALGX -sm from -ch
 % 03-23-01 documented 'cartesian' locfile option -sm
 % 01-25-02 reformated help & license, added links -ad 
 % 03-21-02 added readlocs and the use of eloc input structure -ad 
@@ -266,7 +266,7 @@ if ischar(values)
     
     %newcoords = transformcoords( [ Xe Ye Ze ], [0 -pi/16 -1.57], 100, -[6 0 46]);
     %newcoords = transformcoords( [ Xeori Yeori Zeori ], g.transform(4:6), g.transform(7:9), g.transform(1:3));
-    % same performed below with homogenous transformation matrix
+    % same performed below with homogeneous transformation matrix
     
     transmat  = traditionaldipfit( g.transform ); % arno
     newcoords = transmat*[ newcoords ones(size(newcoords,1),1)]';
@@ -364,7 +364,7 @@ if ischar(values)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     fprintf('Computing %d vertices. Should take a while (see wait bar)\n',...
                       length(x))
-    fprintf('            but doesnt have to be done again for this montage...\n');
+    fprintf('            but does not have to be done again for this montage...\n');
     icadefs;
 
     gx = fastcalcgx(x,y,z,Xe,Ye,Ze);
@@ -457,11 +457,15 @@ else
        'meshfile'   {'string','struct' } []  DEFAULT_MESH;
        'electrodes' 'string' { 'on','off' }  'on';            
        'electrodes3d' 'string' { 'on','off' }  'off';            
+       'eleccolor'   'cell'    { }           {};            
        'material'     'string'            [] 'dull';
        'orilocs'    { 'string','struct' } [] '';            
        'labels'     'integer' [0 1 2]        0 }, 'headplot');
    if ischar(g) error(g); end
    plotelecopt.electrodes3d = g.electrodes3d;
+   if length(g.eleccolor) > 0 && length(g.eleccolor) ~= length(values)
+       error('The number of color must be the same as the number of channels to plot');
+   end
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Open head mesh and electrode spline files
@@ -471,7 +475,7 @@ else
            spline_file));
   end
   load(spline_file, '-mat');
-  if exist('indices'), 
+  if exist('indices')
       try,
           values = values(indices);
       catch, error('problem of index or electrode number with splinefile'); end
@@ -504,7 +508,7 @@ else
   % --------------
   % load mesh file
   % --------------
-  [newPOS POS TRI1 TRI2 NORM index1 center] = getMeshData(g.meshfile);
+  [newPOS, POS, TRI1, TRI2, NORM, index1, center] = getMeshData(g.meshfile);
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%
   % Perform interpolation
@@ -658,6 +662,7 @@ else
   if strcmp(g.electrodes,'on') % plot the electrode locations
       if exist('newElect')
           plotelecopt.labelflag = g.labels;
+          plotelecopt.eleccolor = g.eleccolor;
           plotelec(newElect, ElectrodeNames, HeadCenter, plotelecopt);
       else
           fprintf('Variable newElect not read from spline file.\n');
@@ -689,7 +694,7 @@ else
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  calcgx() - function used in 'setup'
+%  CALCGX - function used in 'setup'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [out] = calcgx(in)
@@ -731,7 +736,7 @@ if ismatlab
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  distance() - function used in 'setup'
+%  DISTANCE - function used in 'setup'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [out] = distance(w,p)
@@ -776,8 +781,22 @@ function plotelec(newElect, ElectrodeNames, HeadCenter, opt);
             else               % plot electrode markers
                 
                 if strcmpi(opt.electrodes3d, 'off')
-                    line(newElect(:,1),newElect(:,2),newElect(:,3),'marker',...
-                          '.','markersize',20,'color',opt.MarkerColor,'linestyle','none');
+                    if isempty(opt.eleccolor) 
+                        line(newElect(i,1),newElect(i,2),newElect(i,3),'marker',...
+                              '.','markersize',20,'color',opt.MarkerColor,'linestyle','none');
+                    else
+                        if isempty(opt.eleccolor{i})
+                            line(newElect(i,1),newElect(i,2),newElect(i,3),'marker',...
+                                  '.','markersize',12,'color',opt.MarkerColor,'linestyle','none');
+                        else
+                            line(newElect(i,1),newElect(i,2),newElect(i,3),'marker',...
+                                  '.','markersize',35,'color',opt.MarkerColor,'linestyle','none');
+                            line(newElect(i,1),newElect(i,2),newElect(i,3),'marker',...
+                                  '.','markersize',28,'color',[1 1 1],'linestyle','none');
+                            line(newElect(i,1),newElect(i,2),newElect(i,3),'marker',...
+                                  '.','markersize',15,'color',opt.eleccolor{i},'linestyle','none');
+                        end
+                    end
                 else
                     [xc yc zc] = cylinder( 2, 10);
                     [xs ys zs] = sphere(10);
@@ -811,19 +830,21 @@ function plotelec(newElect, ElectrodeNames, HeadCenter, opt);
 % get mesh information
 % --------------------
 function [newPOS POS TRI1 TRI2 NORM index1 center] = getMeshData(meshfile);
+%#function mheadnew.mat
+meshpath = fileparts(which('mheadnew.mat'));
 if isdeployed
-    addpath( fullfile( ctfroot, 'EEGLAB', 'functions', 'supportfiles') );
+    addpath( meshpath );
 end
         
 if ~isstruct(meshfile)
-    if ~exist(meshfile)
+    if ~exist(meshfile, 'file')
         if isdeployed
-            meshfile = fullfile( ctfroot, 'EEGLAB', 'functions', 'supportfiles', meshfile);
-            if ~exist(meshfile)
-                error(sprintf('headplot(): deployed mesh file "%s" not found\n',meshfile));
+            meshfile = fullfile( meshpath, meshfile);
+            if ~exist(meshfile, 'file')
+                error('headplot(): deployed mesh file "%s" not found\n', meshfile);
             end
         else
-            error(sprintf('headplot(): mesh file "%s" not found\n',meshfile));
+            error('headplot(): mesh file "%s" not found\n', meshfile);
         end
     end
     fprintf('Loaded mesh file %s\n',meshfile);

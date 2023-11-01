@@ -1,17 +1,17 @@
-% pop_writelocs() - load a EGI EEG file (pop out window if no arguments).
+% POP_WRITELOCS - load a EGI EEG file (pop out window if no arguments).
 %
 % Usage:
 %   >> EEG = pop_writelocs(chanstruct);             % a window pops up
 %   >> EEG = pop_writelocs(chanstruct, filename, 'key', val, ...);
 %
 % Inputs:
-%   chanstruct     - channel structure. See readlocs()
+%   chanstruct     - channel structure. See READLOCS
 %   filename       - Electrode location file name
-%   'key',val      - same as writelocs()
+%   'key',val      - same as WRITELOCS
 % 
 % Author: Arnaud Delorme, CNL / Salk Institute, 17 Dec 2002
 %
-% See also: writelocs()
+% See also: WRITELOCS
 
 % Copyright (C) Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -58,13 +58,10 @@ disp('         IF NOT, THE EXPORTED FILE COORDINATES MAY BE INACURATE')
 
 % get infos from readlocs
 % -----------------------
-[chanformat listcolformat] = readlocs('getinfos');
+[chanformat, listcolformat] = readlocs('getinfos');
 chanformat(end)    = [];
-listcolformat(end) = []; % remove chanedit
-chanformat(end)    = [];
-listcolformat(end) = []; % remove chanedit
 indformat  = [];
-for index = 1:length(chanformat), 
+for index = 1:length(chanformat)
     if ~ischar(chanformat(index).importformat)
         indformat = [ indformat index ];
     end
@@ -76,9 +73,11 @@ formatskip = [ chanformat(indformat).skipline ];
    
 %[listtype formatinfo listcolformat formatskip] = readlocs('getinfoswrite');
 
-listtype{end+1} = 'custom';
-formatinfo{end+1} = {};
-formatskip = [ formatskip 0];
+% GUI support of `custom` filetype, removed until `custom` can pass READLOCS check
+%listtype{end+1} = 'custom';
+%formatinfo{end+1} = {};
+%formatskip = [ formatskip 0];
+
 
 if nargin < 2
    updatefields = [ 'tmpdata = get(gcf, ''userdata'');' ...
@@ -120,7 +119,7 @@ if nargin < 2
                    'catch, end;' ... % catch for custom case
                    'tmpobj = findobj(gcf, ''userdata'', ''setfield'');' ...
                    'if tmpval == ' int2str(length(listtype)) ',' ... % disable if non-custom type
-                   '   set(tmpobj, ''enable'', ''on'');' ...
+                   '   set(tmpobj, ''enable'', ''off'');' ...
                    'else,' ...
                    '   set(tmpobj, ''enable'', ''off'');' ...
                    'end; clear tmpobj tmpobj2 tmpdata tmpval;' ];

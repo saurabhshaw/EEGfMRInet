@@ -1,4 +1,4 @@
-% newtimefbaseln() - Remove baseline power values for newtimef. This
+% NEWTIMEFBASELN - Remove baseline power values for newtimef. This
 %                    function assumes absolute power NOT log transformed power.
 %                    This function only removes baseline. Data has to be
 %                    averaged subsequently if necessary. This function
@@ -149,7 +149,7 @@ end
 if ~strcmpi(g.trialbase, 'on') % full or off
     for ind = 1:length(PP(:))
         if ~isnan( g.baseline(1) ) && any(~isnan( allMbase{ind}(1) )) && strcmpi(g.basenorm, 'off')
-            PP{ind} = bsxfun(@rdivide, PP{ind}, allMbase{ind}); % use single trials
+            PP{ind} = bsxfun(@rdivide, PP{ind}, allMbase{ind});
             % PP{ind} = bsxfun(@rdivide, bsxfun(@minus, PP{ind}, allMbase{ind}), allMstd{ind});
             % ERSP baseline normalized
         elseif ~isnan( g.baseline(1) ) && ~isnan( allMbase{ind}(1) ) && strcmpi(g.basenorm, 'on')

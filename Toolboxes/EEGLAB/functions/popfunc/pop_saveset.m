@@ -1,4 +1,4 @@
-% pop_saveset() - save one or more EEG dataset structures
+% POP_SAVESET - save one or more EEG dataset structures
 %
 % Usage:
 %   >> pop_saveset( EEG ); % use an interactive pop-up window 
@@ -16,10 +16,10 @@
 %                in the dataset; 'onefile' saves the full EEG 
 %                structure in a Matlab '.set' file, 'twofiles' saves 
 %                the structure without the data in a Matlab '.set' file
-%                and the transposed data in a binary float '.dat' file.
+%                and the transposed data in a binary float '.fdt' file.
 %                By default the option from the eeg_options.m file is 
 %                used.
-%   'version' - ['6'|'7.3'] save Matlab file as version 6 or
+%   'version' - ['6'|'7'|'7.3'] save Matlab file as version 6, 7, or
 %               '7.3' (default; as defined in eeg_option file).
 %
 % Outputs:
@@ -30,7 +30,7 @@
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 2001
 %
-% See also: pop_loadset(), eeglab()
+% See also: POP_LOADSET, EEGLAB
   
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -69,6 +69,9 @@ if nargin < 1
 	return;
 end
 if isempty(EEG)  , error('Cannot save empty datasets'); end
+if length(EEG) == 1 && isequal(EEG.data, 'in set file')
+    EEG = pop_loadset(fullfile(EEG.filepath, EEG.filename));
+end
 
 % empty filename (resave file)
 emptyfilename = 0;
@@ -111,7 +114,7 @@ eeglab_options;
 defaultSave = fastif(option_saveversion6, '6', '7.3');
 g = finputcheck(options,  { 'filename'   'string'   []     '';
                             'filepath'   'string'   []     '';
-                            'version'    'string'   { '6','7.3' } defaultSave;
+                            'version'    'string'   { '6','7','7.3' } defaultSave;
                             'check'      'string'   { 'on','off' }     'off';
                             'savemode'   'string'   { 'resave','onefile','twofiles','' } '' });
 if ischar(g), error(g); end
@@ -135,50 +138,45 @@ end
 % check for change in saving mode
 % -------------------------------
 if length(EEG) == 1
-    if strcmpi(g.savemode, 'resave') && isfield(EEG, 'datfile') && ~option_savetwofiles
+    if strcmpi(g.savemode, 'resave') && isfield(EEG, 'datfile') && ~isempty(EEG.datfile) && ~option_savetwofiles
         disp('Note that your memory options for saving datasets does not correspond')
         disp('to the format of the datasets on disk (ignoring memory options)')
-% $$$         but = questdlg2(strvcat('This dataset has an associated ''.dat'' file, but since you have', ...
-% $$$                           'changed of saving mode, all the data will now be saved within the', ...
-% $$$                           'Matlab file and the ''.dat'' file will be deleted.', ...
-% $$$                           '(Note: Just press ''No'' if you do not know what you are doing)'), ...
-% $$$                           'Warning: saving mode changed', 'Cancel', 'No, save as before', 'Yes, do it', 'Yes, do it');
-% $$$         switch but
-% $$$             case 'Cancel', return;
-% $$$             case 'No, save as before', % nothing
-% $$$             case 'Yes, do it', g.savemode = 'onefile';
-% $$$         end
-% $$$         g.filename = EEG.filename;
-% $$$         g.filepath = EEG.filepath;
     elseif strcmpi(g.savemode, 'resave') && ~isfield(EEG, 'datfile') && option_savetwofiles
         disp('Note that your memory options for saving datasets does not correspond')
         disp('to the format of the datasets on disk (ignoring memory options)')
-% $$$         but = questdlg2(strvcat('This dataset does not have yet an associated ''.dat'' file, but since you have', ...
-% $$$                           'changed of saving mode, all the data will now be saved within the ''.dat''', ...
-% $$$                           'file and not in the Matlab file (as it is currently the case).', ...
-% $$$                           '(Note: Just press ''No'' if you do not know what you are doing)'), ...
-% $$$                           'Warning: saving mode changed', 'Cancel', 'No, save as before', 'Yes, do it', 'Yes, do it');
-% $$$         switch but
-% $$$             case 'Cancel', return;
-% $$$             case 'No, save as before', % nothing
-% $$$             case 'Yes, do it', g.savemode = 'twofiles';
-% $$$         end
-% $$$         g.filename = EEG.filename;
-% $$$         g.filepath = EEG.filepath;
     end
 end
 
-% default saving otion
-% --------------------
+% default saving option
+% ---------------------
 save_as_dat_file = 0;
 data_on_disk     = 0;
 if strcmpi(g.savemode, 'resave')
     % process multiple datasets
     % -------------------------
+    
+    % check if called from EEGLAB
+    % if this is not the case, resave the file anyway
+    calledFromEEGLABFlag = true;
+    try
+        db = dbstack;
+        eeglabp = fileparts(which('eeglab.m'));
+        if length(db) > 1
+            if isempty(strfind(which(db(2).file), eeglabp))
+                calledFromEEGLABFlag = false;
+            end
+        end
+    catch
+    end
+    
     if length(EEG) > 1
         for index = 1:length(EEG)
-            pop_saveset(EEG(index), 'savemode', 'resave');
-            EEG(index).saved = 'yes';
+            if strcmpi( EEG(index).saved, 'yes') && calledFromEEGLABFlag
+                disp('Dataset has not been modified; No need to resave it.'); 
+            else
+                pop_saveset(EEG(index), 'savemode', 'resave');
+                EEG(index).saved = 'yes';
+            end
         end
         if nargout > 1
             com = sprintf('EEG = pop_saveset( EEG, %s);', vararg2str(options));
@@ -186,7 +184,10 @@ if strcmpi(g.savemode, 'resave')
         return;
     end
     
-    if strcmpi( EEG.saved, 'yes'), disp('Dataset has not been modified; No need to resave it.'); return; end
+    if strcmpi( EEG.saved, 'yes') && calledFromEEGLABFlag
+        disp('Dataset has not been modified; No need to resave it.'); 
+        return; 
+    end
     g.filename = EEG.filename;
     g.filepath = EEG.filepath;
     if isfield(EEG, 'datfile')
@@ -214,6 +215,7 @@ else
     if strcmpi(g.savemode, 'twofiles')
         save_as_dat_file = 1;
         EEG.datfile = [ filenamenoext '.fdt' ];
+        option_savetwofiles = true; % BUG: Missing, thus it will save data in .set file as well as fdt
     end
 end
 
@@ -240,57 +242,50 @@ try,
             EEG.data = EEG.datfile;
             tmpdata = floatwrite( tmpdata, fullfile(EEG.filepath, EEG.data), 'ieee-le');
         end
-    else
-        if isfield(EEG, 'datfile')
-            if ~isempty(EEG.datfile)
-                if exist(fullfile(EEG.filepath, EEG.datfile))
-                    try, 
-                        delete(fullfile(EEG.filepath, EEG.datfile));
-                        disp('Deleting .dat/.fdt file on disk (all data is within the Matlab file)');
-                    catch, end
-                end
-            end
-            EEG.datfile = [];
-        end
     end
-
+    
+    % reload daata before saving if necessary
+    tmpdata2 = [];
+    if ~option_savetwofiles && ischar(EEG.data)
+        tmpdata2 = EEG.data;
+        EEG.data = eeg_getdatact(EEG);
+        EEG.datfile = [];
+    end
+    
     try
-        if strcmpi(g.version, '6') save(fullfile(EEG.filepath, EEG.filename), '-v6',   '-mat', 'EEG');
-        else                       save(fullfile(EEG.filepath, EEG.filename), '-v7.3', '-mat', 'EEG');
+        if option_saveasstruct
+            if strcmpi(g.version, '6') 
+                warning('')
+                save(fullfile(EEG.filepath, EEG.filename), '-v6',   '-mat', '-struct', 'EEG');
+                [a,b] = lastwarn;
+                if strcmpi(b, 'MATLAB:save:sizeTooBigForMATFile')
+                    disp('Re-saving file using the 7.3 format that can handle large variables')
+                    save(fullfile(EEG.filepath, EEG.filename), '-v7.3', '-mat', '-struct', 'EEG');
+                end
+            elseif strcmpi(g.version, '7') save(fullfile(EEG.filepath, EEG.filename), '-v7', '-mat', '-struct', 'EEG');
+            else                       save(fullfile(EEG.filepath, EEG.filename), '-v7.3', '-mat', '-struct', 'EEG');
+            end
+        else
+            if strcmpi(g.version, '6') save(fullfile(EEG.filepath, EEG.filename), '-v6',   '-mat', 'EEG');
+            elseif strcmpi(g.version, '7') save(fullfile(EEG.filepath, EEG.filename), '-v7', '-mat', 'EEG');
+            else                       save(fullfile(EEG.filepath, EEG.filename), '-v7.3', '-mat', 'EEG');
+            end
         end
     catch
+        disp('Cannot save in v6 format (Unicode characters?), using default (possible x20 slow down)');
         save(fullfile(EEG.filepath, EEG.filename), '-mat', 'EEG');
     end
+    
+    % put back the EEG structure field as they were
+    if ~isempty(tmpdata2)
+        EEG.data = tmpdata2;
+    end
+    
     if save_as_dat_file && strcmpi( no_resave_dat, 'no' )
         EEG.data = tmpdata;
     end
-    
-    % save ICA activities
-    % -------------------
-%     icafile = fullfile(EEG.filepath, [EEG.filename(1:end-4) '.icafdt' ]);
-%     if isempty(EEG.icaweights) & exist(icafile)
-%         disp('ICA activation file found on disk, but no more ICA activities. Deleting file.');
-%         delete(icafile);
-%     end
-%     if ~option_saveica & exist(icafile)
-%         disp('Options indicate not to save ICA activations. Deleting ICA activation file.');
-%         delete(icafile);
-%     end
-%     if option_saveica & ~isempty(EEG.icaweights)
-%         if ~exist('tmpdata')
-%             TMP = eeg_checkset(EEG, 'loaddata');
-%             tmpdata = TMP.data;
-%         end
-%         if isempty(tmpica)
-%              tmpica2 = (EEG.icaweights*EEG.icasphere)*tmpdata(EEG.icachansind,:);
-%         else tmpica2 = tmpica;
-%         end
-%         tmpica2 = reshape(tmpica2, size(tmpica2,1), size(tmpica2,2)*size(tmpica2,3));
-%         floatwrite( tmpica2, icafile, 'ieee-le');
-%         clear tmpica2;
-%     end
-    
-catch,
+        
+catch
     rethrow(lasterror);
 end
 
@@ -301,17 +296,19 @@ if exist(tmpfilename) == 2
     disp('Deleting old .dat file format detected on disk (now replaced by .fdt file)');
     try,
         delete(tmpfilename);
-        disp('Delete sucessfull.');
+        disp('Delete successful.');
+        EEG.datfile = [];
     catch, disp('Error while attempting to remove file'); 
     end
 end
 if save_as_dat_file == 0
     tmpfilename = fullfile(EEG.filepath, [ filenamenoext '.fdt' ]);
     if exist(tmpfilename) == 2
-        disp('Old .fdt file detected on disk, deleting file the Matlab file contains all data...');
-        try,
+        disp('Old .fdt file detected on disk, deleting file since the Matlab file now contains all the data');
+        try
             delete(tmpfilename);
-            disp('Delete sucessfull.');
+            disp('Delete successful.');
+            EEG.datfile = [];
         catch, disp('Error while attempting to remove file'); 
         end
     end

@@ -1,5 +1,5 @@
-% vararg2str() - transform arguments into string for evaluation 
-%                using the eval() command
+% VARARG2STR - transform arguments into string for evaluation 
+%                using the EVAL command
 %
 % Usage:
 %   >> strout = vararg2str( allargs );
@@ -103,12 +103,14 @@ for index = 1:length(allargs)
 			strout = [ strout ',' array2str( tmpvar ) ];
 		elseif iscell( tmpvar )
             tmpres = vararg2str( tmpvar );
-            comas  = find( tmpres == ',' );
-            tmpres(comas) = ' ';
+%             comas  = find( tmpres == ',' );
+%             tmpres(comas) = ' ';
 			strout = [ strout ',{' tmpres '}' ];
 		elseif isstruct(tmpvar)
 			strout = [ strout ',' struct2str( tmpvar ) ];		
-		else
+        elseif isa(tmpvar, 'function_handle')
+            strout = [ strout ',' char( tmpvar ) ];
+        else
 			error('Unrecognized input');
 		end
 	end

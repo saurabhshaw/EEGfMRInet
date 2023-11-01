@@ -1,4 +1,4 @@
-% std_chaninds() - look up channel indices in a STUDY
+% STD_CHANINDS - look up channel indices in a STUDY
 %
 % Usage:
 %         >> inds = std_chaninds(STUDY,  channames);
@@ -42,7 +42,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 % THE POSSIBILITY OF SUCH DAMAGE.
 
-function finalinds = std_chaninds(instruct, channames);
+function finalinds = std_chaninds(instruct, channames)
 
     finalinds   = [];
     if isfield(instruct, 'chanlocs')
@@ -63,6 +63,9 @@ function finalinds = std_chaninds(instruct, channames);
         else
             chanind = strmatch( lower(channames{c}), tmpallchans, 'exact');
             if isempty(chanind), warning(sprintf([ 'Channel "%s" and maybe others was not' 10 'found in pre-computed data file' ], channames{c})); end
+        end
+        if length(chanind) > 1
+            error(sprintf('Duplicate channel label %s - fix the issue and try again', channames{c}));
         end
         finalinds   = [ finalinds chanind ];
     end

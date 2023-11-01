@@ -1,4 +1,4 @@
-% importevent() - Import experimental events from data file or Matlab
+% IMPORTEVENT - Import experimental events from data file or Matlab
 %                 array into a structure.
 %
 % Usage: >> eventstruct = importevent( event, oldevent, srate);
@@ -7,7 +7,7 @@
 % Input:
 %   event     - [ 'filename'|array ] Filename of a text file, or name of
 %               Matlab array in the global workspace containing an
-%               array of events in the folowing format: The first column of
+%               array of events in the following format: The first column of
 %               the cell array is the type of the event, the second the latency. 
 %               The others are user-defined. The function can read 
 %               either numeric or text entries in ascii files.
@@ -21,7 +21,7 @@
 %  'fields'   - [Cell array] List of the name of each user-defined column, 
 %               optionally followed by a description. Ex: { 'type',
 %               'latency' }
-%  'skipline' - [Interger] Number of header rows to skip in the text file 
+%  'skipline' - [Integer] Number of header rows to skip in the text file 
 %  'timeunit' - [ latency unit rel. to seconds ]. Default unit is 1 = seconds. 
 %               NaN indicates that the latencies are given in time points.
 %  'delim'    - [string] String of delimiting characters in the input file. 
@@ -67,7 +67,7 @@
 %
 % Author: Arnaud Delorme & Scott Makeig, CNL / Salk Institute, 2004
 %
-% See also: pop_importevent()
+% See also: POP_IMPORTEVENT
 
 % Copyright (C) Arnaud Delorme, CNL / Salk Institute, 2004, arno@salk.edu
 %
@@ -122,7 +122,7 @@ g = finputcheck( varargin, { 'fields'  'cell'     []                    {};
                          'optimalign'  'string'  { 'on';'off' }         'on';
                          'optimoffset' 'string'  { 'on';'off' }         'off';
                          'optimmeas'   'string'  { 'median';'mean' }    'mean';
-                         'delim'       {'integer';'string'}   []        char([9 32 44])}, 'importevent');
+                         'delim'       {'integer';'string'}   []        char([9 ' ' 44])}, 'importevent');
 if ischar(g), error(g); end
 if ~isempty(g.indices), g.append = 'yes'; end
 g.delim = char(g.delim);    
@@ -155,10 +155,10 @@ g.align.val = tmpalign;
 if ~isnan(g.align.val)
     if isempty(oldevent)
         error('Setevent: no pre-existing event, cannot perform alignment');
-    end;    
+    end
     if ~isfield(oldevent, 'latency')
         error('Setevent: pre-existing events do not have a latency field for re-alignment');
-    end;    
+    end
     switch g.append
         case {'yes' '''yes'''}, disp('Setevent warning: cannot align and append events at the same time; disabling event alignment');
     end
@@ -256,12 +256,12 @@ for curfield = tmpfields'
       end
 end
 
-if isempty(event) % usefull 0xNB empty structure
+if isempty(event) % useful 0xNB empty structure
     event = [];
 end
 
-%% remove the events wit out-of-bound latencies
-% --------------------------------------------
+%% remove the events with out-of-bound latencies
+% ---------------------------------------------
 if isfield(event, 'latency') && latencypresent
     try 
         res = cellfun('isempty', { event.latency });
@@ -279,7 +279,7 @@ end
 function array = load_file_or_array( varname, skipline, delim );
     if ischar(varname) && exist(varname) == 2  % mean that it is a filename
                                              % --------------------------
-        array = loadtxt( varname, 'skipline', skipline, 'delim', delim, 'blankcell', 'off' );
+        array = loadtxt( varname, 'skipline', skipline, 'delim', delim );
         
     else 
          if ~iscell(varname)

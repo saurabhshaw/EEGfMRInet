@@ -1,4 +1,4 @@
-% pop_export() - export EEG dataset
+% POP_EXPORT - export EEG dataset
 %
 % Usage:
 %   >> com = pop_export(EEG);   % a window pops up
@@ -25,7 +25,7 @@
 %                    of precision and should be enough for EEG.
 % 
 % Outputs:
-%   com            - The expresion that execute this function. i.e. 'pop_export(MyEEG, 'ExpEEG.mat')'
+%   com            - The expression that execute this function. i.e. 'pop_export(MyEEG, 'ExpEEG.mat')'
 %
 % Note: tabulation are used as a delimiter.
 %
@@ -173,6 +173,9 @@ end
 % transpose and write to disk
 % ---------------------------
 fid = fopen(filename, 'w');
+if fid == -1
+    error('Cannot write file %s', filename);
+end
 strprintf = [ '%.' num2str(g.precision) 'f' g.separator ];
 if strcmpi(g.transpose, 'on')
     % columns

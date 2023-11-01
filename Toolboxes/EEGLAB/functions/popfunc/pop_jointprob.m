@@ -1,10 +1,10 @@
-% pop_jointprob() - reject artifacts in an EEG dataset using joint 
+% POP_JOINTPROB - reject artifacts in an EEG dataset using joint 
 %                   probability of the recorded electrode or component 
 %                   activities observed at each time point.  e.g., Observing 
-%                   large absoluate values at most electrodes or components 
+%                   large absolute values at most electrodes or components 
 %                   is improbable and may well mark the presence of artifact.
 % Usage:
-%   >> pop_jointprob( INEEG, typerej) % pop-up interative window mode
+%   >> pop_jointprob( INEEG, typerej) % pop-up interactive window mode
 %   >> [OUTEEG, locthresh, globthresh, nrej] = ...
 %		= pop_jointprob( INEEG, typerej, elec_comp, ...
 %                   locthresh, globthresh, superpose, reject, vistype);
@@ -42,8 +42,8 @@
 %              previous marks using different colors. {Default: 0}.
 %   reject     - 0 = do not reject marked trials (but store the marks: 
 %              1 = reject marked trials {Default: 1}.
-%   vistype    - Visualization type. [0] calls rejstatepoch() and [1] calls
-%              eegplot() default is [0].When added to the command line
+%   vistype    - Visualization type. [0] calls REJSTATEPOCH and [1] calls
+%              EEGPLOT default is [0].When added to the command line
 %              call it will not display the plots if the option 'plotflag'
 %              is not set.
 % topcommand   - [] Deprecated argument , keep to ensure backward compatibility
@@ -61,7 +61,7 @@
 %
 % Author: Arnaud Delorme, CNL / Salk Institute, 2001
 %
-% See also: jointprob(), rejstatepoch(), eegplot(), eeglab(), pop_rejepoch()  
+% See also: JOINTPROB, REJSTATEPOCH, EEGPLOT, EEGLAB, POP_REJEPOCH  
 
 % Copyright (C) 2001 Arnaud Delorme, Salk Institute, arno@salk.edu
 %
@@ -147,7 +147,7 @@ if nargin < 3
               { 'Style', 'text', 'string', promptstr{1}} {} { 'Style','edit'      , 'string' ,inistr{1} 'tag' 'cpnum'}...
               { 'Style', 'text', 'string', promptstr{2}} {} { 'Style','edit'      , 'string' ,inistr{2} 'tag' 'singlelimit'}...
               { 'Style', 'text', 'string', promptstr{3}} {} { 'Style','edit'      , 'string' ,inistr{3} 'tag' 'alllimit'}...
-              { 'Style', 'text', 'string', promptstr{4}} {} { 'Style','popupmenu' , 'string' , vismodelist 'tag' 'specmethod' }...
+              { 'Style', 'text', 'string', promptstr{4}} {} { 'Style','popupmenu' , 'string' , vismodelist 'tag' 'specmethod' 'value' 2 }...
               {}...
               { 'Style', 'text', 'string', promptstr{5}} {} { 'Style','checkbox'  ,'string'  , ' ' 'value' str2double(inistr{5}) 'tag','rejmarks' }...
               { 'Style', 'text', 'string', promptstr{6}} {} { 'Style','checkbox'  ,'string'  ,' ' 'value'  str2double(inistr{6})  'tag' 'rejtrials'} ...
@@ -260,6 +260,9 @@ else
 	rej = rejtmp | rej;
 	nrej =  sum(rej);
 	fprintf('%d trials marked for rejection\n', nrej);
+    if reject
+        EEG = pop_rejepoch(EEG, rej, 0);
+    end
 end
 if ~isempty(rej)
 	if icacomp	== 1
@@ -269,14 +272,11 @@ if ~isempty(rej)
 		EEG.reject.icarejjp = rej;
 		EEG.reject.icarejjpE = rejE;
 	end
-    if reject
-        EEG = pop_rejepoch(EEG, rej, 0);
-    end
 end
 nrej = sum(rej);
 
 com = [ com sprintf('EEG = pop_jointprob(EEG,%s);', ...
-		vararg2str({icacomp,elecrange,locthresh,globthresh,superpose,reject, vistype, [],plotflag})) ]; 
+		vararg2str({icacomp,elecrange,locthresh,globthresh,superpose,reject & ~calldisp, vistype, [],plotflag})) ]; 
 if nargin < 3 && nargout == 2
 	locthresh = com;
 end

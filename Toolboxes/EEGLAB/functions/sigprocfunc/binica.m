@@ -1,8 +1,12 @@
-% binica() - Run stand-alone binary version of runica() from the
+% BINICA - Run stand-alone binary version of RUNICA from the
 %            Matlab command line. Saves time and memory relative
-%            to runica().  If stored in a float file, data are not 
+%            to RUNICA.  If stored in a float file, data are not 
 %            read into Matlab, and so may be larger than Matlab
 %            can handle owing to memory limitations.
+%
+% Download the binary version for your system at
+% https://sccn.ucsd.edu/wiki/Binica
+%
 % Usage:
 %  >> [wts,sph] = binica( datavar,  'key1', arg1, 'key2', arg2 ...);
 % else
@@ -25,7 +29,7 @@
 %   'maxsteps'   - int>0         {default: 512}
 %   'stop'       - (0<float<<<1) stopping learning rate {default: 1e-7} 
 %                    NB: 'stop' <= 1e-7 recommended
-%   'weightsin'  - Filename string of inital weight matrix of size
+%   'weightsin'  - Filename string of initial weight matrix of size
 %                  (comps,chans) floats, else a weight matrix variable 
 %                  in the current Matlab workspace (copied to a local
 %                  .inwts files). You may want to reduce the starting 
@@ -54,9 +58,9 @@
 %
 % Author: Scott Makeig, SCCN/INC/UCSD, La Jolla, 2000 
 %
-% See also: runica()
+% See also: RUNICA
 
-% Calls binary translation of runica() by Sigurd Enghoff
+% Calls binary translation of RUNICA by Sigurd Enghoff
 
 % Copyright (C) 2000 Scott Makeig, SCCN/INC/UCSD, scott@sccn.ucsd.edu
 %
@@ -101,9 +105,17 @@ if nargin < 1 || nargin > 25
     more off
     return
 end
+
 if size(data,3) > 1, data = reshape(data, size(data,1), size(data,2)*size(data,3) ); end
 
+if any(pwd == ' ')
+    error('The current path cannot contain spaces');
+end
+
 icadefs % import ICABINARY and SC
+eeglab_p = fileparts(which('eeglab'));
+ICABINARY = fullfile(eeglab_p, 'functions', 'supportfiles', ICABINARY); % done here and not icadefs because slow
+
 if ~exist('SC')
   fprintf('binica(): You need to update your icadefs file to include ICABINARY and SC.\n')
   return
@@ -125,6 +137,9 @@ else
 	else
 		fprintf('binica(): using binary ica file ''\?/%s''\n', ICABINARY);
 	end
+end
+if any(ICABINARYdir == ' ')
+    error('The ICABINARY path defined in icadefs.m cannot contain spaces');
 end
 
 [flags,args] = read_sc(SC); % read flags and args in master SC file
@@ -255,19 +270,19 @@ end
 %
 for x=1:length(flags)
   if strcmp(flags{x},'DataFile')
-     datafile = [pwd '/' datafile];
+     datafile = fullfile(pwd, datafile);
      args{x} = datafile;
   elseif strcmp(flags{x},'WeightsOutFile')
      weightsfile = ['binica' tmpint '.wts'];
-     weightsfile =  [pwd '/' weightsfile];
+     weightsfile =  fullfile(pwd,  weightsfile);
      args{x} = weightsfile;
   elseif strcmp(flags{x},'WeightsTempFile')
      weightsfile = ['binicatmp' tmpint '.wts'];
-     weightsfile =  [pwd '/' weightsfile];
+     weightsfile =  fullfile(pwd,  weightsfile);
      args{x} = weightsfile;
   elseif strcmp(flags{x},'SphereFile')
      spherefile = ['binica' tmpint '.sph'];
-     spherefile =  [pwd '/' spherefile];
+     spherefile =  fullfile(pwd, spherefile);
      args{x} = spherefile;
   elseif strcmp(flags{x},'chans')
      args{x} = int2str(nchans);
@@ -285,7 +300,7 @@ for x=1:length(flags)
 end
 if exist('wtsin') % specify WeightsInfile from 'weightsin' flag, arg
      if exist('wtsin') == 1 % variable
-       winfn = [pwd '/binica' tmpint '.inwts'];
+       winfn = fullfile(pwd, [ 'binica' tmpint '.inwts']);
        if strcmpi(computer, 'MAC')
            floatwrite(wtsin,winfn,'ieee-be');
        else
@@ -295,12 +310,12 @@ if exist('wtsin') % specify WeightsInfile from 'weightsin' flag, arg
        weightsinfile = winfn; % weights in file name
      elseif exist(wtsin) == 2 % file
        weightsinfile = wtsin;
-       weightsinfile =  [pwd '/' weightsinfile];
+       weightsinfile =  fullfile(pwd, weightsinfile);
      else
        fprintf('binica(): weightsin file|variable not found.\n');
        return
      end 
-    eval(['!ls -l ' weightsinfile]);
+    try, eval(['!ls -l ' weightsinfile]); catch, end
     fprintf(fid,'%s %s\n','WeightsInFile',weightsinfile);
 end
 fclose(fid);
@@ -317,7 +332,7 @@ end
    if exist('ncomps')
         fprintf('   Finding %d components.\n',ncomps);
    end
-   eval_call = ['!' ICABINARY '<' pwd '/' scriptfile];
+   eval_call = ['!' ICABINARY '<' fullfile(pwd, scriptfile) ];
    eval(eval_call);
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -336,7 +351,7 @@ if strcmpi(computer, 'MAC')
 else
     wts = floatread(weightsfile,[ncomps Inf],[],0);
     sph = floatread(spherefile,[nchans Inf],[],0);
-end;    
+end
 if isempty(wts)
    fprintf('\nbinica(): weight matrix not read.\n')
    return
@@ -346,9 +361,9 @@ if isempty(sph)
    return
 end
 fprintf('\nbinary ica files left in pwd:\n');
-eval(['!ls -l ' scriptfile ' ' weightsfile ' ' spherefile]);
+try, eval(['!ls -l ' scriptfile ' ' weightsfile ' ' spherefile]); catch, end
 if exist('wtsin')
-   eval(['!ls -l ' weightsinfile]);
+   try, eval(['!ls -l ' weightsinfile]); catch end
 end
 fprintf('\n');
 
@@ -359,11 +374,11 @@ else
 end
 
 %
-% If created by binica(), rm temporary data file
+% If created by BINICA, rm temporary data file
 % NOTE: doesn't remove the .sc .wts and .fdt files
 
 if ~isempty(tmpdata)
-    eval(['!rm -f ' datafile]);
+    try, delete(datafile); catch, end
 end
 
 %

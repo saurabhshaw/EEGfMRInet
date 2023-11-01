@@ -3,18 +3,19 @@
 % Usage:
 %   >> [EEG, com, b] = pop_eegfiltnew(EEG); % pop-up window mode
 %   >> [EEG, com, b] = pop_eegfiltnew(EEG, 'key', val);
+% Legacy call:
 %   >> [EEG, com, b] = pop_eegfiltnew(EEG, locutoff, hicutoff, filtorder,
 %                                     revfilt, usefft, plotfreqz, minphase, 
 %                                     usefftfilt);
 %
 % Inputs:
 %   EEG       - EEGLAB EEG structure
-%   locutoff  - lower edge of the frequency pass band (Hz)
-%               {[]/0 -> lowpass} 
-%   hicutoff  - higher edge of the frequency pass band (Hz)
-%               {[]/0 -> highpass}
 %
 % Optional inputs:
+%   'locutoff'  - [float] lower edge of the frequency pass band (Hz)
+%               {[]/0 -> lowpass} 
+%   'hicutoff'  - [float] higher edge of the frequency pass band (Hz)
+%               {[]/0 -> highpass}
 %   'filtorder' - filter order (filter length - 1). Mandatory even
 %   'revfilt'   - [0|1] invert filter (from bandpass to notch filter)
 %               {default 0 (bandpass)}
@@ -123,7 +124,7 @@ if nargin < 2
     options = {};
     if ~isempty(result{1}), options = { options{:} 'locutoff' str2num( result{1}) }; end
     if ~isempty(result{2}), options = { options{:} 'hicutoff' str2num( result{2}) }; end
-    if ~isempty(result{3}), options = { options{:} 'filtorder' result{3} }; end
+    if ~isempty(result{3}), options = { options{:} 'filtorder' str2num( result{3}) }; end
     if result{4}, options = { options{:} 'revfilt' result{4} }; end
     if result{5}, options = { options{:} 'minphase' result{5} }; end
     if result{6}, options = { options{:} 'plotfreqz' result{6} }; end
@@ -238,7 +239,7 @@ else
     g.filtorderMin = ceil(3.3 ./ ((maxDf * 2) / EEG.srate) / 2) * 2;
     g.filtorderOpt = ceil(3.3 ./ (maxDf / EEG.srate) / 2) * 2;
     if g.filtorder < g.filtorderMin
-        error('Filter order too low. Minimum required filter order is %d. For better results a minimum filter order of %d is recommended.', g.filtorderMin, g.filtorderOpt)
+        error('Filter order too low. Minimum required filter order is %d.\nFor better results a minimum filter order of %d is recommended.', g.filtorderMin, g.filtorderOpt)
     elseif g.filtorder < g.filtorderOpt
         warning('firfilt:filterOrderLow', 'Transition band is wider than maximum stop-band width. For better results a minimum filter order of %d is recommended. Reported might deviate from effective -6dB cutoff frequency.', g.filtorderOpt)
     end
@@ -279,7 +280,7 @@ end
 % Plot frequency response
 if g.plotfreqz
     try
-        freqz(b, 1, 8192, EEG.srate);
+        figure; freqz(b, 1, 8192, EEG.srate);
     catch
         warning( 'Plotting of frequency response requires signal processing toolbox.' )
     end

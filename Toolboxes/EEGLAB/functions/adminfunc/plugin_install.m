@@ -1,4 +1,4 @@
-% plugin_install() - install EEGLAB plugin. Called by plugin_askinstall().
+% PLUGIN_INSTALL - install EEGLAB plugin. Called by PLUGIN_ASKINSTALL.
 %
 % Usage:
 %  plugin_install(zipfilelink, name, version, force, size);
@@ -10,7 +10,11 @@
 %  size        - [real] size of the plugin in Kb
 %  force       - [boolean] force install (even if already installed)
 %
-% See also: plugin_askinstall()
+% Note: To install plugins from the command line, type in
+%
+% plugin_askinstall('xxxxxx', [], true); % with xxxx being the name of the plugin
+%
+% See also: PLUGIN_ASKINSTALL
 
 % Copyright (C) 2012- Arnaud Delorme
 %
@@ -59,15 +63,20 @@ function result = plugin_install(zipfilelink, name, version, pluginsize, forceIn
     if pluginsize > 500000 && ~forceInstall
         res = questdlg2( [ 'Extension ' name ' size is ' num2str(ceil(pluginsize/100)/10) 'MB. Are you sure' 10 ...
             'you want to download this extension?' ], 'Warning', 'No', 'Yes', 'Yes');
-        if strcmpi(res, 'no'), fprintf([ 'Skipping ' name ' extension instalation\n' ]); 
+        if strcmpi(res, 'no'), fprintf([ 'Skipping ' name ' extension installation\n' ]); 
             result = -1; 
             return; 
         end
     end
          
     try
-        plugin_urlread(['http://sccn.ucsd.edu/eeglab/plugin_uploader/plugin_increment.php?plugin=' name '&version=' version ]);
-        plugin_urlwrite( zipfilelink, fullfile(generalPluginPath, zipfile));
+        if exist('OCTAVE_VERSION', 'builtin') == 0
+            plugin_urlread(['http://sccn.ucsd.edu/eeglab/plugin_uploader/plugin_increment.php?plugin=' name '&version=' version ]);
+            plugin_urlwrite( zipfilelink, fullfile(generalPluginPath, zipfile));
+        else
+            urlread(['http://sccn.ucsd.edu/eeglab/plugin_uploader/plugin_increment.php?plugin=' name '&version=' version ]);
+            urlwrite( zipfilelink, fullfile(generalPluginPath, zipfile));
+        end
     catch
         msg = [ 'Could not download extension. Host site might be' 10 ...
                 'unavailable, too slow or you do not have permission' 10 ...

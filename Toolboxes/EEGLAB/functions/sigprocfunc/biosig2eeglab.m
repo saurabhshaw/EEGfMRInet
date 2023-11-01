@@ -1,4 +1,4 @@
-% biosig2eeglab() - convert BIOSIG structue to EEGLAB structure
+% BIOSIG2EEGLAB - convert BIOSIG structure to EEGLAB structure
 %
 % Usage:
 %   >> OUTEEG = pop_biosig2eeglab(hdr, data, interval);
@@ -48,7 +48,7 @@
 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 % THE POSSIBILITY OF SUCH DAMAGE.
 
-function EEG = biosig2eeglab(dat, DAT, interval, channels, importevent);
+function EEG = biosig2eeglab(dat, DAT, interval, channels, importevent, importannot)
 
 if nargin < 2
     help biosig2eeglab;
@@ -63,6 +63,9 @@ end
 if nargin < 5
     importevent = 0;
 end
+if nargin < 6
+    importannot = 0;
+end
 
 % import data
 % -----------
@@ -73,7 +76,7 @@ EEG = eeg_emptyset;
 
 % convert to seconds for sread
 % ----------------------------
-if max(dat.InChanSelect) > size(DAT,1)
+if ~isfield(dat, 'InChanSelect') && max(dat.InChanSelect) > size(DAT,1)
     dat.InChanSelect = [1:size(DAT,1)];
 end
 EEG.nbchan          = length(dat.InChanSelect); %= size(DAT,1);
@@ -211,7 +214,7 @@ if importevent
                 dat.EVENT = dat.out.EVENT;
             end
         end
-        EEG.event = biosig2eeglabevent(dat.EVENT, interval); % Toby's fix
+        EEG.event = biosig2eeglabevent(dat.EVENT, interval, importannot); % Toby's fix
 
         % recreate the epoch field if necessary
         % -------------------------------------
@@ -223,7 +226,7 @@ if importevent
 
         EEG = eeg_checkset(EEG, 'eventconsistency');
     elseif isempty(EEG.event) 
-        disp('Warning: no event found. Events might be embeded in a data channel.');
+        disp('Warning: no event found. Events might be embedded in a data channel.');
         disp('         To extract events, use menu File > Import Event Info > From data channel');
     end
 end

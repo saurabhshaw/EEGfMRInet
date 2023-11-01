@@ -1,6 +1,6 @@
-function state = asr_calibrate_r(X,srate,cutoff,blocksize,B,A,window_len,window_overlap,max_dropout_fraction,min_clean_fraction)
+function state = asr_calibrate_r(X,srate,cutoff,blocksize,B,A,window_len,window_overlap,max_dropout_fraction,min_clean_fraction,maxmem)
 % Calibration function for the Artifact Subspace Reconstruction (ASR) method.
-% State = asr_calibrate(Data,SamplingRate,Cutoff,BlockSize,FilterB,FilterA,WindowLength,WindowOverlap,MaxDropoutFraction,MinCleanFraction)
+% State = asr_calibrate(Data,SamplingRate,Cutoff,BlockSize,FilterB,FilterA,WindowLength,WindowOverlap,MaxDropoutFraction,MinCleanFraction,MaxMemory)
 %
 % The input to this data is a multi-channel time series of calibration data. In typical uses the
 % calibration data is clean resting EEG data of ca. 1 minute duration (can also be longer). One can
@@ -32,7 +32,7 @@ function state = asr_calibrate_r(X,srate,cutoff,blocksize,B,A,window_len,window_
 %   RejectionCutoff: Standard deviation cutoff for rejection. Data portions whose variance is larger
 %                    than this threshold relative to the calibration data are considered missing
 %                    data and will be removed. The most aggressive value that can be used without
-%                    losing too much EEG is 2.5. A quite conservative value would be 5. Default: 5.
+%                    losing too much EEG is 5. Default: 5.
 %
 %   Blocksize : Block size for calculating the robust data covariance and thresholds, in samples;
 %               allows to reduce the memory and time requirements of the robust estimators by this 
@@ -60,6 +60,11 @@ function state = asr_calibrate_r(X,srate,cutoff,blocksize,B,A,window_len,window_
 %   MinCleanFraction : Minimum fraction of windows that need to be clean, used for threshold
 %                      estimation. Default: 0.25
 %
+%   MaxMemory : The maximum amount of memory used by the algorithm when processing a long chunk with
+%               many channels, in MB. The recommended value is 64 MB. To run on the GPU, use
+%               the amount of memory available to your GPU here (needs the parallel computing toolbox).
+%               default: min(5000,1/2 * free memory in MB). Using smaller amounts of memory leads to
+%               longer running times.
 %
 % Out:
 %   State : initial state struct for asr_process
@@ -111,7 +116,11 @@ if nargin < 3 || isempty(cutoff)
     cutoff = 3; end
 if nargin < 4 || isempty(blocksize)
     blocksize = 10; end
-blocksize = max(blocksize,ceil((C*C*S*8*3*2)/hlp_memfree));
+if ~exist('maxmem', 'var')
+    maxmem = hlp_memfree/(2^21); end
+blocksize = max(blocksize,ceil((C*C*S*8*3*2)/(maxmem*(2^21))));
+%blocksize = max(blocksize,ceil((C*C*S*8*3*2)/hlp_memfree));
+
 if nargin < 6 || isempty(A) || isempty(B)
     try
         % try to use yulewalk to design the filter (Signal Processing toolbox required)
@@ -145,13 +154,13 @@ if nargin < 6 || isempty(A) || isempty(B)
         end
     end
 end
-if nargin < 8 || isempty(window_len)
+if nargin < 7 || isempty(window_len)
     window_len = 0.1; end
-if nargin < 9 || isempty(window_overlap)
+if nargin < 8 || isempty(window_overlap)
     window_overlap = 0.5; end
-if nargin < 10 || isempty(max_dropout_fraction)
+if nargin < 9 || isempty(max_dropout_fraction)
     max_dropout_fraction = 0.1; end
-if nargin < 11 || isempty(min_clean_fraction)
+if nargin < 10 || isempty(min_clean_fraction)
     min_clean_fraction = 0.3; end
 
 X(~isfinite(X(:))) = 0;
@@ -273,7 +282,11 @@ end
 
 function result = hlp_memfree
 % Get the amount of free physical memory, in bytes
-result = java.lang.management.ManagementFactory.getOperatingSystemMXBean().getFreePhysicalMemorySize();
+try
+    result = javaMethod('getFreePhysicalMemorySize', javaMethod('getOperatingSystemMXBean','java.lang.management.ManagementFactory'));
+catch
+    result = 1000000;
+end
 
 
 function [mu,sig,alpha,beta] = fit_eeg_distribution(X,min_clean_fraction,max_dropout_fraction,quants,step_sizes,beta)
@@ -375,6 +388,7 @@ for m = round(n*(max_width:-step_sizes(2):min_width))
     nbins = round(3*log2(1+m/2));
     H = bsxfun(@times,X(1:m,:),nbins./X(m,:));
     logq = log(histc(H,[0:nbins-1,Inf]) + 0.01);
+    if size(logq,1) == 1, logq = logq'; end
     
     % for each shape value...
     for b=1:length(beta)
