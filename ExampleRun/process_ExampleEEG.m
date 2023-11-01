@@ -40,25 +40,6 @@ if ~skip_analysis
     else
         EEG = pop_loadset('filename',[EEG.setname '_preprocessed.set'],'filepath',[condition_dir filesep 'PreProcessed']); EEG = eeg_checkset( EEG );
     end
-    %[EEG] = EEGfMRI_preprocess_full(EEG,curr_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
-    
-    % if strcmp(curr_run,'task')
-    %     num_volumes = scan_param.tfunc_num_volumes;
-    % elseif strcmp(curr_run,'rest')
-    %     num_volumes = scan_param.rsfunc_num_volumes;
-    % end
-    % 
-    % % check if slice marker injection is needed
-    % if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) < num_volumes
-    %     [EEG] = inject_missing_markers(EEG,EEG.srate,scan_param.slice_marker,num_volumes,scan_param.TR);
-    % end
-    % 
-    % % sanity check slice marker injection success
-    % if sum(cellfun(@(x)x == scan_param.slice_marker,{EEG.event(:).type})) == num_volumes
-    %     tic
-    %     [EEG] = EEGfMRI_preprocess_full(EEG,curr_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
-    %     toc
-    % end
     
     %% BEGIN FEATURE COMPUTATION
     
