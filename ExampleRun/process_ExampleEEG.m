@@ -1,7 +1,7 @@
 
 % Set participant specifics:
-% base_path = 'C:\Users\danme\Documents_local\neuroscience_phd\research_code\EEGfMRInet'; % Base path of the package (your repository path)
-% curr_condition = 'EyesClosed';
+base_path_example = fileparts(matlab.desktop.editor.getActiveFilename); 
+curr_condition = 'EyesClosed';
 
 %% get req'd parameters
 % addPaths
@@ -9,21 +9,22 @@
 
 % PREP DATA FOR PRE-PROCESSING
 % get participant data location & data
-curr_dir = general_param.base_path_data;
+curr_dir = [base_path_example filesep 'ExampleData'];
 curry_file_dir = dir([curr_dir filesep '*.cdt']);
 
 %% read and save raw participant data, if exists
 skip_analysis = isempty(curry_file_dir);
 if ~skip_analysis
     
+    %% Load file:
     curry_file = [curry_file_dir.folder filesep curry_file_dir.name];
     [curry_filepath, curry_filename] = fileparts(curry_file);
     [EEG] = loadcurry(curry_file);
     
-    % check EEG field consistencies
+    %% check EEG field consistencies
     EEG.setname = [general_param.study_name '_' general_param.participant_id '_' general_param.curr_condition]; EEG = eeg_checkset(EEG);
     
-    % save to file
+    %% save to file
     % create folder if dne
     if ~isfolder([curry_filepath filesep 'EEGfMRI_Raw'])
         mkdir([curry_filepath filesep 'EEGfMRI_Raw']);
@@ -31,10 +32,15 @@ if ~skip_analysis
     output_dir = [curry_filepath filesep 'EEGfMRI_Raw'];
     pop_saveset(EEG, 'filename',EEG.setname,'filepath',output_dir);
     
-    % START PRE-PROCESSING
-    fprintf(['\n ***************************** Starting Pre-Processing Task ***************************** \n']);
+    %% START PRE-PROCESSING
+    fprintf(['\n ***************************** Starting Pre-Processing ***************************** \n']);
 
-    [EEG] = EEGfMRI_preprocess_full(EEG,curr_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
+    if control_param.overwrite_files || isempty(dir([curr_dir filesep 'PreProcessed' filesep EEG.setname '_preprocessed.set']))
+        EEG = offline_preprocess_manual_deploy(EEG_preprocess_param,curr_dir,EEG.setname,control_param.overwrite_files,EEG);
+    else
+        EEG = pop_loadset('filename',[EEG.setname '_preprocessed.set'],'filepath',[condition_dir filesep 'PreProcessed']); EEG = eeg_checkset( EEG );
+    end
+    %[EEG] = EEGfMRI_preprocess_full(EEG,curr_dir,scan_param,num_volumes,EEG_preprocess_param,EEGfMRI_preprocess_param,control_param.overwrite_files);
     
     % if strcmp(curr_run,'task')
     %     num_volumes = scan_param.tfunc_num_volumes;
@@ -54,34 +60,28 @@ if ~skip_analysis
     %     toc
     % end
     
-    % BEGIN FEATURE COMPUTATION
+    %% BEGIN FEATURE COMPUTATION
     
     % define epochs
-    slice_latencies = floor([EEG.event(find(strcmp(num2str(scan_param.slice_marker),{EEG.event.type}))).latency]);
-    start_idx = min(slice_latencies);
-    max_idx = max(slice_latencies);
-    append_idx = start_idx;
-    window_length = scan_param.TR*EEG.srate;
-    window_step = scan_param.TR*EEG.srate;
-    while (start_idx(end) < max_idx)
-        start_idx = [start_idx, append_idx+window_step];
-        append_idx = start_idx(end);
+    if ~isempty(EEG.event)
+        window_length = scan_param.TR*EEG.srate;
+        window_step = scan_param.TR*EEG.srate;
+    else
+        window_length = 10;
+        window_step = 10;
     end
-    end_idx = floor(start_idx + window_length)-1;
     
-    % avoid out of bounds errors + maintain max samples
-    while end_idx(end) > size(EEG.data,2)
-        end_idx = end_idx - 1;
+    % Create epochs
+    if length(size(EEG.data)) == 2
+        [start_idx, end_idx] = create_windows(size(EEG.data,2), window_step*EEG.srate, window_length*EEG.srate);
+        temp_data = arrayfun(@(x,y) EEG.data(:,x:y),start_idx,end_idx,'un',0); temp_time = arrayfun(@(x,y) EEG.times(1,x:y),start_idx,end_idx,'un',0);
+        EEG.data = cat(3,temp_data{:}); EEG.times = cat(3,temp_time{:});
     end
     
     % save epoch definitions
     save([curr_dir filesep EEG.setname '_FeatureEpochDefinitions' ],'start_idx','end_idx');
     
-    % create epochs from definitions
-    temp_data = arrayfun(@(x,y) EEG.data(:,x:y),start_idx,end_idx,'un',0); temp_time = arrayfun(@(x,y) EEG.times(1,x:y),start_idx,end_idx,'un',0);
-    EEG.data = cat(3,temp_data{:}); EEG.times = cat(3,temp_time{:});
-    
-    % COMPUTE FEATURES
+    %% COMPUTE FEATURES
     currFeatures_dir = dir([curr_dir filesep 'EEG_Features' filesep 'Rev_' EEG.setname '_Epoch*.mat']);
     currFeatures_finished = cellfun(@(x) strsplit(x,{'Epoch'}),{currFeatures_dir.name},'un',0);
     currFeatures_finished = cellfun(@(x) strsplit(x{2},{'.mat'}),currFeatures_finished,'un',0);
@@ -95,7 +95,7 @@ if ~skip_analysis
         fprintf(['\n ***************************** Features Computed for All Epochs ***************************** \n']);
     end
     
-    % CURATE FEATURES
+    %% CURATE FEATURES
     fprintf(['\n ***************************** Curating Computed Features ***************************** \n']);
     Featurefiles_directory = [curr_dir filesep 'EEG_Features'];
     Featurefiles_basename = ['Rev_' EEG.setname];

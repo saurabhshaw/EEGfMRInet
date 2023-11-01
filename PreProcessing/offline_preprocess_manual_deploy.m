@@ -16,7 +16,11 @@ else
     load(stageCompletion_file)
     % max_finishedStage = max(find(preprocessing_stageCompletion));
 end
-    
+
+if ~isfield(EEG,'preprocess_steps_completed')
+    EEG.preprocess_steps_completed = {};
+end
+
 %% 1 - Filter the data:
 current_stage = 1;
 if max_finishedStage == current_stage-1

@@ -3,7 +3,8 @@ function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_
 %% GENERAL PARAMS
 
 %%%%%&&%%%%%%%%%%% for the purposes of this example, only edit line 6 %%%%%%%%%%%%%%%%%%
-repo_filepath = 'C:\Users\danme\Documents_local\neuroscience_phd\research_code\EEGfMRInet';
+base_path_example = fileparts(mfilename('fullpath')); cd(base_path_example); cd ..;
+repo_filepath = pwd;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % set general file naming params
