@@ -660,8 +660,8 @@ EEGData = num2cell(EEG.data,2);
         Noise=zeros(1,n);
         pcamat=zeros(floor(max(markerl)/2),pre_peak+max_postpeak+1);
         parsecmarker2 = secmarker2;
-        STARTFLAG = 0;
-        LASTFLAG = 0;
+        % STARTFLAG = 0; %dmer2: initialized above, reinitializing here clears an important variable state for ongoing forloop iterations
+        % LASTFLAG = 0; %dmer2: initialized above, reinitializing here clears an important variable state for ongoing forloop iterations
         
         % Zero-mean the EEGData for the current channel:
         tmpdata = EEGData{c} - mean(EEGData{c});
