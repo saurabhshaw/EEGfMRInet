@@ -4,7 +4,7 @@ function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_
 % set file naming params
 general_param.study_name = 'HCWMIVO';
 general_param.modality = 'EEGfMRI';
-data_subset_folder = 'dataset_1';
+data_subset_folder = 'dataset_2';
 repo_filepath = 'C:\Users\DaniWorkstation\Documents_local\neuroscience_phd\research_code\EEGfMRInet';
 
 % setting base paths
@@ -21,14 +21,10 @@ addpath(genpath(eeglab_directory));
 [~,host_name] = system('hostname'); host_name = strtrim(host_name);
 switch host_name        
     case 'DESKTOP-8S2HATP' % Dan home PC
-        % general_param.base_path_rc = ['C:\Users\DaniWorkstation\OneDrive\Documents_personal\Neuroscience PhD\research_code'];
-        % base_path_rd = 'D:\research_data';
-        general_param.base_path_rd = 'E:\research_data';
+        general_param.base_path_rd = 'D:\research_data';
 
     case 'MSI' % Dan laptop
-        % general_param.base_path_rc = ['idk'];
         general_param.base_path_rd = 'D:\research_data';
-        % base_path_rd = 'E:\research_data';
 end
 
 % define runs and conditions

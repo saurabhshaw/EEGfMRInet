@@ -856,12 +856,12 @@ EEGData = num2cell(EEG.data,2);
                         if curr_secmarker2+post_peak <= length(Iorig) %fix so that when it goes beyond the end of the data, does not later on cause crash
                             INoise(curr_secmarker2-pre_peak:curr_secmarker2+post_peak)...
                                 =Alpha*avg_art;
-                        end;
+                        end
                     catch
-                        if c==1
+                        % if c==1 %dmer2: needs to be open to all channels to prevent downstream index out of bounds errors
                             warning('Not enough data to remove last artifact segment');
                             LASTFLAG=1;
-                        end
+                        % end
                     end
                 else
                     if c==1
