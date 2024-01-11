@@ -75,9 +75,11 @@ for kk = 1:length(general_param.sub_dir)
                     end
                     end_idx = floor(start_idx + window_length)-1;
 
-                    % avoid out of bounds errors + maintain max samples
+                    % avoid out of bounds errors + maintain max epochs
                     while end_idx(end) > size(EEG.data,2)
-                        end_idx = end_idx - 1;
+                        % final epoch extends farther than data exists, rem
+                        end_idx = end_idx(1:end-1);
+                        start_idx = start_idx(1:end-1);
                     end
 
                     % save epoch definitions
