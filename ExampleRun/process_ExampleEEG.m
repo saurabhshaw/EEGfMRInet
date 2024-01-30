@@ -5,7 +5,7 @@ curr_condition = 'EyesClosed';
 
 %% get req'd parameters
 % addPaths
-[general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_example_setup_params();
+[general_param, scan_param, control_param, EEGfMRI_preprocess_param, EEG_preprocess_param, feature_param, CONN_param] = get_example_setup_params();
 
 % PREP DATA FOR PRE-PROCESSING
 % get participant data location & data
@@ -38,7 +38,7 @@ if ~skip_analysis
     if control_param.overwrite_files || isempty(dir([curr_dir filesep 'PreProcessed' filesep EEG.setname '_preprocessed.set']))
         EEG = offline_preprocess_manual_deploy(EEG_preprocess_param,curr_dir,EEG.setname,control_param.overwrite_files,EEG);
     else
-        EEG = pop_loadset('filename',[EEG.setname '_preprocessed.set'],'filepath',[condition_dir filesep 'PreProcessed']); EEG = eeg_checkset( EEG );
+        EEG = pop_loadset('filename',[EEG.setname '_preprocessed.set'],'filepath',[curr_dir filesep 'PreProcessed']); EEG = eeg_checkset( EEG );
     end
     
     %% BEGIN FEATURE COMPUTATION
@@ -83,6 +83,19 @@ if ~skip_analysis
     % [compute_feat, Features, final_FeatureIDX] = curate_features_deploy(feature_names, featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
     [compute_feat] = curate_features_deploy(feature_param.feature_names, feature_param.featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
     
+    %% SELECT FEATURES
+    % Obtain the label vector:
+    curr_CONN_IDX = EEGfMRI_corrIDX(ii,m);
+    YY_final = cell2mat(CONN_data.fMRI_labels_selected_window_avg_thresh{ii-1}{curr_CONN_IDX});  % NOTE:only because this is excluding the first subject
+    YY_final_continuous = (CONN_data.fMRI_labels_selected_window_avg{ii-1}{curr_CONN_IDX}); YY_final_continuous = cat(1,YY_final_continuous{:}); % NOTE:only because this is excluding the first subject
+    YY_final_continuous_thresh = double(YY_final_continuous >= CONN_cfg.threshold);
+    
+    % Select relevant features:
+    nclassesIdx = randperm(length(YY_final));
+    [Features,Feature_labels_mRMR,Feature_mRMR_order] = curate_features_mRMR_deploy(Featurefiles_basename, Featurefiles_directory, YY_final, max_features);
+    save([Featurefiles_directory filesep Featurefiles_basename '_mRMRiterateResults'],'Features','Feature_labels_mRMR','Feature_mRMR_order');
+    
+      
 else
     fprintf(['\n ********** CDT FILE MISSING ********** \n']);
 end
