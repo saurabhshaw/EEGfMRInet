@@ -110,6 +110,13 @@ for kk = 1:length(general_param.sub_dir)
                     % [compute_feat, Features, final_FeatureIDX] = curate_features_deploy(feature_names, featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
                     [compute_feat] = curate_features_deploy(feature_param.feature_names, feature_param.featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
 
+                    % SELECT FEATURES
+                    % obtain label vector
+
+
+                    % select relevant features: (curate_features_mRMR deploy call
+                    
+
                 else
                     fprintf(['\n ********** CDT FILE MISSING :: Processing Subject: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' curr_condition ' ********** \n']);
                 end
