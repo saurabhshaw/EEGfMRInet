@@ -21,20 +21,25 @@ num_timepoints = 160;
 fp_x = folder_path_x + eeg_features;
 load(fp_x)
 
+%% obtain label vectors (activation)
 
-%% obtain label vector
-% split into SMN & DMN activation (just for organization)
-activation_threshold = 0.1; %how to properly quantify binary activation/non-activation of fmri time series?
+activation_threshold = 0.3; %how to properly quantify binary activation/non-activation of fmri time series?
 
-%smn activity labels (for first participant)
-smn_activity_cont = data_curated(1,:,ppt_no);%for first participant
-smn_y = (smn_activity_cont>activation_threshold)';
+%smn signal intensity labels
+smn_sig_intensity = data_curated(1,:,ppt_no);%for first participant
+%normalize signal intensities
+smn_sig_intensity_norm = smn_sig_intensity;%PLACEHOLDER 
+%get activation labels
+smn_y = (smn_sig_intensity_norm>activation_threshold)';
 
-%dmn activity labels
-dmn_activity_cont = data_curated(2,:,ppt_no);%for first participant
-dmn_y = (dmn_activity_cont>activation_threshold)';
+%dmn signal intensity labels
+dmn_sig_intensity = data_curated(2,:,ppt_no);%for first participant
+%normalize signal intensities
+dmn_sig_intensity_norm = dmn_sig_intensity;%PLACEHOLDER
+%get activation labels
+dmn_y = (dmn_sig_intensity_norm>activation_threshold)';
 
-%% Remove redundant features using upper/lower triang for each timepoint and merge into full feature set
+%% Remove redundant features using upper triang for each timepoint and merge into full feature set
 % get dimension specifics depending on feature computed
 if ndims(curr_Feature_curated)==4
     step_size = Feature_size(1)*Feature_size(2);
@@ -70,7 +75,11 @@ end
 % [smn_feature_rank, smn_rank_scores] = fscmrmr(final_features_all_timepoints,smn_y(1:num_timepoints)); 
 % [dmn_feature_rank, dmn_rank_scores] = fscmrmr(final_features_all_timepoints,dmn_y(1:num_timepoints));
 
-%test - using fscmrmr for single timepoint
-[TEST_smn_feature_rank, TEST_smn_rank_scores] = fscmrmr(final_features,smn_y(160)); 
-[TEST_dmn_feature_rank, TEST_dmn_rank_scores] = fscmrmr(final_features,dmn_y(160));
-% display(isequal(dmn_feature_rank,TEST_dmn_feature_rank));
+%%%%% TESTING
+[TEST_1_smn_feature_rank, TEST_1_smn_rank_scores] = fscmrmr(final_features,smn_y(160)); 
+[TEST_1_dmn_feature_rank, TEST_1_dmn_rank_scores] = fscmrmr(final_features,dmn_y(160));
+
+[TEST_2_smn_feature_rank, TEST_2_smn_rank_scores] = fscmrmr(final_features_all_timepoints(138:143,:),smn_y(138:143)); 
+[TEST_2_dmn_feature_rank, TEST_2_dmn_rank_scores] = fscmrmr(final_features_all_timepoints(138:143,:),dmn_y(138:143));
+
+display(isequal(TEST_1_dmn_feature_rank,TEST_2_dmn_feature_rank));
