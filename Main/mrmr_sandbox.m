@@ -28,14 +28,14 @@ activation_threshold = 0.3; %how to properly quantify binary activation/non-acti
 %smn signal intensity labels
 smn_sig_intensity = data_curated(1,:,ppt_no);%for first participant
 %normalize signal intensities
-smn_sig_intensity_norm = smn_sig_intensity;%PLACEHOLDER 
+smn_sig_intensity_norm = normalize(smn_sig_intensity);%normalization method: zcore (default) 
 %get activation labels
 smn_y = (smn_sig_intensity_norm>activation_threshold)';
 
 %dmn signal intensity labels
 dmn_sig_intensity = data_curated(2,:,ppt_no);%for first participant
 %normalize signal intensities
-dmn_sig_intensity_norm = dmn_sig_intensity;%PLACEHOLDER
+dmn_sig_intensity_norm = normalize(dmn_sig_intensity);%normalization method: zcore (default)
 %get activation labels
 dmn_y = (dmn_sig_intensity_norm>activation_threshold)';
 
@@ -75,11 +75,17 @@ end
 % [smn_feature_rank, smn_rank_scores] = fscmrmr(final_features_all_timepoints,smn_y(1:num_timepoints)); 
 % [dmn_feature_rank, dmn_rank_scores] = fscmrmr(final_features_all_timepoints,dmn_y(1:num_timepoints));
 
-%%%%% TESTING
-[TEST_1_smn_feature_rank, TEST_1_smn_rank_scores] = fscmrmr(final_features,smn_y(160)); 
-[TEST_1_dmn_feature_rank, TEST_1_dmn_rank_scores] = fscmrmr(final_features,dmn_y(160));
+%% TESTING %%
+% [TEST_1_smn_feature_rank, TEST_1_smn_rank_scores] = fscmrmr(final_features,smn_y(160)); 
+% [TEST_1_dmn_feature_rank, TEST_1_dmn_rank_scores] = fscmrmr(final_features,dmn_y(160));
+tic
+% [TEST_2_smn_feature_rank, TEST_2_smn_rank_scores] = fscmrmr(final_features_all_timepoints(:,1:1000),smn_y(1:160)); 
+[TEST_2_dmn_feature_rank, TEST_2_dmn_rank_scores] = fscmrmr(final_features_all_timepoints(:,1:3000),dmn_y(1:160));
+toc
 
-[TEST_2_smn_feature_rank, TEST_2_smn_rank_scores] = fscmrmr(final_features_all_timepoints(138:143,:),smn_y(138:143)); 
-[TEST_2_dmn_feature_rank, TEST_2_dmn_rank_scores] = fscmrmr(final_features_all_timepoints(138:143,:),dmn_y(138:143));
-
-display(isequal(TEST_1_dmn_feature_rank,TEST_2_dmn_feature_rank));
+tic
+% [TEST_2_smn_feature_rank, TEST_2_smn_rank_scores] = fscmrmr(final_features_all_timepoints(:,1:1000),smn_y(1:160)); 
+[TEST_X_dmn_feature_rank, TEST_X_dmn_rank_scores] = mRMR(final_features_all_timepoints(:,1:3000),double(dmn_y(1:160)),3000);
+toc
+% display(isequal(TEST_1_dmn_feature_rank,TEST_2_dmn_feature_rank));
+% display(isequal(TEST_1_smn_feature_rank,TEST_2_smn_feature_rank));

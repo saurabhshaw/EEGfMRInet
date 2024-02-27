@@ -66,7 +66,8 @@ fea_base = idxs(1:K);
 
 fea(1) = idxs(1);
 
-KMAX = min(1000,nd); %500
+% KMAX = min(1000,nd); %500
+KMAX = K; %500
 
 idxleft = idxs(2:KMAX);
 
