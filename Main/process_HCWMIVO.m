@@ -111,10 +111,10 @@ for kk = 1:length(general_param.sub_dir)
                     [compute_feat] = curate_features_deploy(feature_param.feature_names, feature_param.featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
 
                     % SELECT FEATURES
-                    % obtain label vector
-
-
-                    % select relevant features: (curate_features_mRMR deploy call
+                    % output workspace for standalone solution, deleteme
+                    if isequal(general_param.sub_dir_mod(kk).PID,'1083')
+                        save(['mrmr_ready_' general_param.sub_dir_mod(kk).PID curr_condition]);
+                    end
                     
 
                 else

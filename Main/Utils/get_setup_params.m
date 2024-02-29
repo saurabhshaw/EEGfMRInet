@@ -4,7 +4,7 @@ function [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_
 % set file naming params
 general_param.study_name = 'HCWMIVO';
 general_param.modality = 'EEGfMRI';
-data_subset_folder = 'dataset_3';
+data_subset_folder = 'all_data\ML_x';
 repo_filepath = 'C:\Users\DaniWorkstation\Documents_local\neuroscience_phd\research_code\EEGfMRInet';
 
 % setting base paths
@@ -21,7 +21,7 @@ addpath(genpath(eeglab_directory));
 [~,host_name] = system('hostname'); host_name = strtrim(host_name);
 switch host_name        
     case 'DESKTOP-8S2HATP' % Dan home PC
-        general_param.base_path_rd = 'E:\research_data';
+        general_param.base_path_rd = 'D:\research_data';
 
     case 'MSI' % Dan laptop
         general_param.base_path_rd = 'D:\research_data';
@@ -125,6 +125,7 @@ CONN_param.threshold = 0.3; % Threshold for making the time course binary
 CONN_param.class_types = 'networks'; % Can be 'subnetworks' or 'networks' which will be based on the CONN_cfg.net_to_analyze
 CONN_param.multilabel = 0; % Whether classification is multilabel or single label
 CONN_param.ROIs_toUse = {'ICA_CEN','ICA_LCEN','ICA_anteriorSN','ICA_posteriorSN','ICA_ventralDMN','ICA_dorsalDMN'}; % Need this if using ROIs for labels rather than ICA
+CONN_param.condition_sequence_w_timepoints = dictionary('rsEEG_Pre',160,'Neutral',118,'MInjury',118,'rsEEG_Post',160);
 CONN_param.rescale = 1; % Rescale between 0 and 1 if selected
 
 
