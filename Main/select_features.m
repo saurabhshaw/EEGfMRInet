@@ -64,12 +64,95 @@ for i = 1:length(currFeatures_curated)
                 % run mRMR: all timepoints of curr condition @ timepoint-window m, frequency n
                 [elec_output_features{n}, elec_output_scores{n},elec_dataset_mRMR,elec_feature_labels_mRMR] = mRMR_iterate_loop(curr_dataset_mRMR,curr_labels_mRMR,innermost_feature_size,max_features,elec_dataset_mRMR,elec_feature_labels_mRMR);
 
-                disp(['Finished mRMR loop for function ' currFeatures_curated{i} ' Window ' num2str(m) ' FrequencyBand ' num2str(n) 'of' curr_condition 'condition']);
+                disp(['Finished mRMR loop for function ' currFeatures_curated{i} ' Window ' num2str(m) ' FrequencyBand ' num2str(n) ' of ' curr_condition ' condition']);
             end
 
+            curr_feature_size = [feat_file_Feature_size(2) size(elec_output_features{1},2)];
+            [freq_output_features{m}, freq_output_scores{m},freq_dataset_mRMR{m},freq_feature_labels_mRMR{m}] = mRMR_iterate_loop(elec_dataset_mRMR,curr_labels_mRMR,curr_feature_size,max_features,freq_dataset_mRMR{m},freq_feature_labels_mRMR{m},elec_feature_labels_mRMR);
+
+        end
+
+        freq_dataset_mRMR = cat(2,freq_dataset_mRMR{:});
+        freq_feature_labels_mRMR = cat(2,freq_feature_labels_mRMR{:});
+
+    else % Between frequency computation
+        freq_dataset_mRMR = []; freq_feature_labels_mRMR = [];
+        freq_output_features = cell(1,feat_file_Feature_size(1)); freq_output_scores = cell(1,feat_file_Feature_size(1));
+        % for m = 1:feat_file_Feature_size(1) % Number of Windows
+        for m = 1:3 % replace me with line 81 -- testing
+            
+            % elec_dataset_mRMR = []; elec_feature_labels_mRMR = [];
+            elec_dataset_mRMR = cell(1,feat_file_Feature_size(2)); elec_feature_labels_mRMR = cell(1,feat_file_Feature_size(2));
+            elec_output_features = cell(1,feat_file_Feature_size(2)); elec_output_scores = cell(1,feat_file_Feature_size(2));
+            
+            curr_dataset_mRMR_parfor = cellfun(@(x)squeeze(x(m,:,:,:,:)),curr_Feature_curated,'un',0);
+
+            tic
+            % Run one less outer loop for frequency due to the n < p
+            % computation used for cross-frequency features - this causes
+            % all n-p combinations of the last n to be empty
+            for n = 1:(feat_file_Feature_size(2)-1) % Number of Frequency Windows
+                
+                innerFreq_dataset_mRMR = []; innerFreq_feature_labels_mRMR = []; innerFreq_loopIDX_mRMR = [];
+                innerFreq_output_features = cell(1,feat_file_Feature_size(3)); innerFreq_output_scores = cell(1,feat_file_Feature_size(3));
+
+                for p = 1:feat_file_Feature_size(3)
+                    % flip p and n index positions because this was not
+                    % kept consistent from the single frequency computation
+                    % where n is the second index - fix this by indexing
+                    % curr_Feature_curated(m,n,p,:,:) in
+                    % curate_features_deploy in future
+                    % But since the number of features on both levels are
+                    % the same - n,p works
+                    
+                    if n < p % This is how features were computed for cross-frequency features
+                        % Get current dataset for mRMR:
+                        curr_dataset_mRMR = cellfun(@(x)squeeze(x(n,p,:,:)),curr_dataset_mRMR_parfor,'un',0);
+                        curr_dataset_mRMR = cell2mat(cellfun(@(x)x(:),curr_dataset_mRMR,'un',0))';
+                        
+                        % Run mRMR at this level:
+                        [innerFreq_output_features{p}, innerFreq_output_scores{p},innerFreq_dataset_mRMR,innerFreq_feature_labels_mRMR] = mRMR_iterate_loop(curr_dataset_mRMR,curr_labels_mRMR,innermost_feature_size,max_features,innerFreq_dataset_mRMR,innerFreq_feature_labels_mRMR);                        
+                        innerFreq_loopIDX_mRMR = [innerFreq_loopIDX_mRMR repmat([p],1,size(innerFreq_output_features{p},2))];
+                        
+                    end
+                    disp(['Finished mRMR loop for function ' currFeatures_curated{i} ' Window ' num2str(m) ' FrequencyBands ' num2str(n) '-' num2str(p) ' of ' curr_condition ' condition']);
+                    
+                end
+                
+                % Run mRMR at this level:
+
+                curr_feature_size = [feat_file_Feature_size(3) size(innerFreq_output_features{end},2)];
+                [elec_output_features{n}, elec_output_scores{n},elec_dataset_mRMR{n},elec_feature_labels_mRMR{n}] = mRMR_iterate_loop(innerFreq_dataset_mRMR,curr_labels_mRMR,curr_feature_size,max_features,elec_dataset_mRMR{n},elec_feature_labels_mRMR{n},innerFreq_feature_labels_mRMR,innerFreq_loopIDX_mRMR);
+                
+            end
+            toc
+            
+            % Run mRMR at this level:
+            elec_loopIDX_mRMR = [];
+            for temp_idx = 1:length(elec_output_features) elec_loopIDX_mRMR = [elec_loopIDX_mRMR repmat([temp_idx],[1 size(elec_output_features{temp_idx},2)])]; end
+            
+            elec_dataset_mRMR = cat(2,elec_dataset_mRMR{:});
+            elec_feature_labels_mRMR = cat(2,elec_feature_labels_mRMR{:});
+            curr_feature_size = [feat_file_Feature_size(2) size(elec_output_features{1},2)];
+            [freq_output_features{m}, freq_output_scores{m},freq_dataset_mRMR,freq_feature_labels_mRMR] = mRMR_iterate_loop(elec_dataset_mRMR,curr_labels_mRMR,curr_feature_size,max_features,freq_dataset_mRMR,freq_feature_labels_mRMR,elec_feature_labels_mRMR,elec_loopIDX_mRMR);
+            
         end
     end
+    % Run mRMR at this level:
+    curr_feature_size = [feat_file_Feature_size(1) size(freq_output_features{1},2)];
+    [wind_output_features{i}, wind_output_scores{i},wind_dataset_mRMR,wind_feature_labels_mRMR] = mRMR_iterate_loop(freq_dataset_mRMR,curr_labels_mRMR,curr_feature_size,max_features,wind_dataset_mRMR,wind_feature_labels_mRMR,freq_feature_labels_mRMR);
 
 end
 
+final_dataset_mRMR = wind_dataset_mRMR;
+final_feature_labels_mRMR = wind_feature_labels_mRMR;
 
+nestedFeature_struct = [];
+nestedFeature_struct.wind_output_features = wind_output_features;
+nestedFeature_struct.wind_output_scores = wind_output_scores;
+nestedFeature_struct.freq_output_features = freq_output_features;
+nestedFeature_struct.freq_output_scores = freq_output_scores;
+nestedFeature_struct.freq_dataset_mRMR = freq_dataset_mRMR;
+nestedFeature_struct.freq_feature_labels_mRMR = freq_feature_labels_mRMR;
+
+save([Featurefiles_directory filesep Featurefiles_basename '_mRMRiterateResults'],'final_dataset_mRMR','final_feature_labels_mRMR','currFeatures_curated','nestedFeature_struct');

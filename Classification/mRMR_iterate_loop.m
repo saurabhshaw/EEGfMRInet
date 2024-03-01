@@ -25,7 +25,7 @@ if isempty(varargin) % Will be empty for the inner-most loop
             code_to_eval = [code_to_eval ',curr_feature_labels_mRMR('];
         end
     end
-    code_to_eval = [code_to_eval '] = ind2sub(curr_feature_size,output_features);'];
+    code_to_eval = [code_to_eval '] = ind2sub(curr_feature_size,output_features);']; %example: '[curr_feature_labels_mRMR(1,:),curr_feature_labels_mRMR(2,:)] = ind2sub(curr_feature_size,output_features);'
     eval(code_to_eval);
     
 else % This is one of the outer loops
