@@ -31,7 +31,7 @@ for i = 1:size(all_conditions)
 end
 curr_condition_end = curr_condition_start+curr_condition_timepoints;
 % final labels
-curr_labels_mRMR = curr_labels_mRMR_all(curr_condition_start+1:curr_condition_end);
+curr_labels_mRMR = double(curr_labels_mRMR_all(curr_condition_start+1:curr_condition_end));
 
 %% iterative mRMR
 %initializations****
@@ -60,10 +60,11 @@ for i = 1:length(currFeatures_curated)
                 curr_dataset_mRMR = cellfun(@(x)x(:),curr_dataset_mRMR,'un',0);% converts dim 68x68 cell into dim 4624x1 cell column vector, for all timepoints
                 curr_dataset_mRMR = cell2mat(curr_dataset_mRMR);% converts (merges) dim 4624x1 cell column vector of each timepoint together into single 4624x118 matrix  
                 curr_dataset_mRMR = curr_dataset_mRMR';%transposes said matrix for correct dimensionality for mRMR x input -- ready for mrmr x-input
+                
                 % run mRMR: all timepoints of curr condition @ timepoint-window m, frequency n
-                % [elec_output_features{n}, elec_output_scores{n},elec_dataset_mRMR,elec_feature_labels_mRMR] = mRMR_iterate_loop(curr_dataset_mRMR,curr_labels_mRMR,innermost_feature_size,max_features,elec_dataset_mRMR,elec_feature_labels_mRMR);
+                [elec_output_features{n}, elec_output_scores{n},elec_dataset_mRMR,elec_feature_labels_mRMR] = mRMR_iterate_loop(curr_dataset_mRMR,curr_labels_mRMR,innermost_feature_size,max_features,elec_dataset_mRMR,elec_feature_labels_mRMR);
 
-                disp(['Finished mRMR loop for function ' currFeatures_curated{i} ' Window ' num2str(m) ' FrequencyBand ' num2str(n)]);
+                disp(['Finished mRMR loop for function ' currFeatures_curated{i} ' Window ' num2str(m) ' FrequencyBand ' num2str(n) 'of' curr_condition 'condition']);
             end
 
         end

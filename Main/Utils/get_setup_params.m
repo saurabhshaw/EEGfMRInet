@@ -12,10 +12,11 @@ general_param.base_path = repo_filepath;
 general_param.base_path_src = [repo_filepath filesep 'Main'];
 toolboxes_path = [general_param.base_path filesep 'Toolboxes'];
 eeglab_directory = [toolboxes_path filesep 'EEGLAB'];
+fslib_directory = [toolboxes_path filesep 'FSLib_v6.2.1_2018'];
 
 % add paths to wd 
 addpath(genpath(general_param.base_path)); rmpath(genpath(toolboxes_path));
-addpath(genpath(eeglab_directory));
+addpath(genpath(eeglab_directory));addpath(genpath(fslib_directory));
 
 % set research code/research data paths
 [~,host_name] = system('hostname'); host_name = strtrim(host_name);
