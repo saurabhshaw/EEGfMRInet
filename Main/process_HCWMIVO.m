@@ -1,6 +1,11 @@
 % get req'd parameters
 [general_param, scan_param, control_param,EEGfMRI_preprocess_param,EEG_preprocess_param, feature_param, CONN_param] = get_setup_params();
 
+% get fmri data if exists
+if CONN_param.fmri_data_all_ppts_filepath ~= "" 
+    load(CONN_param.fmri_data_all_ppts_filepath);
+end
+
 for kk = 1:length(general_param.sub_dir)
     for ii = 1:length(general_param.runs)
         curr_run = general_param.runs{ii};
@@ -111,11 +116,19 @@ for kk = 1:length(general_param.sub_dir)
                     [compute_feat] = curate_features_deploy(feature_param.feature_names, feature_param.featureVar_to_load, Featurefiles_basename, Featurefiles_directory, 0, 0);
 
                     % SELECT FEATURES
-                    % output workspace for standalone solution, deleteme
-                    if isequal(general_param.sub_dir_mod(kk).PID,'1083')
-                        save(['mrmr_ready_' general_param.sub_dir_mod(kk).PID curr_condition]);
+                    % output workspace for mrmr feature selection
+                    if ~exist([Featurefiles_directory filesep 'mrmr'],'dir')
+                        mkdir([Featurefiles_directory filesep 'mrmr']);
                     end
-                    
+                    workspace_filename = [general_param.sub_dir_mod(kk).PID '_' curr_condition];
+                    save_full_path = [Featurefiles_directory filesep 'mrmr' filesep 'mrmr_ready_' workspace_filename];
+                    save(save_full_path);
+                    tic
+                    for ROI_index = 1:length(ROI_ID)
+                        select_features([save_full_path '.mat'],ROI_index);
+                    end
+                    toc
+
 
                 else
                     fprintf(['\n ********** CDT FILE MISSING :: Processing Subject: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' curr_condition ' ********** \n']);

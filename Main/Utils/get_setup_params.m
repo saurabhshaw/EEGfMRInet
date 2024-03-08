@@ -127,6 +127,7 @@ CONN_param.class_types = 'networks'; % Can be 'subnetworks' or 'networks' which 
 CONN_param.multilabel = 0; % Whether classification is multilabel or single label
 CONN_param.ROIs_toUse = {'ICA_CEN','ICA_LCEN','ICA_anteriorSN','ICA_posteriorSN','ICA_ventralDMN','ICA_dorsalDMN'}; % Need this if using ROIs for labels rather than ICA
 CONN_param.condition_sequence_w_timepoints = dictionary('rsEEG_Pre',160,'Neutral',118,'MInjury',118,'rsEEG_Post',160);
+CONN_param.fmri_data_all_ppts_filepath = 'D:\research_data\HCWMIVO\all_data\ML_y\fMRI_ICNActivity_All.mat';
 CONN_param.rescale = 1; % Rescale between 0 and 1 if selected
 
 
