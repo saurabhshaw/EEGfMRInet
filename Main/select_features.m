@@ -16,10 +16,133 @@ roi_name = ROI_ID(roi_idx);
 curr_fmri_data = data_curated(roi_idx,:,ppt_idx);
 
 %% get feature labels for curr condition
-curr_fmri_data_norm = normalize(curr_fmri_data,"norm"); %L2 p-norm. what's the best way to normalize?
-activation_threshold = prctile(curr_fmri_data_norm,70); %threshold of 70th percentile -- how to be optimally conservative?
+curr_fmri_data_norm = normalize(curr_fmri_data,"range"); % [0 1]
+% activation_threshold = prctile(curr_fmri_data_norm,75); 
+activation_threshold = CONN_param.threshold; % bl threshold
 % get all labels for all conditions
 curr_labels_mRMR_all = (curr_fmri_data_norm>activation_threshold)';
+
+%%%% QUANTITATIVELY testing thresholds ---- 
+
+max_corr = 0;
+ground_truth_fmri = normalize(curr_fmri_data,"range");
+%testing absolutes
+fmri_data_for_thresholding = normalize(abs(curr_fmri_data),"range");
+method = 'absolutes';
+max_xcorr_after_abs = 0;
+for i = 0.9:-0.01:0.05
+    threshold = i;
+    labels_absolutes = (fmri_data_for_thresholding>threshold)';
+    max_xcorr_absolutes = max(xcorr(ground_truth_fmri,labels_absolutes,"normalized")); 
+    if max_xcorr_absolutes > max_corr
+        max_corr = max_xcorr_absolutes;
+        chosen_method_and_threshold = [method ', threshold > ' string(i)];
+        chosen_labels = labels_absolutes;
+    if sum(chosen_labels==1)>length(curr_fmri_data)/1.5
+        break;
+    end
+    end
+    if max_xcorr_absolutes > max_xcorr_after_abs
+        max_xcorr_after_abs = max_xcorr_absolutes;
+    end
+end
+abs_label_1_0_ratio = sum(chosen_labels==1)/sum(chosen_labels~=1) 
+
+% graph
+xcorr_output = xcorr(ground_truth_fmri,chosen_labels,"normalized");
+figure;plot(xcorr_output);title(['THRESHOLDING TECHNIQUE: ' chosen_method_and_threshold "; resulting max normalized xcorr value: " max(xcorr_output)]);
+
+% plot best results
+compPlot = figure('Name', 'Comparison of stuff');
+ax1 = axes('Parent', compPlot);
+plot(ax1, normalize(curr_fmri_data(1:50),"range"), 'Color', 'blue');
+hold on
+plot(ax1, chosen_labels(1:50)*0.9, 'Color', 'red');
+hold off
+title(ax1,['THRESHOLDING TECHNIQUE: ' chosen_method_and_threshold "; resulting max normalized xcorr value: " max(xcorr_output)]);
+
+%testing squares
+max_corr = 0;
+fmri_data_for_thresholding = normalize((curr_fmri_data).^2,"range");
+method = 'squares';
+max_xcorr_after_squares = 0;
+for j = 0.9:-0.01:0.05
+    threshold = j;
+    labels_squares = (fmri_data_for_thresholding>threshold)';
+    max_xcorr_squares = max(xcorr(ground_truth_fmri,labels_squares,"normalized"));
+    if max_xcorr_squares > max_corr
+        max_corr = max_xcorr_squares;
+        chosen_method_and_threshold = [method ', threshold > ' string(j)];
+        chosen_labels = labels_squares;
+    end
+    if max_xcorr_squares > max_xcorr_after_squares
+        max_xcorr_after_squares = max_xcorr_squares;
+    end
+end
+sq_label_1_0_ratio = sum(chosen_labels==1)/sum(chosen_labels~=1) 
+
+% graph
+xcorr_output = xcorr(ground_truth_fmri,chosen_labels,"normalized");
+figure;plot(xcorr_output);title(['THRESHOLDING TECHNIQUE: ' chosen_method_and_threshold "; resulting max normalized xcorr value: " max(xcorr_output)]);
+
+% plot best results
+compPlot = figure('Name', 'Comparison of stuff');
+ax1 = axes('Parent', compPlot);
+plot(ax1, normalize(curr_fmri_data(1:50),"range"), 'Color', 'blue');
+hold on
+plot(ax1, chosen_labels(1:50)*0.9, 'Color', 'red');
+hold off
+title(ax1,['THRESHOLDING TECHNIQUE: ' chosen_method_and_threshold "; resulting max normalized xcorr value: " max(xcorr_output)]);
+
+%testing outside-bounds
+max_corr = 0;
+optimization = [];
+fmri_data_for_thresholding = normalize(curr_fmri_data,"range");
+method = 'outside-bounds';
+for k = 0.05:0.01:0.9
+    lower_threshold = k;
+    upper_threshold = 1-lower_threshold;
+    labels_outside_bounds = (fmri_data_for_thresholding<lower_threshold | fmri_data_for_thresholding>upper_threshold)';
+    max_xcorr_outside_bounds = max(xcorr(ground_truth_fmri,labels_outside_bounds,"normalized")); 
+    if max_xcorr_outside_bounds > max_corr
+        max_corr = max_xcorr_outside_bounds;
+        chosen_lower_threshold = k;
+        chosen_upper_threshold = 1-lower_threshold;
+        chosen_method_and_threshold = [method ', < lower(' string(chosen_lower_threshold) '), > upper ('  string(chosen_upper_threshold)];
+        chosen_labels = labels_outside_bounds;
+
+        oc_label_1_0_ratio = sum(chosen_labels==1)/sum(chosen_labels~=1);
+        optimization = [optimization oc_label_1_0_ratio];
+
+    % after analysis below, concluded 36 to be optimal in terms of variance
+    % capture and balanced labels. NOTE: 37, 38 also feasible.
+    if length(optimization)==36
+        break;
+    end
+    end
+end
+
+% analysis
+% oc_label_1_0_ratio_max = sum(chosen_labels==1)/sum(chosen_labels~=1)
+figure; plot(optimization);title('optimization test');
+
+% graph
+xcorr_output = xcorr(ground_truth_fmri,chosen_labels,"normalized");
+figure;plot(xcorr_output);title(['THRESHOLDING TECHNIQUE, 36: ' chosen_method_and_threshold "; resulting max normalized xcorr value: " max(xcorr_output)]);
+
+% plot best results
+compPlot = figure('Name', 'Comparison of stuff');
+ax1 = axes('Parent', compPlot);
+plot(ax1, normalize(curr_fmri_data(1:50),"range"), 'Color', 'blue');
+hold on
+plot(ax1, chosen_labels(1:50)*0.9, 'Color', 'red');
+hold off
+title(ax1,['THRESHOLDING TECHNIQUE, 36: ' chosen_method_and_threshold "; resulting max normalized xcorr value: " max(xcorr_output)]);
+
+%%%% QUANTITATIVE testing thresholds ---- 
+
+
+
 % reduce labels focusing only on current condition
 curr_condition_timepoints = CONN_param.condition_sequence_w_timepoints(curr_condition);
 all_conditions = keys(CONN_param.condition_sequence_w_timepoints);
@@ -53,8 +176,8 @@ for i = 1:length(currFeatures_curated)
         % initializations per window****
         freq_dataset_mRMR = cell(1,feat_file_Feature_size(1)); freq_feature_labels_mRMR = cell(1,feat_file_Feature_size(1));
         freq_output_features = cell(1,feat_file_Feature_size(1)); freq_output_scores = cell(1,feat_file_Feature_size(1));
-        % parfor m = 1:feat_file_Feature_size(1) % Number of Windows
-        for m = 1:2 % replace me with line above -- TESTING
+        parfor m = 1:feat_file_Feature_size(1) % Number of Windows
+        % for m = 1:2 % replace me with line above -- TESTING
             % initializations per frequency****
             elec_dataset_mRMR = []; elec_feature_labels_mRMR = [];
             elec_output_features = cell(1,feat_file_Feature_size(2)); elec_output_scores = cell(1,feat_file_Feature_size(2));
@@ -82,8 +205,8 @@ for i = 1:length(currFeatures_curated)
     else % Between frequency computation
         freq_dataset_mRMR = []; freq_feature_labels_mRMR = [];
         freq_output_features = cell(1,feat_file_Feature_size(1)); freq_output_scores = cell(1,feat_file_Feature_size(1));
-        % for m = 1:feat_file_Feature_size(1) % Number of Windows
-        for m = 1:2 % replace me with line above -- TESTING
+        for m = 1:feat_file_Feature_size(1) % Number of Windows
+        % for m = 1:2 % replace me with line above -- TESTING
             
             % elec_dataset_mRMR = []; elec_feature_labels_mRMR = [];
             elec_dataset_mRMR = cell(1,feat_file_Feature_size(2)); elec_feature_labels_mRMR = cell(1,feat_file_Feature_size(2));

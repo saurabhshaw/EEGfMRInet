@@ -4,7 +4,7 @@ ppt_no = 1; %to iterate over all participants
 % feature_of_interest = 'avg_coherence';
 
 % get filepaths
-data_fp = "D:\research_data\HWCMIVO\all_data\";
+data_fp = "D:\research_data\HCWMIVO\all_data\";
 data_fp_x = data_fp + "ML_x\";
 data_fp_y = data_fp + "ML_y\";
 
@@ -15,7 +15,7 @@ load(fp_y)
 
 % load ppt-specific feature data
 % ppt_id = P_ID(ppt_no);
-folder_path_x = "D:\research_data\HWCMIVO\all_data\ML_x\20210409_HCWMIVO_EEGfMRI-1001\EEG_Features\";
+folder_path_x = "D:\research_data\HCWMIVO\all_data\ML_x\20210409_HCWMIVO_EEGfMRI-1001\EEG_Features\";
 eeg_features = "Rev_rest_1001_rsEEG_Post_AllEpochs_avg_coherence.mat";%to iterate over all features
 num_timepoints = 160;
 fp_x = folder_path_x + eeg_features;
@@ -80,12 +80,12 @@ end
 % [TEST_1_dmn_feature_rank, TEST_1_dmn_rank_scores] = fscmrmr(final_features,dmn_y(160));
 tic
 % [TEST_2_smn_feature_rank, TEST_2_smn_rank_scores] = fscmrmr(final_features_all_timepoints(:,1:1000),smn_y(1:160)); 
-[TEST_2_dmn_feature_rank, TEST_2_dmn_rank_scores] = fscmrmr(final_features_all_timepoints(:,1:3000),dmn_y(1:160));
+[TEST_2_dmn_feature_rank, TEST_2_dmn_rank_scores] = fscmrmr(final_features_all_timepoints(:,1:5000),dmn_y(1:160));
 toc
 
 tic
 % [TEST_2_smn_feature_rank, TEST_2_smn_rank_scores] = fscmrmr(final_features_all_timepoints(:,1:1000),smn_y(1:160)); 
-[TEST_X_dmn_feature_rank, TEST_X_dmn_rank_scores] = mRMR(final_features_all_timepoints(:,1:3000),double(dmn_y(1:160)),3000);
+[TEST_X_dmn_feature_rank, TEST_X_dmn_rank_scores] = mRMR(final_features_all_timepoints(:,1:5000),double(dmn_y(1:160)),5000);
 toc
 % display(isequal(TEST_1_dmn_feature_rank,TEST_2_dmn_feature_rank));
 % display(isequal(TEST_1_smn_feature_rank,TEST_2_smn_feature_rank));
