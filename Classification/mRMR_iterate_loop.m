@@ -3,9 +3,9 @@ function [output_features, output_scores,dataset_mRMR,feature_labels_mRMR] = mRM
 
 %% Run mRMR:
 % using fslib mrmr
-[output_features, output_scores] = mRMR(curr_dataset_mRMR,curr_labels_mRMR,min(max_features,size(curr_dataset_mRMR,2)));
+% [output_features, output_scores] = mRMR(curr_dataset_mRMR,curr_labels_mRMR,min(max_features,size(curr_dataset_mRMR,2)));
 % using matlab mrmr
-[output_features_m, output_scores_m] = fscmrmr(curr_dataset_mRMR,curr_labels_mRMR);output_features_m=output_features_m(1:max_features);
+[output_features, output_scores] = fscmrmr(curr_dataset_mRMR,curr_labels_mRMR);output_features=output_features(1:max_features);
 
 %% Isolate mRMR dataset for next level run:
 dataset_mRMR = cat(2,dataset_mRMR,curr_dataset_mRMR(:,output_features));
