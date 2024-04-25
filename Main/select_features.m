@@ -167,5 +167,5 @@ if ~isfile([save_path '.mat'])
     save_path = [Featurefiles_directory filesep 'mrmr' filesep Featurefiles_basename '_mRMRiterateResults_' roi_name];
     save(save_path,'final_dataset_mRMR','final_feature_labels_mRMR','currFeatures_curated','nestedFeature_struct');
 else
-    fprintf(['\n ***************************** Done MRMR for participant: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' curr_condition ' ***************************** \n']);
+    fprintf(['\n ***************************** Done MRMR for participant: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' curr_condition ', ROI: ' roi_name ' ***************************** \n']);
 end
