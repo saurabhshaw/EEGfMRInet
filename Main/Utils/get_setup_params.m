@@ -104,7 +104,8 @@ feature_param.max_features = 1000; % Keep this CPU-handle-able
 feature_param.testTrainSplit = 0.75; % Classifier - trained on 25%
 feature_param.num_CV_folds = 20; % Classifier - increased folds = more accurate but more computer-intensive??
 feature_param.curate_features_individually = true;
-feature_param.feature_names = {'COH', 'PAC', 'dPLI', 'CFC_SI'}; %  {'COH', 'PAC', 'PLI', 'dPLI', 'CFC_SI'}; potentially remove dPLI?
+% feature_param.feature_names = {'COH', 'PAC', 'dPLI', 'CFC_SI'};
+feature_param.feature_names = {'dPLI'}; %  {'COH', 'PAC', 'dPLI', 'CFC_SI'}; potentially remove dPLI?
 feature_param.featureVar_to_load = 'final'; % Can be 'final' or 'full', leave 'final'
 feature_param.final_featureSelection = 0; % Whether to run final feature selection after mRMR iterate - NOTE - this caused poor classification results
 feature_param.final_featuresToUse = 'individual'; % Can be 'preselected' or 'individualized'

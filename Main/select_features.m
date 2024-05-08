@@ -165,7 +165,7 @@ if ~isfile([save_path '.mat'])
     nestedFeature_struct.freq_feature_labels_mRMR = freq_feature_labels_mRMR;
     
     save_path = [Featurefiles_directory filesep 'mrmr' filesep Featurefiles_basename '_mRMRiterateResults_' roi_name];
-    save(save_path,'final_dataset_mRMR','final_feature_labels_mRMR','currFeatures_curated','nestedFeature_struct');
+    save(save_path,'final_dataset_mRMR','final_feature_labels_mRMR','currFeatures_curated','nestedFeature_struct','curr_labels_mRMR');
 else
     fprintf(['\n ***************************** Done MRMR for participant: ' general_param.sub_dir_mod(kk).PID ', Run: ' curr_run ', Condition: ' curr_condition ', ROI: ' roi_name ' ***************************** \n']);
 end
