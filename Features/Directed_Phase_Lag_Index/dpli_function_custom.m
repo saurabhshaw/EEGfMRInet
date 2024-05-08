@@ -50,7 +50,7 @@ try
                     test = dPLI_surr(i,:,m,n);
                     p = signrank(test, dPLI{sub}(i,m,n)); 
                     
-                    if p < p_value % 4 Conditions 
+                    if p < p_value && m~=n % 4 Conditions 
                         if dPLI{sub}(i,m,n) > 0.5 && median(test) > 0.5
                             gap = dPLI{sub}(i,m,n) - median(test);
                                 if(gap < 0)
