@@ -144,6 +144,7 @@ if any(runFeatureComputation)
     
     % Prefilter the dataset into frequency bands +
     % Precompute the hilbert transform for use in PLI, dPLI, PAC, CFC_SI, PLV:
+    err_flag = 0;
     if (compute_COH + compute_PAC + compute_PLI + compute_dPLI + compute_STE + compute_Bspec + compute_CFC_SI + compute_PLV) > 0
         EEGdata_filt = cell(1,length(frequency_bands));
         EEGdata_filt_hilbert = cell(1,length(frequency_bands));
@@ -155,6 +156,9 @@ if any(runFeatureComputation)
             else
                 EEGdata_filt{i} = bpfilter(freq_low, freq_high, EEG.srate, permute(double(EEG.data),[2, 1])); % Dimension should be time x channels (so it will work on time)
             end
+            
+            % Check for zeroes error in filtering algorithm
+            if EEGdata_filt{i}(1:100,1,2) == 0 err_flag=1; end
             
             % Compute Hilbert transform:
             if length(size(EEG.data)) > 2
@@ -208,7 +212,7 @@ if any(runFeatureComputation)
     
     % Compute features over the various sliding window protocols for the various Epochs
     runFeatureComputation = compute_COH + compute_PAC + compute_PLI + compute_dPLI + compute_STE + compute_FBCSP + compute_BPow + compute_Bspec + compute_CFC_SI + compute_PLV;
-    if any(runFeatureComputation)
+    if any(runFeatureComputation) && ~err_flag
         numFeatures = length(feature_names);
         % Features = cell(1,num_epochs);
         for j = 1:num_epochs
@@ -277,6 +281,8 @@ if any(runFeatureComputation)
                 disp(['Skipping Epoch ', num2str(j) ' - Already Processed']);
             end
         end
+    else
+        disp(['***************************** No Features to Compute (check set params file) OR Feature Computation Error (Tip: Check butter.m algorithm, ensure using built-in matlab file) *****************************']);
     end
 else
     disp(['***************************** Features already computed *****************************']);
