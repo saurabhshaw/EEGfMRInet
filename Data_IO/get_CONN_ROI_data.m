@@ -22,6 +22,7 @@ end
 %% Gather data from all participants:
 data_path = [conn_folder filesep conn_project_name filesep 'results' filesep 'preprocessing'];
 data_curated = zeros(length(ROIs_toUse),time_length,num_subs);
+P_ID = {};
 for i = 1:num_subs
     curr_data = load([data_path filesep 'ROI_Subject' sprintf('%03d',i) '_Condition' sprintf('%03d',condIdx) '.mat'],'data'); % Add if statement checking cond_All here
     for j = 1:size(data_curated)
@@ -31,4 +32,8 @@ for i = 1:num_subs
         if (length(temp_X) ~= time_length) pad_amt = time_length - length(temp_X); temp_X = [temp_X; zeros(pad_amt,1)]; end
         data_curated(j,:,i) = temp_X;
     end
+    
+    % Get corresponding Participant ID:
+    tempPID = strsplit(CONN_x.Setup.structural{i}{1}{1},{'-',filesep});
+    P_ID{i} = tempPID{end-3};
 end
