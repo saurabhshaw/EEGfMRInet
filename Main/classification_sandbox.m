@@ -36,7 +36,7 @@ for i = 1:numFolds
     trainData = final_dataset_SMN(trainIdx, :);
     testData = final_dataset_SMN(testIdx, :);
     trainLabels = final_labels_SMN(trainIdx);
-    testLabels = final_labels_SMN(testIdx);
+    testLabels = final_labels_SMN(testIdx); 
     
     % Train SVM model
     svmModel = fitcsvm(trainData, trainLabels, 'Standardize', true, 'KernelFunction', 'linear');
